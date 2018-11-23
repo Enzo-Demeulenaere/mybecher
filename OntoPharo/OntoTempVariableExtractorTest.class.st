@@ -1,11 +1,11 @@
 Class {
-	#name : #OntoTempVariableExtractorCase,
+	#name : #OntoTempVariableExtractorTest,
 	#superclass : #TestCase,
-	#category : #'OntoPharo-Extractors'
+	#category : #'OntoPharo-Tests'
 }
 
 { #category : #tests }
-OntoTempVariableExtractorCase >> testExtractMethodSymbols [
+OntoTempVariableExtractorTest >> testExtractMethodSymbols [
 
 	| symbols extractor|
 	extractor := OntoTempVarExtractor new.

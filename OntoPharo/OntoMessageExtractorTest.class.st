@@ -1,25 +1,25 @@
 Class {
-	#name : #OntoMessageExtractorCase,
+	#name : #OntoMessageExtractorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'x',
 		'y'
 	],
-	#category : #'OntoPharo-Extractors'
+	#category : #'OntoPharo-Tests'
 }
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethodSymbols [
+OntoMessageExtractorTest >> testExtractMethodSymbols [
 
 	| symbols |
 	symbols := (OntoMessageExtractor new extractSymbolOfMethod: (OntoClassResources >> #degrees)) symbols.
-	#(#asFloat  #arcTan #radiansToDegrees #ifTrue:ifFalse: #degrees)
+	#(#asFloat  #arcTan #radiansToDegrees #ifTrue:ifFalse:)
 		do: [ :each |  
 				self assert: (symbols includes: each) ]
 ]
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethodSymbols2 [
+OntoMessageExtractorTest >> testExtractMethodSymbols2 [
 
 	| symbols extractor|
 	extractor := OntoMessageExtractor new.
@@ -32,7 +32,7 @@ OntoMessageExtractorCase >> testExtractMethodSymbols2 [
 ]
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethodSymbolsDoesNotIncludeClassLiteral [
+OntoMessageExtractorTest >> testExtractMethodSymbolsDoesNotIncludeClassLiteral [
 
 	| symbols |
 	symbols := (OntoMessageExtractor new extractSymbolOfMethod: (OntoClassResources >> #degrees)) symbols.
@@ -40,7 +40,7 @@ OntoMessageExtractorCase >> testExtractMethodSymbolsDoesNotIncludeClassLiteral [
 ]
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethodSymbolsFilterCommonsConstructs [
+OntoMessageExtractorTest >> testExtractMethodSymbolsFilterCommonsConstructs [
 
 	| extractor | 
 	extractor := OntoMessageExtractor new. 
@@ -51,7 +51,7 @@ OntoMessageExtractorCase >> testExtractMethodSymbolsFilterCommonsConstructs [
 ]
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethodSymbolsFilterOneConstruct [
+OntoMessageExtractorTest >> testExtractMethodSymbolsFilterOneConstruct [
 
 	| extractor | 
 	extractor := OntoMessageExtractor new. 
@@ -62,7 +62,7 @@ OntoMessageExtractorCase >> testExtractMethodSymbolsFilterOneConstruct [
 ]
 
 { #category : #tests }
-OntoMessageExtractorCase >> testExtractMethods [
+OntoMessageExtractorTest >> testExtractMethods [
 
 	| symbols extractor|
 	extractor := OntoMessageExtractor new.
@@ -70,7 +70,7 @@ OntoMessageExtractorCase >> testExtractMethods [
 
 	extractor extractSymbolOfMethods: {(OntoClassResources >> #adhereTo:). (OntoClassResources >> #degrees)}.
 	symbols := extractor symbols.
-	#(#containsPoint: #max: #left min: right bottom #asFloat  #arcTan #radiansToDegrees #degrees)
+	#(#containsPoint: #max: #left min: right bottom #asFloat  #arcTan #radiansToDegrees)
 		do: [ :each |  
 				self assert: (symbols includes: each) ]
 ]

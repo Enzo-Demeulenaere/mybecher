@@ -4,7 +4,7 @@ An OntoMessageSeparatorTest is a test class for testing the behavior of OntoMess
 Class {
 	#name : #OntoMessageSeparatorTest,
 	#superclass : #TestCase,
-	#category : #'OntoPharo-Extractors'
+	#category : #'OntoPharo-Tests'
 }
 
 { #category : #'tests-operations' }
