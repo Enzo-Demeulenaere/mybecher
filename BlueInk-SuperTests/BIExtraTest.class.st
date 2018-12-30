@@ -24,7 +24,10 @@ BIExtraTest >> advancedPrettyPrinterConfiguration [
 	
 BIPrettyPrinterContext new
 	formatCommentWithStatements: false;
+	
 	indentString: '	';
+	"we use a tab to indent method body"
+	
 	indentsForKeywords: 1;
 	keepBlockInMessage: true;
 	lineUpBlockBrackets: false;
@@ -45,7 +48,10 @@ BIPrettyPrinterContext new
 	retainBlankLinesBeforeComments: true;
 	retainBlankLinesBetweenStatements: false;
 	selectorAndArgumentCombinedMaxSize: 40;
+	
 	stringFollowingReturn: ' ' ;
+	"a return is separated by a space ^a => ^ a"
+	
 	stringInsideBlocks: ' ' ;
 	stringInsideParentheses: '';
 	traditionalBinaryPrecedenceArray: #(#($| $& $?) #($= $~ $< $>) #($- $+) #($* $/ $% $\) #($@));
@@ -86,8 +92,16 @@ BIExtraTest >> rawSimple [
 	"I'm a rather simple method but already we can check some pretty printing points."
 |x|
 x:=2.
-x:=x + 1.
+x:=x+1.
 ^x.
+]
+
+{ #category : #'simple methods' }
+BIExtraTest >> rawSimpleNoCommentStillHaveANewLine [
+	| x |
+	x := 2.
+	x := x + 1.
+	^ x
 ]
 
 { #category : #'simple methods' }
@@ -117,6 +131,15 @@ BIExtraTest >> simple [
 ]
 
 { #category : #'simple methods' }
+BIExtraTest >> simpleNoCommentStillHaveANewLine [
+
+	| x |
+	x := 2.
+	x := x + 1.
+	^ x
+]
+
+{ #category : #'simple methods' }
 BIExtraTest >> simpleNoExtraSpace [
 	"There should be no space at the end of the line and only tab to start with."
 
@@ -132,7 +155,17 @@ BIExtraTest >> testAdvancedConfiguration [
 	self advancedConfiguration.
 	self validate: #rawSimple isFormattedAs: #simple.
 	self validate: #rawSimpleNoExtraSpace isFormattedAs: #simpleNoExtraSpace.
+	
+]
 
+{ #category : #tests }
+BIExtraTest >> testBroken [
+
+
+	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
+	self advancedConfiguration.
+	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine
+	
 ]
 
 { #category : #tests }
