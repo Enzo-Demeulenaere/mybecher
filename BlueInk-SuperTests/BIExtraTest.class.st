@@ -23,7 +23,7 @@ BIExtraTest >> advancedPrettyPrinterConfiguration [
 	^ 
 	
 BIPrettyPrinterContext new
-	formatCommentWithStatements: true;
+	formatCommentWithStatements: false;
 	indentString: '	';
 	indentsForKeywords: 1;
 	keepBlockInMessage: true;
@@ -45,8 +45,8 @@ BIPrettyPrinterContext new
 	retainBlankLinesBeforeComments: true;
 	retainBlankLinesBetweenStatements: false;
 	selectorAndArgumentCombinedMaxSize: 40;
-	stringFollowingReturn: '' ;
-	stringInsideBlocks: '' ;
+	stringFollowingReturn: ' ' ;
+	stringInsideBlocks: ' ' ;
 	stringInsideParentheses: '';
 	traditionalBinaryPrecedenceArray: #(#($| $& $?) #($= $~ $< $>) #($- $+) #($* $/ $% $\) #($@));
 	useBasicCommentFormat: true;
