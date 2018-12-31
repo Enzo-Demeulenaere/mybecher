@@ -29,10 +29,10 @@ BIPrettyPrinterContext new
 	"we use a tab to indent method body"
 
 	newLinesAfterMethodPattern: 1;
-	"Comments are put on the line after the signature without empty line"
+		"Comments are put on the line after the signature without empty line"
 	
-	newLinesAfterMethodComment: 2;
-	"After the comments we let one empty line"
+	newLinesAfterMethodComment: 1;
+		"After the comments (even empty) we let one empty line"
 	
 	indentsForKeywords: 1;
 	keepBlockInMessage: true;
@@ -109,10 +109,10 @@ x:=x+1.
 
 { #category : #'simple methods' }
 BIExtraTest >> rawSimpleNoCommentStillHaveANewLine [
-	| x |
-	x := 2.
-	x := x + 1.
-	^ x
+| x |
+x := 2.
+x := x + 1.
+^ x
 ]
 
 { #category : #'simple methods' }
@@ -180,20 +180,11 @@ BIExtraTest >> testAdvancedConfiguration [
 { #category : #tests }
 BIExtraTest >> testBroken [
 
-
+	self advancedConfiguration.
 	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
 	"self advancedConfiguration.
 	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine
 	"
-]
-
-{ #category : #tests }
-BIExtraTest >> testDefaultConfiguration [
-
-	self defaultConfiguration.
-	self validate: #rawSimple isFormattedAs: #simple.
-	self validate: #rawSimpleNoExtraSpace isFormattedAs: #simpleNoExtraSpace.
-
 ]
 
 { #category : #'simple tests' }
@@ -203,9 +194,17 @@ BIExtraTest >> testNewLineBetweenTopCommentsIsInitialized [
 ]
 
 { #category : #tests }
+BIExtraTest >> testNoCommentStillHaveANewLine [
+
+	self advancedConfiguration.
+	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
+	
+]
+
+{ #category : #tests }
 BIExtraTest >> testWithTwoSubsequentComments [
 
-
+	self advancedConfiguration.
 	self validate: #rawWithTwoSubsequentComments isFormattedAs: #withTwoSubsequentComments.
 
 ]
