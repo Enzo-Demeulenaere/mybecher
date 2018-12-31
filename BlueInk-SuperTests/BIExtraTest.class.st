@@ -27,6 +27,12 @@ BIPrettyPrinterContext new
 	
 	indentString: '	';
 	"we use a tab to indent method body"
+
+	newLinesAfterMethodPattern: 1;
+	"Comments are put on the line after the signature without empty line"
+	
+	newLinesAfterMethodComment: 2;
+	"After the comments we let one empty line"
 	
 	indentsForKeywords: 1;
 	keepBlockInMessage: true;
@@ -38,8 +44,8 @@ BIPrettyPrinterContext new
 	newLineAfterCascade: true;
 	newLineBeforeFirstCascade: true;
 	newLineBeforeFirstKeyword: false;
-	newLinesAfterMethodComment: 2;
-	newLinesAfterMethodPattern: 1;
+
+	
 	newLinesAfterTemporaries: 1;
 	numberOfArgumentsForMultiLine: 4;
 	oneLineMessages: #(#to: #to:do: #to:by: #to:by:do:);
@@ -190,6 +196,20 @@ BIExtraTest >> testDefaultConfiguration [
 
 ]
 
+{ #category : #'simple tests' }
+BIExtraTest >> testNewLineBetweenTopCommentsIsInitialized [
+
+	self assert: BIExtrasConfigurableFormatter new newLinesBetweenTopComments equals: 1
+]
+
+{ #category : #tests }
+BIExtraTest >> testWithTwoSubsequentComments [
+
+
+	self validate: #rawWithTwoSubsequentComments isFormattedAs: #withTwoSubsequentComments.
+
+]
+
 { #category : #utils }
 BIExtraTest >> validate: aRawSelector isFormattedAs: aSelector [
 	"We compare that the pretty printed value of the method whose selector is aRawSelector is the same as the one of aSelector."
@@ -200,4 +220,12 @@ BIExtraTest >> validate: aRawSelector isFormattedAs: aSelector [
 	"I patched the selector so that I can compare a method with a different name but the same body."
 	source := self formatter format: tree1.
 	self assert: source equals: (self class sourceCodeAt: aSelector)
+]
+
+{ #category : #'simple methods' }
+BIExtraTest >> withTwoSubsequentComments [
+	"first comment"
+	"second comment"
+
+	^ 'there should only one empty line'
 ]
