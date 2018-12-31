@@ -75,6 +75,11 @@ BIExtraTest >> formatter [
 ]
 
 { #category : #configuration }
+BIExtraTest >> formatterClass [
+	^ BIExtrasConfigurableFormatter
+]
+
+{ #category : #configuration }
 BIExtraTest >> prettyPrinterConfiguration [
 	"Here we can control explicitely the configuration we want."
 	"
@@ -112,6 +117,14 @@ BIExtraTest >> rawSimpleNoExtraSpace [
   x := 2.  
      x := x + 1.  
 	^ x  
+]
+
+{ #category : #'simple methods' }
+BIExtraTest >> rawWithTwoSubsequentComments [
+	"first comment"
+	"second comment"
+	
+	^ 'there should only one empty line'
 ]
 
 { #category : #setUp }
@@ -163,9 +176,9 @@ BIExtraTest >> testBroken [
 
 
 	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
-	self advancedConfiguration.
+	"self advancedConfiguration.
 	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine
-	
+	"
 ]
 
 { #category : #tests }
@@ -182,8 +195,7 @@ BIExtraTest >> validate: aRawSelector isFormattedAs: aSelector [
 	"We compare that the pretty printed value of the method whose selector is aRawSelector is the same as the one of aSelector."
 
 	| tree1 source |
-	tree1 := RBParser
-		parseMethod: (self class sourceCodeAt: aRawSelector).
+	tree1 := RBParser parseMethod: (self class sourceCodeAt: aRawSelector).
 	tree1 selector: aSelector.
 	"I patched the selector so that I can compare a method with a different name but the same body."
 	source := self formatter format: tree1.
