@@ -110,8 +110,7 @@ BIExtrasConfigurableFormatter >> tab [
 BIExtrasConfigurableFormatter >> visitMethodNode: aMethodNode [
 	
 	| totalNumberOfLinesAfterCommentZone |
-	totalNumberOfLinesAfterCommentZone := self newLinesAfterMethodComment + 2.
-	
+	totalNumberOfLinesAfterCommentZone := self newLinesAfterMethodComment + 1.
 	self formatMethodPatternFor: aMethodNode.
 	self emitNonTabulatedNewLines: 1.
 	self increaseIndent.

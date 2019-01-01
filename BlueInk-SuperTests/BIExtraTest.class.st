@@ -7,60 +7,6 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
-{ #category : #configurations }
-BIExtraTest >> advancedPrettyPrinterConfiguration [
-	"Here we can control explicitely the configuration we want."
-	"
-	String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]  
-	"
-	^ 
-	
-BIPrettyPrinterContext new
-	formatCommentWithStatements: false;
-	
-	indentString: '	';
-	"we use a tab to indent method body"
-
-	newLinesAfterMethodPattern: 1;
-		"Comments are put on the line after the signature without empty line"
-	
-	newLinesAfterMethodComment: 1;
-		"After the comments (even empty) we let one empty line"
-	
-	indentsForKeywords: 1;
-	keepBlockInMessage: true;
-	lineUpBlockBrackets: false;
-	maxLineLength: 70;
-	methodSignatureOnMultipleLines: false;
-	minimumNewLinesBetweenStatements: 1;
-	multiLineMessages: #(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:);
-	newLineAfterCascade: true;
-	newLineBeforeFirstCascade: true;
-	newLineBeforeFirstKeyword: false;
-
-	
-	newLinesAfterTemporaries: 1;
-	numberOfArgumentsForMultiLine: 4;
-	oneLineMessages: #(#to: #to:do: #to:by: #to:by:do:);
-	periodsAtEndOfBlock: false;
-	periodsAtEndOfMethod: false;
-	retainBlankLinesBeforeComments: true;
-	retainBlankLinesBetweenStatements: false;
-	selectorAndArgumentCombinedMaxSize: 40;
-	
-	stringFollowingReturn: ' ' ;
-	"a return is separated by a space ^a => ^ a"
-	
-	stringInsideBlocks: ' ' ;
-	stringInsideParentheses: '';
-	traditionalBinaryPrecedenceArray: #(#($| $& $?) #($= $~ $< $>) #($- $+) #($* $/ $% $\) #($@));
-	useBasicCommentFormat: true;
-	useTraditionalBinaryPrecedenceForParentheses: true
-	
-
-]
-
 { #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
@@ -117,19 +63,15 @@ BIExtraTest >> newLinesHaveCommentZoneConfiguration [
 	String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]  
 	"
-	^ 
-	
-BIPrettyPrinterContext new
-	formatCommentWithStatements: false;
-	
-	indentString: '	';
-	"we use a tab to indent method body"
-
-	newLinesAfterMethodPattern: 1;
-		"Comments are put on the line after the signature without empty line"
-	
-	newLinesAfterMethodComment: 1
-		"After the comments (even empty) we let one empty line"
+	^ BIPrettyPrinterContext new
+		formatCommentWithStatements: false;
+		indentString: '	';	"we use a tab to indent method body"
+		newEmptyLineAfterMethodCommentZone ; "equivalent to"
+			newLinesAfterMethodComment: 2
+			"
+			We do two line return: one for the empty line and one for the method body start.
+			After the comments (even empty) we let one empty line
+			"
 
 ]
 
@@ -140,11 +82,11 @@ BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
 	String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]  
 	"
-	^ 
-	
-BIPrettyPrinterContext new
+	^ BIPrettyPrinterContext new
+		formatCommentWithStatements: false;
 		newLinesAfterMethodComment: 1
-		"After the comments (even empty) we let one empty line"
+			"After the comments (even empty) we don't let one empty line.
+			We just issue one new line for the method body"
 ]
 
 { #category : #'source - result - no newline' }
