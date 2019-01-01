@@ -7,13 +7,7 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
-{ #category : #configuration }
-BIExtraTest >> advancedConfiguration [
-
-	configurationSelector := #advancedPrettyPrinterConfiguration
-]
-
-{ #category : #configuration }
+{ #category : #configurations }
 BIExtraTest >> advancedPrettyPrinterConfiguration [
 	"Here we can control explicitely the configuration we want."
 	"
@@ -67,80 +61,29 @@ BIPrettyPrinterContext new
 
 ]
 
-{ #category : #configuration }
-BIExtraTest >> defaultConfiguration [
-
-	configurationSelector := #prettyPrinterConfiguration
-]
-
-{ #category : #configuration }
+{ #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
 		installNewContext: (self perform: configurationSelector)
 		yourself
 ]
 
-{ #category : #configuration }
+{ #category : #hooks }
 BIExtraTest >> formatterClass [
 	^ BIExtrasConfigurableFormatter
 ]
 
-{ #category : #configuration }
-BIExtraTest >> prettyPrinterConfiguration [
-	"Here we can control explicitely the configuration we want."
-	"
-	String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]  
-	"
-	^ 
-	
-BIPrettyPrinterContext new
-	
+{ #category : #'source - result - new lines and tabulated' }
+BIExtraTest >> newLineAfterCommentZoneNoCommentStillHaveANewLine [
+
+	| x |
+	x := 2.
+	x := x + 1.
+	^ x
 ]
 
-{ #category : #'simple methods' }
-BIExtraTest >> rawSimple [ 
-	"I'm a rather simple method but already we can check some pretty printing points."
-|x|
-x:=2.
-x:=x+1.
-^x.
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> rawSimpleNoCommentStillHaveANewLine [
-| x |
-x := 2.
-x := x + 1.
-^ x
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> rawSimpleNoExtraSpace [     
-  "There should be no space at the end of the line and only tab to start with."
-
-  | x |
-  x := 2.  
-     x := x + 1.  
-	^ x  
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> rawWithTwoSubsequentComments [
-	"first comment"
-	"second comment"
-	
-	^ 'there should only one empty line'
-]
-
-{ #category : #setUp }
-BIExtraTest >> setUp [ 
-
-	self defaultConfiguration 
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> simple [
+{ #category : #'source - result - new lines and tabulated' }
+BIExtraTest >> newLineAfterCommentZoneSimple [
 	"I'm a rather simple method but already we can check some pretty printing points."
 
 	| x |
@@ -149,17 +92,8 @@ BIExtraTest >> simple [
 	^ x
 ]
 
-{ #category : #'simple methods' }
-BIExtraTest >> simpleNoCommentStillHaveANewLine [
-
-	| x |
-	x := 2.
-	x := x + 1.
-	^ x
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> simpleNoExtraSpace [
+{ #category : #'source - result - new lines and tabulated' }
+BIExtraTest >> newLineAfterCommentZoneSimpleNoExtraSpace [
 	"There should be no space at the end of the line and only tab to start with."
 
 	| x |
@@ -168,23 +102,109 @@ BIExtraTest >> simpleNoExtraSpace [
 	^ x
 ]
 
-{ #category : #tests }
-BIExtraTest >> testAdvancedConfiguration [
+{ #category : #'source - result - new lines and tabulated' }
+BIExtraTest >> newLineAfterCommentZoneWithTwoSubsequentComments [
+	"first comment"
+	"second comment"
 
-	self advancedConfiguration.
-	self validate: #rawSimple isFormattedAs: #simple.
-	self validate: #rawSimpleNoExtraSpace isFormattedAs: #simpleNoExtraSpace.
-	
+	^ 'there should only one empty line'
 ]
 
-{ #category : #tests }
-BIExtraTest >> testBroken [
-
-	self advancedConfiguration.
-	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
-	"self advancedConfiguration.
-	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine
+{ #category : #configurations }
+BIExtraTest >> newLinesHaveCommentZoneConfiguration [
+	"Here we can control explicitely the configuration we want."
 	"
+	String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]  
+	"
+	^ 
+	
+BIPrettyPrinterContext new
+	formatCommentWithStatements: false;
+	
+	indentString: '	';
+	"we use a tab to indent method body"
+
+	newLinesAfterMethodPattern: 1;
+		"Comments are put on the line after the signature without empty line"
+	
+	newLinesAfterMethodComment: 1
+		"After the comments (even empty) we let one empty line"
+
+]
+
+{ #category : #configurations }
+BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
+	"Here we can control explicitely the configuration we want."
+	"
+	String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]  
+	"
+	^ 
+	
+BIPrettyPrinterContext new
+		newLinesAfterMethodComment: 1
+		"After the comments (even empty) we let one empty line"
+]
+
+{ #category : #'source - result - no newline' }
+BIExtraTest >> noNewLinesSimple [
+	"I'm a rather simple method but already we can check some pretty printing points."
+	| x |
+	x := 2.
+	x := x+1.
+	^ x.
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawSimple [ 
+	"I'm a rather simple method but already we can check some pretty printing points."
+|x|
+x:=2.
+x:=x+1.
+^x.
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawSimpleFunkyExtraSpaces [     
+  "There should be no space at the end of the line and only tab to start with."
+
+  | x |
+  x := 2.  
+     x := x + 1.  
+	^ x  
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawSimpleNoComment [
+| x |
+x := 2.
+x := x + 1.
+^ x
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawWithTwoSubsequentComments [
+	"first comment"
+	"second comment"
+	
+	^ 'there should only one empty line'
+]
+
+{ #category : #configurations }
+BIExtraTest >> setAdvancedConfiguration [
+
+	configurationSelector := #advancedPrettyPrinterConfiguration
+]
+
+{ #category : #'tests - new lines' }
+BIExtraTest >> testNewLineAfterCommentZoneWhenNoComment [
+
+	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	self 
+		validate: #rawSimpleNoComment 
+		isFormattedAs: #newLineAfterCommentZoneNoCommentStillHaveANewLine.
+	
 ]
 
 { #category : #'simple tests' }
@@ -193,19 +213,29 @@ BIExtraTest >> testNewLineBetweenTopCommentsIsInitialized [
 	self assert: BIExtrasConfigurableFormatter new newLinesBetweenTopComments equals: 1
 ]
 
-{ #category : #tests }
-BIExtraTest >> testNoCommentStillHaveANewLine [
+{ #category : #'tests - new lines' }
+BIExtraTest >> testNewLinesAfterCommentZone [
 
-	self advancedConfiguration.
-	self validate: #rawSimpleNoCommentStillHaveANewLine isFormattedAs: #simpleNoCommentStillHaveANewLine.
+	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	self 
+		validate: #rawWithTwoSubsequentComments 
+		isFormattedAs: #newLineAfterCommentZoneWithTwoSubsequentComments.
+	self 
+		validate: #rawSimple 
+		isFormattedAs: #newLineAfterCommentZoneSimple.
+	self 
+		validate: #rawSimpleFunkyExtraSpaces 
+		isFormattedAs: #newLineAfterCommentZoneSimpleNoExtraSpace.
 	
 ]
 
-{ #category : #tests }
-BIExtraTest >> testWithTwoSubsequentComments [
+{ #category : #'tests - new lines' }
+BIExtraTest >> testnewLineAfterWithTwoSubsequentComments [
 
-	self advancedConfiguration.
-	self validate: #rawWithTwoSubsequentComments isFormattedAs: #withTwoSubsequentComments.
+	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	self 
+		validate: #rawWithTwoSubsequentComments 
+		isFormattedAs: #newLineAfterCommentZoneWithTwoSubsequentComments.
 
 ]
 
@@ -219,12 +249,4 @@ BIExtraTest >> validate: aRawSelector isFormattedAs: aSelector [
 	"I patched the selector so that I can compare a method with a different name but the same body."
 	source := self formatter format: tree1.
 	self assert: source equals: (self class sourceCodeAt: aSelector)
-]
-
-{ #category : #'simple methods' }
-BIExtraTest >> withTwoSubsequentComments [
-	"first comment"
-	"second comment"
-
-	^ 'there should only one empty line'
 ]
