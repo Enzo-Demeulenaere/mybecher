@@ -19,7 +19,30 @@ BIExtraTest >> formatterClass [
 	^ BIExtrasConfigurableFormatter
 ]
 
-{ #category : #'source - result - new lines and tabulated' }
+{ #category : #'result - long selectors' }
+BIExtraTest >> methodWithTooMany: aParameter 
+	default: aDefaultValue optional: optional andCrazy2: aStringOrSymbolOrNil [
+	"Probably an average comment."
+	
+	^ self printString
+	
+
+]
+
+{ #category : #'result - long selectors' }
+BIExtraTest >> methodWithTooMany: aParameter 
+	default: aDefaultValue 
+	optional: optional 
+	andCrazy: aStringOrSymbolOrNil [
+	
+	"Probably an average comment."
+	
+	^ self printString
+	
+
+]
+
+{ #category : #'result - new lines and tabulated' }
 BIExtraTest >> newLineAfterCommentZoneNoCommentStillHaveANewLine [
 
 	| x |
@@ -28,7 +51,7 @@ BIExtraTest >> newLineAfterCommentZoneNoCommentStillHaveANewLine [
 	^ x
 ]
 
-{ #category : #'source - result - new lines and tabulated' }
+{ #category : #'result - new lines and tabulated' }
 BIExtraTest >> newLineAfterCommentZoneSimple [
 	"I'm a rather simple method but already we can check some pretty printing points."
 
@@ -38,7 +61,7 @@ BIExtraTest >> newLineAfterCommentZoneSimple [
 	^ x
 ]
 
-{ #category : #'source - result - new lines and tabulated' }
+{ #category : #'result - new lines and tabulated' }
 BIExtraTest >> newLineAfterCommentZoneSimpleNoExtraSpace [
 	"There should be no space at the end of the line and only tab to start with."
 
@@ -48,7 +71,7 @@ BIExtraTest >> newLineAfterCommentZoneSimpleNoExtraSpace [
 	^ x
 ]
 
-{ #category : #'source - result - new lines and tabulated' }
+{ #category : #'result - new lines and tabulated' }
 BIExtraTest >> newLineAfterCommentZoneWithTwoSubsequentComments [
 	"first comment"
 	"second comment"
@@ -77,11 +100,11 @@ BIExtraTest >> newLinesHaveCommentZoneConfiguration [
 
 { #category : #configurations }
 BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
+	
 	"Here we can control explicitely the configuration we want."
-	"
-	String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]  
-	"
+	" String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]"
+		
 	^ BIPrettyPrinterContext new
 		formatCommentWithStatements: false;
 		newLinesAfterMethodComment: 1
@@ -89,7 +112,7 @@ BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
 			We just issue one new line for the method body"
 ]
 
-{ #category : #'source - result - no newline' }
+{ #category : #'result - no newline' }
 BIExtraTest >> noNewLineAfterCommentZoneNoComment [
 	| x |
 	x := 2.
@@ -97,20 +120,29 @@ BIExtraTest >> noNewLineAfterCommentZoneNoComment [
 	^ x
 ]
 
-{ #category : #'source - result - no newline' }
+{ #category : #'result - no newline' }
 BIExtraTest >> noNewLineAfterCommentZoneWithTwoSubsequentComments [
 	"first comment"
 	"second comment"
 	^ 'there should only one empty line'
 ]
 
-{ #category : #'source - result - no newline' }
+{ #category : #'result - no newline' }
 BIExtraTest >> noNewLinesSimple [
 	"I'm a rather simple method but already we can check some pretty printing points."
 	| x |
 	x := 2.
 	x := x+1.
 	^ x.
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawMethodWithTooMany: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+	"Probably an average comment."
+	
+	^ self printString
+	
+
 ]
 
 { #category : #'source - raw methods' }
