@@ -148,6 +148,21 @@ BIPrettyPrinterContext new
 ]
 
 { #category : #'source - result - no newline' }
+BIExtraTest >> noNewLineAfterCommentZoneNoComment [
+	| x |
+	x := 2.
+	x := x + 1.
+	^ x
+]
+
+{ #category : #'source - result - no newline' }
+BIExtraTest >> noNewLineAfterCommentZoneWithTwoSubsequentComments [
+	"first comment"
+	"second comment"
+	^ 'there should only one empty line'
+]
+
+{ #category : #'source - result - no newline' }
 BIExtraTest >> noNewLinesSimple [
 	"I'm a rather simple method but already we can check some pretty printing points."
 	| x |
@@ -191,12 +206,6 @@ BIExtraTest >> rawWithTwoSubsequentComments [
 	^ 'there should only one empty line'
 ]
 
-{ #category : #configurations }
-BIExtraTest >> setAdvancedConfiguration [
-
-	configurationSelector := #advancedPrettyPrinterConfiguration
-]
-
 { #category : #'tests - new lines' }
 BIExtraTest >> testNewLineAfterCommentZoneWhenNoComment [
 
@@ -227,6 +236,26 @@ BIExtraTest >> testNewLinesAfterCommentZone [
 		validate: #rawSimpleFunkyExtraSpaces 
 		isFormattedAs: #newLineAfterCommentZoneSimpleNoExtraSpace.
 	
+]
+
+{ #category : #'tests - no newlines' }
+BIExtraTest >> testNoNewLineAfterCommentZoneWhenNoComment [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawSimpleNoComment 
+		isFormattedAs: #noNewLineAfterCommentZoneNoComment
+	
+]
+
+{ #category : #'tests - no newlines' }
+BIExtraTest >> testNoNewLineAfterWithTwoSubsequentComments [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawWithTwoSubsequentComments 
+		isFormattedAs: #noNewLineAfterCommentZoneWithTwoSubsequentComments
+
 ]
 
 { #category : #'tests - new lines' }
