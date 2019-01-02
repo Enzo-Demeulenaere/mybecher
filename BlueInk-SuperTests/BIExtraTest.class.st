@@ -7,6 +7,18 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
+{ #category : #configurations }
+BIExtraTest >> allSelectorsOnOneLine [
+	
+	^ BIPrettyPrinterContext new
+		formatCommentWithStatements: false;
+		indentString: '	';	"we use a tab to indent method body"
+		newEmptyLineAfterMethodCommentZone;
+		methodSignatureOnMultipleLines: true
+		
+		
+]
+
 { #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
@@ -21,25 +33,20 @@ BIExtraTest >> formatterClass [
 
 { #category : #'result - long selectors' }
 BIExtraTest >> methodWithTooMany: aParameter 
-	default: aDefaultValue optional: optional andCrazy2: aStringOrSymbolOrNil [
-	"Probably an average comment."
-	
-	^ self printString
-	
-
-]
-
-{ #category : #'result - long selectors' }
-BIExtraTest >> methodWithTooMany: aParameter 
 	default: aDefaultValue 
 	optional: optional 
 	andCrazy: aStringOrSymbolOrNil [
-	
+	"A possible variation."
 	"Probably an average comment."
-	
-	^ self printString
-	
 
+	^ self printString
+]
+
+{ #category : #'result - long selectors' }
+BIExtraTest >> methodWithTooManyArguments: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+	"Probably an average comment."
+
+	^ self printString
 ]
 
 { #category : #'result - new lines and tabulated' }
@@ -137,12 +144,21 @@ BIExtraTest >> noNewLinesSimple [
 ]
 
 { #category : #'source - raw methods' }
-BIExtraTest >> rawMethodWithTooMany: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+BIExtraTest >> rawMethodWithTooMany: aParameter 
+	default: aDefaultValue 
+	optional: optional 
+	andCrazy: aStringOrSymbolOrNil [
+	"A possible variation."
 	"Probably an average comment."
-	
-	^ self printString
-	
 
+	^ self printString
+]
+
+{ #category : #'source - raw methods' }
+BIExtraTest >> rawMethodWithTooManyArguments: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+	"Probably an average comment."
+
+	^ self printString
 ]
 
 { #category : #'source - raw methods' }
@@ -178,6 +194,16 @@ BIExtraTest >> rawWithTwoSubsequentComments [
 	"second comment"
 	
 	^ 'there should only one empty line'
+]
+
+{ #category : #'tests - long selectors' }
+BIExtraTest >> testAllSelectorOnOneLine [
+
+	configurationSelector := #allSelectorsOnOneLine.
+	self 
+		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
+		isFormattedAs: #rawMethodWithTooManyArguments:default:optional:andCrazy:
+	
 ]
 
 { #category : #'tests - new lines' }
