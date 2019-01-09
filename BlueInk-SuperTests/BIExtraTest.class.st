@@ -7,18 +7,6 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
-{ #category : #configurations }
-BIExtraTest >> allSelectorsOnOneLine [
-	
-	^ BIPrettyPrinterContext new
-		formatCommentWithStatements: false;
-		indentString: '	';	"we use a tab to indent method body"
-		newEmptyLineAfterMethodCommentZone;
-		methodSignatureOnMultipleLines: true
-		
-		
-]
-
 { #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
@@ -196,14 +184,28 @@ BIExtraTest >> rawWithTwoSubsequentComments [
 	^ 'there should only one empty line'
 ]
 
-{ #category : #'tests - long selectors' }
-BIExtraTest >> testAllSelectorOnOneLine [
-
-	configurationSelector := #allSelectorsOnOneLine.
-	self 
-		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
-		isFormattedAs: #rawMethodWithTooManyArguments:default:optional:andCrazy:
+{ #category : #configurations }
+BIExtraTest >> selectorsOnMultipleLines [
 	
+	^ BIPrettyPrinterContext new
+		formatCommentWithStatements: false;
+		indentString: '	';	"we use a tab to indent method body"
+		newEmptyLineAfterMethodCommentZone;
+		methodSignatureOnMultipleLines: true
+		
+		
+]
+
+{ #category : #configurations }
+BIExtraTest >> selectorsOnOneLine [
+	
+	^ BIPrettyPrinterContext new
+		formatCommentWithStatements: false;
+		indentString: '	';	"we use a tab to indent method body"
+		newEmptyLineAfterMethodCommentZone;
+		methodSignatureOnMultipleLines: false
+		
+		
 ]
 
 { #category : #'tests - new lines' }
@@ -256,6 +258,26 @@ BIExtraTest >> testNoNewLineAfterWithTwoSubsequentComments [
 		validate: #rawWithTwoSubsequentComments 
 		isFormattedAs: #noNewLineAfterCommentZoneWithTwoSubsequentComments
 
+]
+
+{ #category : #'tests - long selectors' }
+BIExtraTest >> testSelectorOnMultipleLines [
+
+	configurationSelector := #selectorsOnMultipleLines.
+	self 
+		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
+		isFormattedAs: #methodWithTooMany:default:optional:andCrazy:
+	
+]
+
+{ #category : #'tests - long selectors' }
+BIExtraTest >> testSelectorOnOneLine [
+
+	configurationSelector := #selectorsOnMultipleLines.
+	self 
+		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
+		isFormattedAs: #methodWithTooManyArguments:default:optional:andCrazy:
+	
 ]
 
 { #category : #'tests - new lines' }
