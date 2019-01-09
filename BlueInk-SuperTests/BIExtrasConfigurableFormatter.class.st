@@ -101,6 +101,27 @@ BIExtrasConfigurableFormatter >> newLinesBetweenTopComments: anInteger [
 	newLinesBetweenTopComments := anInteger
 ]
 
+{ #category : #private }
+BIExtrasConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
+	| selectors arguments |
+	arguments := aMethodNode arguments.
+	selectors := aMethodNode selectorParts.
+	codeStream nextPutAll: selectors first.
+	self space.
+	self visitArgumentNode: arguments first.
+	self newLine. 
+	self
+		with: selectors allButFirst
+		and: arguments allButFirst
+		do: [ :key :arg | 
+			codeStream nextPutAll: self indentString.
+			codeStream nextPutAll: key.
+			self space.
+			self visitArgumentNode: arg ]
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ].
+	self newLine
+]
+
 { #category : #'configuration options' }
 BIExtrasConfigurableFormatter >> sizeOfLongLine [
 	"Returns the number of characters after which we consider that we have a long line."

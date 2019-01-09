@@ -20,9 +20,9 @@ BIExtraTest >> formatterClass [
 ]
 
 { #category : #'result - long selectors' }
-BIExtraTest >> methodWithTooMany: aParameter 
-	default: aDefaultValue 
-	optional: optional 
+BIExtraTest >> methodWithTooMany: aParameter
+	default: aDefaultValue
+	optional: optional
 	andCrazy: aStringOrSymbolOrNil [
 	"A possible variation."
 	"Probably an average comment."
