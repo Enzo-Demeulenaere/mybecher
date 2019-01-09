@@ -79,6 +79,14 @@ BIExtrasConfigurableFormatter >> initialize [
 	self newLinesBetweenTopComments: 1.
 ]
 
+{ #category : #private }
+BIExtrasConfigurableFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethodNode [
+
+	^ self methodSignatureOnMultipleLines
+		ifTrue: [ aMethodNode signatureSize >  self selectorAndArgumentCombinedMaxSize ]
+		ifFalse: [ false ]
+]
+
 { #category : #'configuration options' }
 BIExtrasConfigurableFormatter >> newLinesBetweenTopComments [
 			

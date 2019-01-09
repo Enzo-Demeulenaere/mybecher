@@ -32,6 +32,7 @@ BIExtraTest >> methodWithTooMany: aParameter
 
 { #category : #'result - long selectors' }
 BIExtraTest >> methodWithTooManyArguments: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+	"A possible variation."
 	"Probably an average comment."
 
 	^ self printString
@@ -144,6 +145,7 @@ BIExtraTest >> rawMethodWithTooMany: aParameter
 
 { #category : #'source - raw methods' }
 BIExtraTest >> rawMethodWithTooManyArguments: aParameter default: aDefaultValue optional: optional andCrazy: aStringOrSymbolOrNil [
+	"A possible variation."
 	"Probably an average comment."
 
 	^ self printString
@@ -273,10 +275,10 @@ BIExtraTest >> testSelectorOnMultipleLines [
 { #category : #'tests - long selectors' }
 BIExtraTest >> testSelectorOnOneLine [
 
-	configurationSelector := #selectorsOnMultipleLines.
+	configurationSelector := #selectorsOnOneLine.
 	self 
 		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
-		isFormattedAs: #methodWithTooManyArguments:default:optional:andCrazy:
+		isFormattedAs: #rawMethodWithTooManyArguments:default:optional:andCrazy:
 	
 ]
 
