@@ -27,6 +27,11 @@ BIExtrasConfigurableFormatter >> emitNonTabulatedNewLines: anInteger [
 	
 ]
 
+{ #category : #'low operations' }
+BIExtrasConfigurableFormatter >> emitTabs [ 
+	indent timesRepeat: [ codeStream nextPutAll: self indentString ]
+]
+
 { #category : #'private-formatting' }
 BIExtrasConfigurableFormatter >> emitTabulatedNewLinesAfterEndOfCommentZone [
 	self newLines: self newLinesAfterMethodComment
@@ -40,7 +45,7 @@ BIExtrasConfigurableFormatter >> emitTabulatedNewLinesAfterMethodPattern [
 { #category : #'private-formatting' }
 BIExtrasConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 	
-	self tab.
+	self emitTabs.
 	self formatPragmasFor: aMethodNode.
 	self visitNode: aMethodNode body
 ]
@@ -55,7 +60,9 @@ BIExtrasConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
 					self useBasicCommentFormat
 						ifTrue: [ self basicFormatCommentFor: each ]
 						ifFalse: [ self resizeCommentFor: each startingAt: 0 ] ]
-				separatedBy: [ self newLines: self newLinesBetweenTopComments ] 
+				separatedBy: [ self newLines: self newLinesBetweenTopComments ].
+	self emitNonTabulatedNewLines: 1. 
+	"We have finished the comments and we create the beginning of next line being empty or not"
 ]
 
 { #category : #'private-formatting' }
@@ -65,7 +72,9 @@ BIExtrasConfigurableFormatter >> formatMethodPatternFor: aMethodNode [
 		ifFalse: [ 
 			(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
 				ifTrue: [ self privateFormatMethodPatternMultiLineFor: aMethodNode ]
-				ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ] ]
+				ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ] ].
+	"We position the cursor on a new line being empty or not"
+	self newLine
 ]
 
 { #category : #'low operations' }
@@ -124,8 +133,7 @@ BIExtrasConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethod
 			codeStream nextPutAll: key.
 			self space.
 			self visitArgumentNode: arg ]
-		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ].
-	self newLine
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ]
 ]
 
 { #category : #'configuration options' }
@@ -143,15 +151,19 @@ BIExtrasConfigurableFormatter >> tab [
 
 { #category : #visiting }
 BIExtrasConfigurableFormatter >> visitMethodNode: aMethodNode [
+
+	self formatMethodPatternFor: aMethodNode. "after, cursor is at beginning of line."
 	
-	self formatMethodPatternFor: aMethodNode.
-	self emitNonTabulatedNewLines: self newLinesAfterSignature.
+	self emitNonTabulatedNewLines: self newLinesAfterSignature. 
+		"zero for comment glued or one for an empty line"
+	
 	self increaseIndent.
 	
 	aMethodNode hasComments 
 		ifTrue: [ 
-			self tab. 
-			self formatMethodCommentFor: aMethodNode ].
+			self emitTabs. 
+			self formatMethodCommentFor: aMethodNode
+			"after, cursor is at beginning of line." ].
 	
 	self emitNonTabulatedNewLines: self newLinesAfterCommentZone.
 	self formatMethodBodyFor: aMethodNode

@@ -91,7 +91,8 @@ BIExtraTest >> newLinesAfterCommentZoneConfiguration [
 
 	^ self contextClass new
 		formatCommentWithStatements: false;
-		indentString: '	'
+		indentString: '	';
+		newLinesAfterCommentZone: 1
 ]
 
 { #category : #configurations }
