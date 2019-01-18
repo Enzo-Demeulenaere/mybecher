@@ -104,9 +104,7 @@ BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
 
 	^ self contextClass new
 		formatCommentWithStatements: false;
-		newLinesAfterMethodComment: 1
-	"After the comments (even empty) we don't let one empty line.
-			We just issue one new line for the method body"
+		newLinesAfterCommentZone: 0. "no empty line"
 ]
 
 { #category : #'result - no newline' }

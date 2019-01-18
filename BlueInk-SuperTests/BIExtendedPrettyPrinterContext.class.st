@@ -27,7 +27,8 @@ BIExtendedPrettyPrinterContext >> newLinesAfterCommentZone [
 
 { #category : #accessing }
 BIExtendedPrettyPrinterContext >> newLinesAfterCommentZone: anInteger [
-			
+	"return the number of empty lines after the top comments: to have a empty line then use 1. To have code glued to comment use 0."
+	
 	newLinesAfterCommentZone := anInteger
 ]
 
