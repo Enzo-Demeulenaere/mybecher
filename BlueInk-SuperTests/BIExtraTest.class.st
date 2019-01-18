@@ -25,6 +25,11 @@ BIExtraTest >> contextClass [
 	^ BIExtendedPrettyPrinterContext
 ]
 
+{ #category : #'result - temp with space' }
+BIExtraTest >> emptyTemporaries [
+	^ self
+]
+
 { #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
@@ -169,6 +174,12 @@ BIExtraTest >> rawAloneTemporariesAndNewLineAfter [
 	| a b c |a := b + c.^ a
 ]
 
+{ #category : #'result - temp with space' }
+BIExtraTest >> rawEmptyTemporaries [
+	| | 
+	^ self
+]
+
 { #category : #'source - raw methods' }
 BIExtraTest >> rawMethodWithTooMany: aParameter 
 	default: aDefaultValue 
@@ -241,6 +252,16 @@ BIExtraTest >> selectorsOnOneLine [
 		"we use a tab to indent method body"
 			newEmptyLineAfterMethodCommentZone;
 		methodSignatureOnMultipleLines: false
+]
+
+{ #category : #'tests - temp' }
+BIExtraTest >> testEmptyTemporaries [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawEmptyTemporaries 
+		isFormattedAs: #emptyTemporaries
+	
 ]
 
 { #category : #'tests - new lines' }
