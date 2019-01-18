@@ -12,7 +12,9 @@ Class {
 	#name : #BIExtrasConfigurableFormatter,
 	#superclass : #BIConfigurableFormatter,
 	#instVars : [
-		'newLinesBetweenTopComments'
+		'newLinesBetweenTopComments',
+		'newLinesAfterSignature',
+		'newLinesAfterCommentZone'
 	],
 	#category : #'BlueInk-SuperTests'
 }
@@ -73,10 +75,10 @@ BIExtrasConfigurableFormatter >> increaseIndent [
 ]
 
 { #category : #initialization }
-BIExtrasConfigurableFormatter >> initialize [ 	
+BIExtrasConfigurableFormatter >> initialize [
 
-	super initialize. 
-	self newLinesBetweenTopComments: 1.
+	super initialize.
+	self installNewContext: BIExtendedPrettyPrinterContext new.
 ]
 
 { #category : #private }
@@ -88,17 +90,21 @@ BIExtrasConfigurableFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethod
 ]
 
 { #category : #'configuration options' }
-BIExtrasConfigurableFormatter >> newLinesBetweenTopComments [
+BIExtrasConfigurableFormatter >> newLinesAfterCommentZone [
 			
-	^ newLinesBetweenTopComments
+	^ context newLinesAfterCommentZone
 ]
 
 { #category : #'configuration options' }
-BIExtrasConfigurableFormatter >> newLinesBetweenTopComments: anInteger [
-	"This variable control the number of lines separating the first top comments of a method.
-	Usually the value should be 1 to indicate that comments should be place on following line one after the others."
-	
-	newLinesBetweenTopComments := anInteger
+BIExtrasConfigurableFormatter >> newLinesAfterSignature [
+			
+	^ context newLinesAfterSignature
+]
+
+{ #category : #'configuration options' }
+BIExtrasConfigurableFormatter >> newLinesBetweenTopComments [
+			
+	^ context newLinesBetweenTopComments
 ]
 
 { #category : #private }
@@ -138,20 +144,15 @@ BIExtrasConfigurableFormatter >> tab [
 { #category : #visiting }
 BIExtrasConfigurableFormatter >> visitMethodNode: aMethodNode [
 	
-	| totalNumberOfLinesAfterCommentZone |
-	totalNumberOfLinesAfterCommentZone := self newLinesAfterMethodComment + 1.
 	self formatMethodPatternFor: aMethodNode.
-	self emitNonTabulatedNewLines: 1.
+	self emitNonTabulatedNewLines: self newLinesAfterSignature.
 	self increaseIndent.
 	
 	aMethodNode hasComments 
 		ifTrue: [ 
 			self tab. 
-			"we separate the tab emission from the increase to be able to generate a line with a single tab
-when the comment are empty"
-			self formatMethodCommentFor: aMethodNode ]
-		ifFalse: [totalNumberOfLinesAfterCommentZone := totalNumberOfLinesAfterCommentZone - 1 ].
+			self formatMethodCommentFor: aMethodNode ].
 	
-	self emitNonTabulatedNewLines: totalNumberOfLinesAfterCommentZone - 1.
+	self emitNonTabulatedNewLines: self newLinesAfterCommentZone.
 	self formatMethodBodyFor: aMethodNode
 ]

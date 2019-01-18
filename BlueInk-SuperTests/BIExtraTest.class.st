@@ -7,6 +7,11 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
+{ #category : #configurations }
+BIExtraTest >> contextClass [
+	^ BIExtendedPrettyPrinterContext
+]
+
 { #category : #hooks }
 BIExtraTest >> formatter [
 	^ self formatterClass new
@@ -76,35 +81,30 @@ BIExtraTest >> newLineAfterCommentZoneWithTwoSubsequentComments [
 ]
 
 { #category : #configurations }
-BIExtraTest >> newLinesHaveCommentZoneConfiguration [
+BIExtraTest >> newLinesAfterCommentZoneConfiguration [
 	"Here we can control explicitely the configuration we want."
+
 	"
 	String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]  
 	"
-	^ BIPrettyPrinterContext new
-		formatCommentWithStatements: false;
-		indentString: '	';	"we use a tab to indent method body"
-		newEmptyLineAfterMethodCommentZone ; "equivalent to"
-			newLinesAfterMethodComment: 2
-			"
-			We do two line return: one for the empty line and one for the method body start.
-			After the comments (even empty) we let one empty line
-			"
 
+	^ self contextClass new
+		formatCommentWithStatements: false;
+		indentString: '	'
 ]
 
 { #category : #configurations }
 BIExtraTest >> noEmptyLineAfterCommentsConfiguration [
-	
 	"Here we can control explicitely the configuration we want."
+
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
-		
-	^ BIPrettyPrinterContext new
+
+	^ self contextClass new
 		formatCommentWithStatements: false;
 		newLinesAfterMethodComment: 1
-			"After the comments (even empty) we don't let one empty line.
+	"After the comments (even empty) we don't let one empty line.
 			We just issue one new line for the method body"
 ]
 
@@ -188,32 +188,28 @@ BIExtraTest >> rawWithTwoSubsequentComments [
 
 { #category : #configurations }
 BIExtraTest >> selectorsOnMultipleLines [
-	
-	^ BIPrettyPrinterContext new
+	^ self contextClass new
 		formatCommentWithStatements: false;
-		indentString: '	';	"we use a tab to indent method body"
-		newEmptyLineAfterMethodCommentZone;
+		indentString: '	';
+		"we use a tab to indent method body"
+			newEmptyLineAfterMethodCommentZone;
 		methodSignatureOnMultipleLines: true
-		
-		
 ]
 
 { #category : #configurations }
 BIExtraTest >> selectorsOnOneLine [
-	
-	^ BIPrettyPrinterContext new
+	^ self contextClass new
 		formatCommentWithStatements: false;
-		indentString: '	';	"we use a tab to indent method body"
-		newEmptyLineAfterMethodCommentZone;
+		indentString: '	';
+		"we use a tab to indent method body"
+			newEmptyLineAfterMethodCommentZone;
 		methodSignatureOnMultipleLines: false
-		
-		
 ]
 
 { #category : #'tests - new lines' }
 BIExtraTest >> testNewLineAfterCommentZoneWhenNoComment [
 
-	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	configurationSelector := #newLinesAfterCommentZoneConfiguration.
 	self 
 		validate: #rawSimpleNoComment 
 		isFormattedAs: #newLineAfterCommentZoneNoCommentStillHaveANewLine.
@@ -229,7 +225,7 @@ BIExtraTest >> testNewLineBetweenTopCommentsIsInitialized [
 { #category : #'tests - new lines' }
 BIExtraTest >> testNewLinesAfterCommentZone [
 
-	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	configurationSelector := #newLinesAfterCommentZoneConfiguration.
 	self 
 		validate: #rawWithTwoSubsequentComments 
 		isFormattedAs: #newLineAfterCommentZoneWithTwoSubsequentComments.
@@ -285,7 +281,7 @@ BIExtraTest >> testSelectorOnOneLine [
 { #category : #'tests - new lines' }
 BIExtraTest >> testnewLineAfterWithTwoSubsequentComments [
 
-	configurationSelector := #newLinesHaveCommentZoneConfiguration.
+	configurationSelector := #newLinesAfterCommentZoneConfiguration.
 	self 
 		validate: #rawWithTwoSubsequentComments 
 		isFormattedAs: #newLineAfterCommentZoneWithTwoSubsequentComments.
