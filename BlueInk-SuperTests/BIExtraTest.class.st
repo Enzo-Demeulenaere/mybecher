@@ -7,6 +7,19 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
+{ #category : #'result - temp with space' }
+BIExtraTest >> aloneTemporaries [
+	| a b c |
+	^ self
+]
+
+{ #category : #'result - temp with space' }
+BIExtraTest >> aloneTemporariesAndNewLineAfter [
+	| a b c |
+	a := b + c.
+	^ a
+]
+
 { #category : #configurations }
 BIExtraTest >> contextClass [
 	^ BIExtendedPrettyPrinterContext
@@ -129,6 +142,31 @@ BIExtraTest >> noNewLinesSimple [
 	x := 2.
 	x := x+1.
 	^ x.
+]
+
+{ #category : #configurations }
+BIExtraTest >> noSpaceForTemporaries [
+	"Here we can control explicitely the configuration we want."
+
+	" String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]"
+
+	^ self contextClass new
+		formatCommentWithStatements: false;
+		newLinesAfterCommentZone: 0. 
+	" for the moment there is no possibility to not have space i.e. |a b c| 
+	we only support | a b c |"
+]
+
+{ #category : #'result - temp with space' }
+BIExtraTest >> rawAloneTemporaries [
+	| a b c |
+	^ self
+]
+
+{ #category : #'result - temp with space' }
+BIExtraTest >> rawAloneTemporariesAndNewLineAfter [
+	| a b c |a := b + c.^ a
 ]
 
 { #category : #'source - raw methods' }
@@ -274,6 +312,26 @@ BIExtraTest >> testSelectorOnOneLine [
 	self 
 		validate: #rawMethodWithTooManyArguments:default:optional:andCrazy: 
 		isFormattedAs: #rawMethodWithTooManyArguments:default:optional:andCrazy:
+	
+]
+
+{ #category : #'tests - temp' }
+BIExtraTest >> testSpaceForTemporaries [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawAloneTemporaries 
+		isFormattedAs: #aloneTemporaries
+	
+]
+
+{ #category : #'tests - temp' }
+BIExtraTest >> testSpaceForTemporariesAndNewLineAfter [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawAloneTemporariesAndNewLineAfter 
+		isFormattedAs: #aloneTemporariesAndNewLineAfter 
 	
 ]
 
