@@ -163,6 +163,16 @@ BIExtraTest >> noSpaceForTemporaries [
 	we only support | a b c |"
 ]
 
+{ #category : #'result - terminating period' }
+BIExtraTest >> noTerminatingPeriod [
+	| a b c |
+	b := 10.
+	c := 20.
+	a := b + c.
+	a ifNil: [ b := 30 ].
+	^ a
+]
+
 { #category : #'result - temp with space' }
 BIExtraTest >> rawAloneTemporaries [
 	| a b c |
@@ -226,6 +236,15 @@ x := x + 1.
 ^ x
 ]
 
+{ #category : #'result - terminating period' }
+BIExtraTest >> rawTerminatingPeriod [
+	| a b c |
+	b := 10. c:=20.
+	a := b + c.
+	a ifNil: [ b:=30. ].
+	^ a.
+]
+
 { #category : #'source - raw methods' }
 BIExtraTest >> rawWithTwoSubsequentComments [
 	"first comment"
@@ -252,6 +271,16 @@ BIExtraTest >> selectorsOnOneLine [
 		"we use a tab to indent method body"
 			newEmptyLineAfterMethodCommentZone;
 		methodSignatureOnMultipleLines: false
+]
+
+{ #category : #'result - terminating period' }
+BIExtraTest >> terminatingPeriod [
+	| a b c |
+	b := 10. 
+	c := 20.
+	a := b + c.
+	a ifNil: [ b := 30. ].
+	^ a.
 ]
 
 { #category : #'tests - temp' }
@@ -314,6 +343,17 @@ BIExtraTest >> testNoNewLineAfterWithTwoSubsequentComments [
 		validate: #rawWithTwoSubsequentComments 
 		isFormattedAs: #noNewLineAfterCommentZoneWithTwoSubsequentComments
 
+]
+
+{ #category : #'tests - terminating period' }
+BIExtraTest >> testNoTerminatingTemporaries [
+
+	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	self 
+		validate: #rawTerminatingPeriod 
+		isFormattedAs: #noTerminatingPeriod
+
+	
 ]
 
 { #category : #'tests - long selectors' }
