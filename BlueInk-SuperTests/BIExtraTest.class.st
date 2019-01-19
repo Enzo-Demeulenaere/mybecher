@@ -7,13 +7,13 @@ Class {
 	#category : #'BlueInk-SuperTests'
 }
 
-{ #category : #'result - temp with space' }
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> aloneTemporaries [
 	| a b c |
 	^ self
 ]
 
-{ #category : #'result - temp with space' }
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> aloneTemporariesAndNewLineAfter [
 	| a b c |
 	a := b + c.
@@ -25,7 +25,7 @@ BIExtraTest >> contextClass [
 	^ BIExtendedPrettyPrinterContext
 ]
 
-{ #category : #'result - temp with space' }
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> emptyTemporaries [
 	^ self
 ]
@@ -173,18 +173,44 @@ BIExtraTest >> noTerminatingPeriod [
 	^ a
 ]
 
-{ #category : #'result - temp with space' }
+{ #category : #configurations }
+BIExtraTest >> noTerminatingPeriodConfiguration [
+	"Here we can control explicitely the configuration we want."
+
+	" String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]"
+
+	^ self contextClass new
+		formatCommentWithStatements: false;
+		newLinesAfterCommentZone: 0; "no empty line"
+		periodsAtEndOfBlock: false
+]
+
+{ #category : #'result/raw - complex block' }
+BIExtraTest >> notWorkingReceiverAndMessageInFlowAllMethodsSelect: aBlock [ 
+	"Answer a SortedCollection of each method that, when used as the block  
+	argument to aBlock, gives a true result."
+	| aCollection |
+	aCollection := OrderedCollection new.
+	self allBehaviorsDo: [ :class | class
+												selectorsAndMethodsDo: [:sel :m | (aBlock value: m)
+																									ifTrue: [aCollection
+																													add: (self createMethodNamed: sel realParent: class)]]].
+	^ aCollection
+]
+
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> rawAloneTemporaries [
 	| a b c |
 	^ self
 ]
 
-{ #category : #'result - temp with space' }
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> rawAloneTemporariesAndNewLineAfter [
 	| a b c |a := b + c.^ a
 ]
 
-{ #category : #'result - temp with space' }
+{ #category : #'result/raw - temp with space' }
 BIExtraTest >> rawEmptyTemporaries [
 	| | 
 	^ self
@@ -253,6 +279,19 @@ BIExtraTest >> rawWithTwoSubsequentComments [
 	^ 'there should only one empty line'
 ]
 
+{ #category : #'result/raw - complex block' }
+BIExtraTest >> receiverOnNextIndentAllMethodsSelect: aBlock [ 
+	"Answer a SortedCollection of each method that, when used as the block  
+	argument to aBlock, gives a true result."
+	| aCollection |
+	aCollection := OrderedCollection new.
+	self allBehaviorsDo: [:class | 
+		class selectorsAndMethodsDo: [:sel :m | 
+			(aBlock value: m)
+				ifTrue: [ aCollection add: (self createMethodNamed: sel realParent: class)]]].
+	^ aCollection
+]
+
 { #category : #configurations }
 BIExtraTest >> selectorsOnMultipleLines [
 	^ self contextClass new
@@ -273,6 +312,34 @@ BIExtraTest >> selectorsOnOneLine [
 		methodSignatureOnMultipleLines: false
 ]
 
+{ #category : #configurations }
+BIExtraTest >> spaceAndNewLinesForTemporaries [
+	"for the moment there is no possibility to not have space i.e. |a b c| 
+	we only support | a b c |"
+
+	" String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]"
+
+	^ self contextClass new
+		newLinesAfterTemporaries: 1;
+		newLinesAfterCommentZone: 0.
+
+]
+
+{ #category : #configurations }
+BIExtraTest >> spaceForTemporaries [
+	"Here we can control explicitely the configuration we want."
+
+	" String streamContents: [:s |
+			BIPrettyPrinterContext new storeOn: s]"
+
+	^ self contextClass new
+		formatCommentWithStatements: false;
+		newLinesAfterCommentZone: 0. 
+	" for the moment there is no possibility to not have space i.e. |a b c| 
+	we only support | a b c |"
+]
+
 { #category : #'result - terminating period' }
 BIExtraTest >> terminatingPeriod [
 	| a b c |
@@ -286,7 +353,7 @@ BIExtraTest >> terminatingPeriod [
 { #category : #'tests - temp' }
 BIExtraTest >> testEmptyTemporaries [
 
-	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	configurationSelector := #spaceAndNewLinesForTemporaries.
 	self 
 		validate: #rawEmptyTemporaries 
 		isFormattedAs: #emptyTemporaries
@@ -348,7 +415,7 @@ BIExtraTest >> testNoNewLineAfterWithTwoSubsequentComments [
 { #category : #'tests - terminating period' }
 BIExtraTest >> testNoTerminatingTemporaries [
 
-	configurationSelector := #noEmptyLineAfterCommentsConfiguration.
+	configurationSelector := #noTerminatingPeriodConfiguration.
 	self 
 		validate: #rawTerminatingPeriod 
 		isFormattedAs: #noTerminatingPeriod
