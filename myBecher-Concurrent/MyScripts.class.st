@@ -4,7 +4,7 @@ Class {
 	#category : #'myBecher-Concurrent'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripts }
 MyScripts >> script1 [
 
 	| lock counter |
@@ -25,7 +25,7 @@ MyScripts >> script1 [
 	] fork
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #scripts }
 MyScripts >> script1WithMutex [
 
 	| lock counter |
@@ -40,4 +40,18 @@ MyScripts >> script1WithMutex [
 	lock critical: [ counter := counter - 100.
 					counter crTrace ] ]
 	] fork
+]
+
+{ #category : #scripts }
+MyScripts >> script2 [
+
+	[1 to: 10 do: [:i| i trace. ' 'trace ]] fork.
+  [11 to: 20 do: [:i| i trace. ' 'trace ]] fork.
+
+]
+
+{ #category : #scripts }
+MyScripts >> script3 [
+	[1 to: 10 do: [:i| i trace. ' ' trace. Processor yield ]] fork.
+	[11 to: 20 do: [:i| i trace. ' ' trace. Processor yield ]] fork.
 ]
