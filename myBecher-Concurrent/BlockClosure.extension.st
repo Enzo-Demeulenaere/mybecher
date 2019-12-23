@@ -7,18 +7,12 @@ BlockClosure >> promise [
 
 { #category : #'*myBecher-Concurrent' }
 BlockClosure >> promiseAt: aPriority [
-	"Answer a Promise that represents the result of evaluating the receiver at the given priority."
+	"Answer a promise that represents the result of the receiver execution
+	at the given priority."
 	| promise |
 	promise := MyPromise new.
-	(self promiseBlock: promise) forkAt: aPriority.
-	^promise
-]
-
-{ #category : #'*myBecher-Concurrent' }
-BlockClosure >> promiseBlock: aPromise [
-	"Answer a block that evaluates the receiver as a Promise."
-
-	^ aPromise value: self value
+	[ promise value: self value ] forkAt: aPriority.
+	^ promise
 ]
 
 { #category : #'*myBecher-Concurrent' }

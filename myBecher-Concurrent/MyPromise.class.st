@@ -3,7 +3,7 @@ A promise is a value that is concurrently computed by another process and that w
 When the value is not available, asking for its value will block the caller until the value is available. 
 
 
-sync is the semaphore protecting the value. 
+valueProtectingSemaphore is the semaphore protecting the value. 
 hasValue returns true whether a value is available.
 value is the 
 "
@@ -11,13 +11,28 @@ Class {
 	#name : #MyPromise,
 	#superclass : #Object,
 	#instVars : [
-		'sync',
 		'value',
 		'hasValue',
-		'raisedException'
+		'raisedException',
+		'valueProtectingSemaphore'
 	],
 	#category : #'myBecher-Concurrent-promise'
 }
+
+{ #category : #accessing }
+MyPromise class >> script [ 
+
+	| controllingPromise promise |
+	controllingPromise := Semaphore new.
+	[ (Delay forSeconds: 10) wait.
+	controllingPromise signal ] fork.
+	promise := [ controllingPromise wait. 
+							1 + 3 ] promise. 
+	self deny: promise hasValue.
+	(Delay forSeconds: 15) wait. 
+	self assert: promise hasValue.
+	self assert: promise value equals: 4
+]
 
 { #category : #accessing }
 MyPromise >> hasValue [
@@ -28,7 +43,7 @@ MyPromise >> hasValue [
 { #category : #accessing }
 MyPromise >> initialize [
 	super initialize.
-	sync := Semaphore new.
+	valueProtectingSemaphore := Semaphore new.
 	hasValue := false
 ]
 
@@ -40,7 +55,7 @@ MyPromise >> raisedException: anException [
 		ifTrue:
 			[ raisedException := anException.
 			hasValue := true.
-			sync signal.
+			valueProtectingSemaphore signal.
 			true]
 		ifFalse:
 			[false]
@@ -48,9 +63,9 @@ MyPromise >> raisedException: anException [
 
 { #category : #'private for block' }
 MyPromise >> value [
-
-	sync wait.
-	sync signal. 
+	"Wait for a value and once it is available returns it"
+	valueProtectingSemaphore wait.
+	valueProtectingSemaphore signal. 
 	"To allow multiple requests for the value."
 	^ value 
 ]
@@ -60,14 +75,14 @@ MyPromise >> value: resultValue [
 
 	value := resultValue.
 	hasValue := true.
-	sync signal
+	valueProtectingSemaphore signal
 ]
 
 { #category : #'private for block' }
 MyPromise >> valueWithExceptionHandling [
 
-	sync wait.
-	sync signal. 
+	valueProtectingSemaphore wait.
+	valueProtectingSemaphore signal. 
 	"To allow multiple requests for the value."
 	raisedException == nil
 		ifTrue: [ ^value ]
