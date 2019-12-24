@@ -55,3 +55,14 @@ MyScripts >> script3 [
 	[1 to: 10 do: [:i| i trace. ' ' trace. Processor yield ]] fork.
 	[11 to: 20 do: [:i| i trace. ' ' trace. Processor yield ]] fork.
 ]
+
+{ #category : #scripts }
+MyScripts >> script4 [
+	[ 1 to: 10 do: [ :i |
+  i trace; trace: ' '.
+  Processor yield ] ] fork.
+
+[ 101 to: 110 do: [ :i |
+  i trace; trace: ' '.
+  Processor yield ] ] fork
+]
