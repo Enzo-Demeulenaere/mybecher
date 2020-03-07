@@ -6,5 +6,6 @@ Class {
 
 { #category : #decode }
 PhonePad >> decode: aCharacter and: anInteger [ 
-	^$C
+	
+	^ (aCharacter codePoint + anInteger - 1) asCharacter
 ]
