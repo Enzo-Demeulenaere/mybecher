@@ -1,5 +1,7 @@
 "
-Counter new increment; increment
+| d |
+d := Duck new.
+d speak
 "
 Class {
 	#name : #Counter,
