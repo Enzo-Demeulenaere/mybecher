@@ -14,6 +14,17 @@ Class {
 	#category : #'myBecher-Block'
 }
 
+{ #category : #'3-accessing shared variables' }
+NBexp >> accessingSharedVariables [
+	| t |
+	^ String streamContents: [ :st |  
+		t := 42.
+		self executeBlock: [ st print: t. st cr. t := 99. st print: t. st cr ].
+		self executeBlock: [ st print: t. st cr. t := 66. st print: t. st cr. ].
+		self executeBlock: [ st print: t. st cr. ]
+		 ]
+]
+
 { #category : #'6-self binding' }
 NBexp >> executeBlock6 [
 	^ String 	
@@ -22,10 +33,10 @@ NBexp >> executeBlock6 [
 					 ]
 ]
 
-{ #category : #initialization }
+{ #category : #'1-variable lookup' }
 NBexp >> executeBlock: aBlock [
 	| t |
-	t := nil.
+	t := 33.
 	^ aBlock value
 ]
 
@@ -44,18 +55,18 @@ NBexp >> initialize [
 	x := 123.
 ]
 
-{ #category : #initialization }
+{ #category : #'1-variable lookup' }
 NBexp >> setVariableAndDefineBlock [
 	| t |
 	t := 42.
-	^ self executeBlock: [ t traceCr ]
+	^ self executeBlock: [ t ]
 ]
 
-{ #category : #initialization }
+{ #category : #'2-changing value' }
 NBexp >> setVariableAndDefineBlock2 [
 	| t |
 	t := 42.
-	^ self executeBlock: [ t := 33. t traceCr ]
+	^ self executeBlock: [ t := 2008. t ]
 ]
 
 { #category : #initialization }
@@ -68,17 +79,6 @@ NBexp >> setVariableAndDefineBlock3 [
 ]
 
 { #category : #initialization }
-NBexp >> setVariableAndDefineBlock3b [
-	| t |
-	^ String streamContents: [ :st |  
-		t := 42.
-		self executeBlock: [ st print: t. st cr. t := 33. st print: t. st cr ].
-		self executeBlock: [ st print: t. st cr. t := 66. st print: t. st cr. ].
-		self executeBlock: [ st print: t. st cr. ]
-		 ]
-]
-
-{ #category : #initialization }
 NBexp >> setVariableAndDefineBlock4 [
 	
 	^ String streamContents: [ :st |  
@@ -88,6 +88,17 @@ NBexp >> setVariableAndDefineBlock4 [
 		t := 69.
 		self executeBlock: block
 ]
+]
+
+{ #category : #'3-accessing shared variables' }
+NBexp >> testAccessingSharedVariables [
+
+	self assert: self accessingSharedVariables equals: '42
+99
+99
+66
+66
+'
 ]
 
 { #category : #'5-arguments' }
@@ -109,27 +120,16 @@ NBexp >> testExecuteBlockInAnotherInstance6 [
 	self assert: self executeBlock6 equals: 'NBexp>>#testExecuteBlockInAnotherInstance6123'
 ]
 
-{ #category : #tests }
+{ #category : #'1-variable lookup' }
 NBexp >> testSetVariableAndDefineBlock [
 
 	self assert: self setVariableAndDefineBlock equals: 42
 ]
 
-{ #category : #tests }
+{ #category : #'2-changing value' }
 NBexp >> testSetVariableAndDefineBlock2 [
 
-	self assert: self setVariableAndDefineBlock2 equals: 33
-]
-
-{ #category : #tests }
-NBexp >> testSetVariableAndDefineBlock3b [
-
-	self assert: self setVariableAndDefineBlock3b equals: '42
-33
-33
-66
-66
-'
+	self assert: self setVariableAndDefineBlock2 equals: 2008
 ]
 
 { #category : #tests }
