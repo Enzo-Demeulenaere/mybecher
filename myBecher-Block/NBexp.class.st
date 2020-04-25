@@ -25,14 +25,6 @@ NBexp >> accessingSharedVariables [
 		 ]
 ]
 
-{ #category : #'6-self binding' }
-NBexp >> executeBlock6 [
-	^ String 	
-			streamContents: [ :st | 
-					self executeBlockInAnotherInstance6: [ st print: self ; print: x ].
-					 ]
-]
-
 { #category : #'1-variable lookup' }
 NBexp >> executeBlock: aBlock [
 	| t |
@@ -55,39 +47,25 @@ NBexp >> initialize [
 	x := 123.
 ]
 
-{ #category : #'1-variable lookup' }
-NBexp >> setVariableAndDefineBlock [
-	| t |
-	t := 42.
-	^ self executeBlock: [ t ]
+{ #category : #'6-self binding' }
+NBexp >> selfIsCapturedToo [
+	^ String 	
+			streamContents: [ :st | 
+					self executeBlockInAnotherInstance6: [ st print: self ; print: x ] ]
 ]
 
 { #category : #'2-changing value' }
-NBexp >> setVariableAndDefineBlock2 [
+NBexp >> setVariableAndChangingVariableBlock [
 	| t |
 	t := 42.
 	^ self executeBlock: [ t := 2008. t ]
 ]
 
-{ #category : #initialization }
-NBexp >> setVariableAndDefineBlock3 [
+{ #category : #'1-variable lookup' }
+NBexp >> setVariableAndDefineBlock [
 	| t |
 	t := 42.
-	self executeBlock: [ t traceCr. t := 33. t traceCr ].
-	self executeBlock: [ t traceCr. t := 66. t traceCr ].
-	self executeBlock: [ t traceCr ]
-]
-
-{ #category : #initialization }
-NBexp >> setVariableAndDefineBlock4 [
-	
-	^ String streamContents: [ :st |  
-		| t |
-		t := 42.
-		block := [ st print: t ].
-		t := 69.
-		self executeBlock: block
-]
+	^ self executeBlock: [ t ]
 ]
 
 { #category : #'3-accessing shared variables' }
@@ -115,9 +93,15 @@ NBexp >> testArg5: arg [
 ]
 
 { #category : #'6-self binding' }
-NBexp >> testExecuteBlockInAnotherInstance6 [
+NBexp >> testSelfIsCapturedToo [
 	
-	self assert: self executeBlock6 equals: 'NBexp>>#testExecuteBlockInAnotherInstance6123'
+	self assert: self selfIsCapturedToo equals: 'NBexp>>#testSelfIsCapturedToo123'
+]
+
+{ #category : #'2-changing value' }
+NBexp >> testSetVariableAndChangingVariableBlock [
+
+	self assert: self setVariableAndChangingVariableBlock equals: 2008
 ]
 
 { #category : #'1-variable lookup' }
@@ -126,14 +110,19 @@ NBexp >> testSetVariableAndDefineBlock [
 	self assert: self setVariableAndDefineBlock equals: 42
 ]
 
-{ #category : #'2-changing value' }
-NBexp >> testSetVariableAndDefineBlock2 [
+{ #category : #'4-lookup at execution time' }
+NBexp >> testVariableLookupIsDoneAtExecution [
 
-	self assert: self setVariableAndDefineBlock2 equals: 2008
+	self assert: self variableLookupIsDoneAtExecution equals: '69'
 ]
 
-{ #category : #tests }
-NBexp >> testSetVariableAndDefineBlock4 [
-
-	self assert: self setVariableAndDefineBlock4 equals: '69'
+{ #category : #'4-lookup at execution time' }
+NBexp >> variableLookupIsDoneAtExecution [
+	
+	^ String streamContents: [ :st |  
+		| t |
+		t := 42.
+		block := [ st print: t ].
+		t := 69.
+		self executeBlock: block ]
 ]
