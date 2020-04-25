@@ -7,6 +7,9 @@ executeBlock: aBlock
 Class {
 	#name : #NBexp,
 	#superclass : #TestCase,
+	#instVars : [
+		'block'
+	],
 	#category : #'myBecher-Block'
 }
 
@@ -51,6 +54,18 @@ NBexp >> setVariableAndDefineBlock3b [
 		 ]
 ]
 
+{ #category : #initialization }
+NBexp >> setVariableAndDefineBlock4 [
+	
+	^ String streamContents: [ :st |  
+		| t |
+		t := 42.
+		block := [ st print: t ].
+		t := 69.
+		self executeBlock: block
+]
+]
+
 { #category : #tests }
 NBexp >> testSetVariableAndDefineBlock [
 
@@ -72,4 +87,10 @@ NBexp >> testSetVariableAndDefineBlock3b [
 66
 66
 '
+]
+
+{ #category : #tests }
+NBexp >> testSetVariableAndDefineBlock4 [
+
+	self assert: self setVariableAndDefineBlock4 equals: '69'
 ]
