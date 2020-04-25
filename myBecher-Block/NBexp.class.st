@@ -8,16 +8,40 @@ Class {
 	#name : #NBexp,
 	#superclass : #TestCase,
 	#instVars : [
-		'block'
+		'block',
+		'x'
 	],
 	#category : #'myBecher-Block'
 }
+
+{ #category : #'6-self binding' }
+NBexp >> executeBlock6 [
+	^ String 	
+			streamContents: [ :st | 
+					self executeBlockInAnotherInstance6: [ st print: self ; print: x ].
+					 ]
+]
 
 { #category : #initialization }
 NBexp >> executeBlock: aBlock [
 	| t |
 	t := nil.
 	^ aBlock value
+]
+
+{ #category : #'5-arguments' }
+NBexp >> executeBlockAndIgnoreArgument: arg [
+	^ block value
+]
+
+{ #category : #'6-self binding' }
+NBexp >> executeBlockInAnotherInstance6: aBlock [
+	^ NBexp2 new executeBlockInAnotherInstance6: aBlock
+]
+
+{ #category : #initialization }
+NBexp >> initialize [
+	x := 123.
 ]
 
 { #category : #initialization }
@@ -64,6 +88,25 @@ NBexp >> setVariableAndDefineBlock4 [
 		t := 69.
 		self executeBlock: block
 ]
+]
+
+{ #category : #'5-arguments' }
+NBexp >> testArg5 [
+
+	self assert: (self testArg5: 'foo') equals: 'foo'
+]
+
+{ #category : #'5-arguments' }
+NBexp >> testArg5: arg [
+	^ String streamContents: [ :st |  
+		block := [ st << arg ].
+		self executeBlockAndIgnoreArgument: 'zork']
+]
+
+{ #category : #'6-self binding' }
+NBexp >> testExecuteBlockInAnotherInstance6 [
+	
+	self assert: self executeBlock6 equals: 'NBexp>>#testExecuteBlockInAnotherInstance6123'
 ]
 
 { #category : #tests }
