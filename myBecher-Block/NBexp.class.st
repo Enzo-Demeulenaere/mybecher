@@ -119,6 +119,13 @@ NBexp >> setVariableAndDefineBlock [
 	^ self executeBlock: [ t ]
 ]
 
+{ #category : #'8-outliving' }
+NBexp >> sharing [
+	| a |
+	[ a := 0 ] value.
+	^ a
+]
+
 { #category : #'3-accessing shared variables' }
 NBexp >> testAccessingSharedVariables [
 
@@ -173,10 +180,33 @@ NBexp >> testSetVariableAndDefineBlock [
 	self assert: self setVariableAndDefineBlock equals: 42
 ]
 
+{ #category : #'8-outliving' }
+NBexp >> testSharing [
+	self assert: self sharing equals: 0
+]
+
+{ #category : #'8-outliving' }
+NBexp >> testTwoBlockArray [
+	
+	| array |
+	array := self twoBlockArray.
+	self assert: array second value equals: 0.
+	
+	array first value.
+	self assert: array second value equals: 2
+]
+
 { #category : #'4-lookup at execution time' }
 NBexp >> testVariableLookupIsDoneAtExecution [
 
 	self assert: self variableLookupIsDoneAtExecution equals: '69'
+]
+
+{ #category : #'8-outliving' }
+NBexp >> twoBlockArray [
+	| a |
+	a := 0.
+	^ {[ a := 2] . [a]}
 ]
 
 { #category : #'4-lookup at execution time' }
