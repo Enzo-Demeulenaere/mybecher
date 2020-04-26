@@ -1,8 +1,21 @@
 "
-executeBlock: aBlock
-	| t |
-	t := nil.
-	^ aBlock value
+NBexp >> #blockLocalTemp
+
+
+CompilationContext bytecodeBackend: EncoderForSistaV1.
+CompilationContext optionFullBlockClosure: true.
+NBexp recompile: #blockLocalTemp.
+(NBexp >> #blockLocalTemp) inspect
+
+
+blockLocalTemp
+	| collection |
+	collection := OrderedCollection new.
+	#(1 2 3) do: [ :index |
+		| temp |
+		temp := index.
+		collection add: [ temp ] ].
+	^ collection collect: [ :each | each value ]
 "
 Class {
 	#name : #NBexp,
@@ -23,6 +36,44 @@ NBexp >> accessingSharedVariables [
 		self executeBlock: [ st print: t. st cr. t := 66. st print: t. st cr. ].
 		self executeBlock: [ st print: t. st cr. ]
 		 ]
+]
+
+{ #category : #'7-block allocation' }
+NBexp >> blockLocalTemp [
+	| collection |
+	collection := OrderedCollection new.
+	#(1 2 3) do: [ :index |
+		| temp |
+		temp := index.
+		collection add: [ temp ] ].
+	^ collection collect: [ :each | each value ]
+]
+
+{ #category : #'7-block allocation' }
+NBexp >> blockLocalTemp2 [
+	"self new blockLocalTemp2"
+	| collection |
+	collection := OrderedCollection new.
+	#(1 2 3) do: [ :index |
+		| temp bloc context |
+		temp := index.
+		bloc := [ temp ].
+		index = 2 ifTrue: [ context := thisContext copy. self halt. ].
+		"why when I look at the context it is nil?
+		It should not be the context of the [temp] definition because we are a bit after 
+		but I do not get why it is nil."
+		collection add: [ temp ] ].
+	^ collection collect: [ :each | each value ]
+]
+
+{ #category : #'7-block allocation' }
+NBexp >> blockOutsideTemp [
+	| collection temp |
+	collection := OrderedCollection new.
+	#(1 2 3) do: [ :index | 
+		temp := index.
+		collection add: [ temp ] ].
+	^ collection collect: [ :each | each value ]
 ]
 
 { #category : #'1-variable lookup' }
@@ -90,6 +141,18 @@ NBexp >> testArg5: arg [
 	^ String streamContents: [ :st |  
 		block := [ st << arg ].
 		self executeBlockAndIgnoreArgument: 'zork']
+]
+
+{ #category : #'7-block allocation' }
+NBexp >> testBlockLocalTemp [
+	
+	self assert: self blockLocalTemp asArray equals: #(1 2 3)
+]
+
+{ #category : #'7-block allocation' }
+NBexp >> testBlockOutsideTemp [
+	
+	self assert: self blockOutsideTemp asArray equals: #(3 3 3)
 ]
 
 { #category : #'6-self binding' }
