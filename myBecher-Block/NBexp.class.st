@@ -28,7 +28,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'block',
-		'x'
+		'x',
+		'stream'
 	],
 	#category : #'myBecher-Block'
 }
@@ -42,6 +43,15 @@ NBexp >> accessingSharedVariables [
 		self executeBlock: [ st print: t. st cr. t := 66. st print: t. st cr. ].
 		self executeBlock: [ st print: t. st cr. ]
 		 ]
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> arg: aBlock [
+	| res |
+	self traceCr: 'arg start'.
+	res := self executeBlock: aBlock.
+	self traceCr: 'arg end'.
+	^ res
 ]
 
 { #category : #'7-block allocation' }
@@ -82,11 +92,29 @@ NBexp >> blockOutsideTemp [
 	^ collection collect: [ :each | each value ]
 ]
 
-{ #category : #'1-variable lookup' }
+{ #category : #'9-explicit return' }
+NBexp >> contents [ 
+	^ stream contents
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> defineBlock [
+	| res |
+	self traceCr: 'defineBlock start'.
+	res := self arg: [ self traceCr: 'block start'.
+                            1 isZero ifFalse: [ ^ 33 ].
+                            self traceCr: 'block end'. ].
+	self traceCr: 'defineBlock end'.
+	^ res
+]
+
+{ #category : #'9-explicit return' }
 NBexp >> executeBlock: aBlock [
-	| t |
-	t := 33.
-	^ aBlock value
+	| res |
+	self traceCr: 'executeBlock start'.
+	res := self executeBlock: aBlock value.
+	self traceCr: 'executeBlock loops so should never print that one'.
+	^  res
 ]
 
 { #category : #'5-arguments' }
@@ -102,6 +130,7 @@ NBexp >> executeBlockInAnotherInstance6: aBlock [
 { #category : #initialization }
 NBexp >> initialize [
 	x := 123.
+	stream := '' writeStream 
 ]
 
 { #category : #'9-explicit return' }
@@ -139,6 +168,15 @@ NBexp >> sharing [
 	| a |
 	[ a := 0 ] value.
 	^ a
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> start [
+	| res |
+	self traceCr: 'start start'.
+	res := self defineBlock.
+	self traceCr: 'start end'.
+	^ res
 ]
 
 { #category : #'3-accessing shared variables' }
@@ -206,6 +244,18 @@ NBexp >> testSharing [
 	self assert: self sharing equals: 0
 ]
 
+{ #category : #'9-explicit return' }
+NBexp >> testStart [
+
+	self assert: (self start; contents) equals: 'start start
+defineBlock start
+arg start
+executeBlock start
+block start
+start end
+'
+]
+
 { #category : #'8-outliving' }
 NBexp >> testTwoBlockArray [
 	
@@ -227,6 +277,12 @@ NBexp >> testVariableLookupIsDoneAtExecution [
 NBexp >> testWithExplicitReturn [
 	self assert: self withExplicitReturn equals: 'one
 two'
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> traceCr: aString [
+
+	stream nextPutAll: aString; cr
 ]
 
 { #category : #'8-outliving' }
