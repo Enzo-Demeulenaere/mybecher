@@ -110,6 +110,7 @@ NBexp >> defineBlock [
 
 { #category : #'9-explicit return' }
 NBexp >> executeBlock: aBlock [
+	"endless loop on purpose! If you do not pass an escaping block you are dead."
 	| res |
 	self traceCr: 'executeBlock start'.
 	res := self executeBlock: aBlock value.
