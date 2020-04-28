@@ -16,6 +16,12 @@ blockLocalTemp
 		temp := index.
 		collection add: [ temp ] ].
 	^ collection collect: [ :each | each value ]
+	
+String streamContents: [ :str | 
+	(NBexp >> #blockLocalTemp) symbolicBytecodes 
+		do: [ :each | str << each printString;cr  ]
+	 ]
+
 "
 Class {
 	#name : #NBexp,
@@ -202,6 +208,12 @@ NBexp >> testVariableLookupIsDoneAtExecution [
 	self assert: self variableLookupIsDoneAtExecution equals: '69'
 ]
 
+{ #category : #'9-explicit return' }
+NBexp >> testWithExplicitReturn [
+	self assert: self withExplicitReturn equals: 'one
+two'
+]
+
 { #category : #'8-outliving' }
 NBexp >> twoBlockArray [
 	| a |
@@ -218,4 +230,12 @@ NBexp >> variableLookupIsDoneAtExecution [
 		block := [ st print: t ].
 		t := 69.
 		self executeBlock: block ]
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> withExplicitReturn [
+	^ String streamContents: [:str | 
+		str nextPutAll: 'one'; cr.
+		0 isZero ifTrue: [ str nextPutAll: 'two'. ^ str contents ].
+		str nextPutAll: 'not printed']
 ]
