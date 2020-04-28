@@ -104,6 +104,15 @@ NBexp >> initialize [
 	x := 123.
 ]
 
+{ #category : #'9-explicit return' }
+NBexp >> jumpingOut [
+
+	#(1 2 3 4) do: [:each |
+					each = 3
+						ifTrue: [^ 3]].
+	^ 42
+]
+
 { #category : #'6-self binding' }
 NBexp >> selfIsCapturedToo [
 	^ String 	
@@ -166,6 +175,12 @@ NBexp >> testBlockLocalTemp [
 NBexp >> testBlockOutsideTemp [
 	
 	self assert: self blockOutsideTemp asArray equals: #(3 3 3)
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> testJumpingOut [
+
+	self assert: self jumpingOut equals: 3
 ]
 
 { #category : #'6-self binding' }
