@@ -163,6 +163,14 @@ NBexp >> selfIsCapturedToo [
 					self executeBlockInAnotherInstance6: [ st print: self ; print: x ] ]
 ]
 
+{ #category : #initialization }
+NBexp >> setUp [
+
+	super setUp.
+	x := 123.
+	stream := '' writeStream 
+]
+
 { #category : #'2-changing value' }
 NBexp >> setVariableAndChangingVariableBlock [
 	| t |
@@ -284,11 +292,24 @@ NBexp >> testTwoBlockArray [
 
 { #category : #'9-explicit return' }
 NBexp >> testValueWithExitBreak [
+	
 	| val |
 	[ :break |
 	    1 to: 10 do: [ :i |
 			         val := i.
 			         val = 4 ifTrue: [ break value ] ] ] valuePassingEscapingBlock.
+	Transcript show: 'Passed here!'.
+	self assert: val equals: 4
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> testValueWithExitBreak2 [
+	| val |
+	[ :break |
+	    1 to: 10 do: [ :i |
+			         val := i.
+			         val = 4 ifTrue: [ break value ] ] ] value: [^nil].
+	self halt.
 	self assert: val equals: 4
 ]
 
