@@ -101,7 +101,20 @@ NBexp >> contents [
 NBexp >> defineBlock [
 	| res |
 	self traceCr: 'defineBlock start'.
-	res := self arg: [ self traceCr: 'block start'.
+	res := self arg: [
+					        self traceCr: 'block start'.
+                            1 isZero ifFalse: [ ^ 33 ].
+                            self traceCr: 'block end'. ].
+	self traceCr: 'defineBlock end'.
+	^ res
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> defineBlockWithInspect [
+	| res |
+	self traceCr: 'defineBlock start'.
+	res := self arg: [ thisContext home inspect.
+					        self traceCr: 'block start'.
                             1 isZero ifFalse: [ ^ 33 ].
                             self traceCr: 'block end'. ].
 	self traceCr: 'defineBlock end'.
@@ -173,6 +186,7 @@ NBexp >> sharing [
 
 { #category : #'9-explicit return' }
 NBexp >> start [
+	"self new start"
 	| res |
 	self traceCr: 'start start'.
 	res := self defineBlock.
@@ -266,6 +280,16 @@ NBexp >> testTwoBlockArray [
 	
 	array first value.
 	self assert: array second value equals: 2
+]
+
+{ #category : #'9-explicit return' }
+NBexp >> testValueWithExitBreak [
+	| val |
+	[ :break |
+	    1 to: 10 do: [ :i |
+			         val := i.
+			         val = 4 ifTrue: [ break value ] ] ] valuePassingEscapingBlock.
+	self assert: val equals: 4
 ]
 
 { #category : #'4-lookup at execution time' }
