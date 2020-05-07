@@ -21,6 +21,15 @@ Vis1 >> classes: aCollection [
 ]
 
 { #category : #drawing }
+Vis1 >> createCompositeFrom: label methods: methods [
+	^  RSComposite new
+			color: Color gray;
+			shapes: {label} , methods;
+			@ RSDraggable;
+			padding: 10
+]
+
+{ #category : #drawing }
 Vis1 >> createLabel: cls [
 	^ RSLabel new text: cls name
 ]
@@ -47,12 +56,7 @@ Vis1 >> draw [
 			RSLocation new
 				above;
 				move: label on: methods.
-			composite := RSComposite new.
-			composite color: Color gray.
-			composite shapes: {label} , methods.
-			composite @ RSDraggable.
-			composite padding: 10.
-			c add: composite ].
+			c add: (self createCompositeFrom: label methods: methods) ].
 	RSFlowLayout on: c shapes.
 	c @ RSCanvasController
 ]
