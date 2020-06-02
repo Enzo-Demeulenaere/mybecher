@@ -4,7 +4,7 @@ Class {
 	#category : #'myBecher-XLS'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'data question1 ' }
 DataOfDeprecationAnalysis >> applicationDeveloperString [
 
 	^'Yes
@@ -55,7 +55,17 @@ Uncertain
 Yes'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #queries }
+DataOfDeprecationAnalysis >> countingYesNoUncertain: columnName [
+	"self new countingYesNoUncertain: #applicationDeveloper >>> #(43 0 3)"
+	| q1 | 
+	q1 := self treat: columnName.
+	^ { (q1 select: [ :each | each = 'Yes' ]) size .
+	  (q1 select: [ :each | each = 'No' ]) size . (q1 select: [ :each | each = 'Uncertain' or: [each = '']  ]) size }
+		
+]
+
+{ #category : #'data question1 ' }
 DataOfDeprecationAnalysis >> frameworkDeveloperString [
 
 	^'Yes
@@ -106,7 +116,7 @@ Uncertain
 No'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'data question1 ' }
 DataOfDeprecationAnalysis >> libraryDeveloperString [
 
 	^'Yes
@@ -157,17 +167,28 @@ Uncertain
 Yes'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #queries }
 DataOfDeprecationAnalysis >> question1Stats [
 	"self new question1Stats"
-	| q1 | 
-	q1 := self treatAppDeveloper.
-	^ { (q1 select: [ :each | each = 'Yes' ]) size .
-	  (q1 select: [ :each | each = 'No' ]) size . (q1 select: [ :each | each = 'Uncertain' or: [each = '']  ]) size }
-		
+	^ { #applicationDeveloper -> (self countingYesNoUncertain: #applicationDeveloper).
+		#libraryDeveloper -> (self countingYesNoUncertain: #libraryDeveloper).
+		#frameworkDeveloper -> (self countingYesNoUncertain: #frameworkDeveloper) }
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
+DataOfDeprecationAnalysis >> treat: columnName [
+
+	| str res| 
+	res := OrderedCollection new. 
+	str := (self perform: (columnName, 'String') asSymbol) readStream.
+	[ str atEnd ] whileFalse: 
+		[ res add: (str upTo: Character cr) ].
+	^ res
+	
+]
+
+{ #category : #prototype }
 DataOfDeprecationAnalysis >> treatAppDeveloper [
 
 	| str res| 
