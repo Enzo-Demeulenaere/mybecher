@@ -116,6 +116,57 @@ Uncertain
 No'
 ]
 
+{ #category : #'data question2' }
+DataOfDeprecationAnalysis >> frequencyString [
+
+	^ 'Often
+Very often
+Often
+Not often
+Often
+Often
+Very often
+Often
+Very often
+From time to time
+Very often
+Often
+Very often
+From time to time
+Very often
+Not often
+Often
+Often
+Not often
+From time to time
+Often
+From time to time
+Often
+Not often
+From time to time
+Very often
+Often
+Often
+Often
+From time to time
+Often
+From time to time
+Often
+Often
+From time to time
+Often
+From time to time
+From time to time
+From time to time
+Often
+Very often
+From time to time
+Not often
+Often
+From time to time
+Not often'
+]
+
 { #category : #'data question1 ' }
 DataOfDeprecationAnalysis >> libraryDeveloperString [
 
@@ -176,6 +227,15 @@ DataOfDeprecationAnalysis >> question1Stats [
 
 ]
 
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question2Stats [
+	"self new question2Stats"
+	
+	^ ( self treatString: self frequencyString) asBag asDictionary
+
+
+]
+
 { #category : #cleaning }
 DataOfDeprecationAnalysis >> treat: columnName [
 
@@ -194,6 +254,18 @@ DataOfDeprecationAnalysis >> treatAppDeveloper [
 	| str res| 
 	res := OrderedCollection new. 
 	str := self applicationDeveloperString readStream.
+	[ str atEnd ] whileFalse: 
+		[ res add: (str upTo: Character cr) ].
+	^ res
+	
+]
+
+{ #category : #cleaning }
+DataOfDeprecationAnalysis >> treatString: aString [ 
+
+	| str res| 
+	res := OrderedCollection new. 
+	str := aString readStream.
 	[ str atEnd ] whileFalse: 
 		[ res add: (str upTo: Character cr) ].
 	^ res
