@@ -110,45 +110,45 @@ Yes'
 DataOfDeprecationAnalysis >> configurationRewritingByDefaultString [
 
 	^ 'N/A
+Yes
+No
+No
 No
 Yes
 Yes
 Yes
 Yes
+No
+No
+Yes
+N/A
+No
+Yes
+N/A
 Yes
 Yes
 No
-Yes
-Yes
-No
-N/A
-Yes
-Yes
-N/A
-Yes
-Yes
-Yes
-Yes
-N/A
-Yes
-Yes
-N/A
-Yes
-No
-Yes
 Yes
 N/A
 No
 No
 N/A
 No
-Yes
-No
 No
 Yes
 No
+N/A
+Yes
 No
+N/A
+Yes
+Yes
+Yes
 No
+Yes
+Yes
+Yes
+Yes
 Yes
 N/A
 Yes
@@ -636,6 +636,13 @@ DataOfDeprecationAnalysis >> question5DefaultConfigurationStats [
 	"self new question5DefaultConfigurationStats"
 	
 	^  self countingYesNoNA: #configurationRewritingByDefault
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question5RaisingWarningStats [
+	"self new question5RaisingWarningStats #(24 12 10)"
+	
+	^  self countingYesNoNA: #configurationRaiseWarning
 ]
 
 { #category : #cleaning }
