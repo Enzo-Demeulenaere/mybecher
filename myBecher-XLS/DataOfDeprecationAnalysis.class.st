@@ -4,7 +4,7 @@ Class {
 	#category : #'myBecher-XLS'
 }
 
-{ #category : #'data question1 ' }
+{ #category : #'data who are you' }
 DataOfDeprecationAnalysis >> applicationDeveloperString [
 
 	^'Yes
@@ -55,6 +55,118 @@ Uncertain
 Yes'
 ]
 
+{ #category : #'data about configuration' }
+DataOfDeprecationAnalysis >> configurationRaiseWarningString [
+
+	^ 'N/A
+No
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+No
+N/A
+Yes
+Yes
+N/A
+Yes
+Yes
+Yes
+Yes
+N/A
+Yes
+Yes
+N/A
+Yes
+No
+Yes
+Yes
+N/A
+No
+No
+N/A
+No
+Yes
+No
+No
+Yes
+No
+No
+No
+Yes
+N/A
+Yes
+N/A
+N/A
+Yes'
+]
+
+{ #category : #'data about configuration' }
+DataOfDeprecationAnalysis >> configurationRewritingByDefaultString [
+
+	^ 'N/A
+No
+Yes
+Yes
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+No
+N/A
+Yes
+Yes
+N/A
+Yes
+Yes
+Yes
+Yes
+N/A
+Yes
+Yes
+N/A
+Yes
+No
+Yes
+Yes
+N/A
+No
+No
+N/A
+No
+Yes
+No
+No
+Yes
+No
+No
+No
+Yes
+N/A
+Yes
+N/A
+N/A
+Yes'
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> countingYesNoNA: columnName [
+	"self new countingYesNoNA: #doYouKnowIn >>> #(43 0 3)"
+	| q1 | 
+	q1 := self treat: columnName.
+	^ { (q1 select: [ :each | each = 'Yes' ]) size .
+	  (q1 select: [ :each | each = 'No' ]) size . (q1 select: [ :each | each = 'N/A' ]) size }
+		
+]
+
 { #category : #queries }
 DataOfDeprecationAnalysis >> countingYesNoUncertain: columnName [
 	"self new countingYesNoUncertain: #applicationDeveloper >>> #(43 0 3)"
@@ -65,7 +177,7 @@ DataOfDeprecationAnalysis >> countingYesNoUncertain: columnName [
 		
 ]
 
-{ #category : #'data question2' }
+{ #category : #'data user' }
 DataOfDeprecationAnalysis >> didHelpString [
 
 	^ 'N/A
@@ -116,7 +228,7 @@ N/A
 Yes'
 ]
 
-{ #category : #'data question2' }
+{ #category : #'data as library dev' }
 DataOfDeprecationAnalysis >> didYouWriteString [
 
 	^ 'N/A
@@ -167,7 +279,7 @@ N/A
 Yes'
 ]
 
-{ #category : #'data question2' }
+{ #category : #'data user' }
 DataOfDeprecationAnalysis >> doYouKnowInString [
 
 	^ 'N/A
@@ -218,7 +330,7 @@ N/A
 Yes'
 ]
 
-{ #category : #'data question2' }
+{ #category : #'data user' }
 DataOfDeprecationAnalysis >> doYouSeeValueInString [
 
 	^ 'Yes
@@ -269,7 +381,7 @@ Yes
 Yes'
 ]
 
-{ #category : #'data question1 ' }
+{ #category : #'data who are you' }
 DataOfDeprecationAnalysis >> frameworkDeveloperString [
 
 	^'Yes
@@ -320,7 +432,7 @@ Uncertain
 No'
 ]
 
-{ #category : #'data question2' }
+{ #category : #'data user' }
 DataOfDeprecationAnalysis >> frequencyString [
 
 	^ 'Often
@@ -371,7 +483,58 @@ From time to time
 Not often'
 ]
 
-{ #category : #'data question1 ' }
+{ #category : #'data as library dev' }
+DataOfDeprecationAnalysis >> howEasyString [
+
+	^ '
+Easy
+Easy
+
+Medium
+Very easy
+Very easy
+Medium
+Medium
+
+Medium
+
+
+
+
+
+Medium
+Medium
+
+
+
+
+Medium
+
+
+Medium
+Easy
+
+
+Easy
+
+
+Easy
+
+Difficult
+
+
+
+
+Easy
+
+
+Easy
+
+
+Medium'
+]
+
+{ #category : #'data who are you' }
 DataOfDeprecationAnalysis >> libraryDeveloperString [
 
 	^'Yes
@@ -438,6 +601,41 @@ DataOfDeprecationAnalysis >> question2Stats [
 	^ ( self treatString: self frequencyString) asBag asDictionary
 
 
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question3HelpStats [
+	"self new question3HelpStats"
+	
+	^  self countingYesNoNA: #didHelp
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question3KnowStats [
+	"self new question2Stats"
+	
+	^  self countingYesNoNA: #doYouKnowIn
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question4EasyStats [
+	"self new question4EasyStats"
+	
+	^ ( self treatString: self howEasyString ) asBag asDictionary
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question4WriteStats [
+	"self new question4WriteStats"
+	
+	^  self countingYesNoNA: #didYouWrite
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question5DefaultConfigurationStats [
+	"self new question5DefaultConfigurationStats"
+	
+	^  self countingYesNoNA: #configurationRewritingByDefault
 ]
 
 { #category : #cleaning }
