@@ -56,6 +56,57 @@ Yes'
 ]
 
 { #category : #'data about configuration' }
+DataOfDeprecationAnalysis >> classDeprecationString [
+
+	^ 'N/A
+Yes
+Yes
+No
+Yes
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+N/A
+No
+No
+N/A
+No
+Yes
+No
+No
+N/A
+Yes
+Yes
+N/A
+No
+Yes
+Yes
+Yes
+N/A
+Yes
+No
+N/A
+Yes
+Yes
+No
+No
+Yes
+Yes
+No
+Yes
+Yes
+N/A
+Yes
+N/A
+N/A
+Yes'
+]
+
+{ #category : #'data about configuration' }
 DataOfDeprecationAnalysis >> configurationRaiseWarningString [
 
 	^ 'N/A
@@ -643,6 +694,13 @@ DataOfDeprecationAnalysis >> question5RaisingWarningStats [
 	"self new question5RaisingWarningStats #(24 12 10)"
 	
 	^  self countingYesNoNA: #configurationRaiseWarning
+]
+
+{ #category : #queries }
+DataOfDeprecationAnalysis >> question6ClassStats [
+	"self new question6ClassStats #(24 12 10)"
+	
+	^  self countingYesNoNA: #classDeprecation
 ]
 
 { #category : #cleaning }
