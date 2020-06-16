@@ -8,13 +8,13 @@ Class {
 Logger >> log: aMessage [
 
 	self 
-		deprecated: 'Use: #log:level: instead'
-		transformWith: '`rec log: `arg' -> '`rec log: `arg level: #info'.
-	^ self log: aMessage level: #info
+		deprecated: 'Use: #logMessage: instead'
+		transformWith: '`rec log: `arg' -> '`rec logMessage: `arg'.
+	^ self logMessage: aMessage 
 ]
 
 { #category : #'instance creation' }
-Logger >> log: aMessage level: aSymbol [
+Logger >> logMessage: aMessage [ 
 	
-	^ aSymbol, aMessage
+	^ aMessage
 ]
