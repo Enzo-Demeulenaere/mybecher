@@ -7,8 +7,9 @@ Class {
 { #category : #'instance creation' }
 Logger >> log: aMessage [
 
-	self deprecated: 'Use: #log:level: instead'
-	 transformWith: '`rec log: `arg' -> '`rec log: level: #info'.
+	self 
+		deprecated: 'Use: #log:level: instead'
+		transformWith: '`rec log: `arg' -> '`rec log: `arg level: #info'.
 	^ self log: aMessage level: #info
 ]
 
