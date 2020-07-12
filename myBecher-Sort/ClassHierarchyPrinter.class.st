@@ -3,11 +3,18 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'theClass',
-		'filteredClasses',
+		'excludedClasses',
+		'limitedToClasses',
 		'stream'
 	],
 	#category : #'myBecher-Sort-ForPharo'
 }
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> excludedClasses: aCollection [
+
+	excludedClasses := aCollection
+]
 
 { #category : #accessing }
 ClassHierarchyPrinter >> filteredClasses: aCollection [
@@ -23,8 +30,15 @@ ClassHierarchyPrinter >> forClass: aClass [
 { #category : #initialization }
 ClassHierarchyPrinter >> initialize [ 	
 	super initialize.
-	filteredClasses  := #().
+	excludedClasses := #().
+	limitedToClasses := #().
 	stream := (String new: 100) writeStream
+]
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> limitedToClasses: aCollection [
+
+	limitedToClasses := aCollection
 ]
 
 { #category : #accessing }
@@ -40,33 +54,38 @@ ClassHierarchyPrinter >> print [
 
 	| index |
 	index := 0.
-	theClass allSuperclasses reverseDo: 
-			[ :aClass | 
-				stream crtab: index.
-				index := index + 1.
-				stream nextPutAll: aClass name.
-				stream space.
-				stream print: aClass instVarNames ].
-		stream cr.
-		self printSubclassesOf: theClass level: index.
-	^ stream contents 
+	theClass allSuperclasses
+		reverseDo: [ :aClass | 
+			self printClass: aClass level: index.
+			index := index + 1 ].
+	stream cr.
+	self printSubclassesOf: theClass level: index.
+	^ stream contents
+]
+
+{ #category : #printing }
+ClassHierarchyPrinter >> printClass: aClass level: index [
+	stream crtab: index.
+	stream nextPutAll: aClass name.
+	stream
+		space;
+		print: aClass instVarNames
 ]
 
 { #category : #printing }
 ClassHierarchyPrinter >> printSubclassesOf: aClass level: level [
 	"As part of the algorithm for printing a description of the receiver, print the
 	subclass on the file stream, aStream, indenting level times."
-	
+
 	| sortedSubclasses |
-	stream crtab: level.
-	stream nextPutAll: aClass name.
-	stream space; print: aClass instVarNames.
+	self printClass: aClass level: level.
 	aClass == Class
-		ifTrue: 
-			[ stream crtab: level + 1; nextPutAll: '[ ... all the Metaclasses ... ]'.
+		ifTrue: [ stream
+				crtab: level + 1;
+				nextPutAll: '[ ... all the Metaclasses ... ]'.
 			^ self ].
-	sortedSubclasses := aClass subclasses asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
-	"Print subclasses in alphabetical order"
-	sortedSubclasses do:
-		[ :subclass | self printSubclassesOf: subclass level: level + 1 ]
+	sortedSubclasses := aClass subclasses
+		asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
+	sortedSubclasses
+		do: [ :subclass | self printSubclassesOf: subclass level: level + 1 ]
 ]
