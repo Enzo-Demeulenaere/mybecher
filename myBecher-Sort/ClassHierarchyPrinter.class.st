@@ -5,7 +5,9 @@ Class {
 		'theClass',
 		'excludedClasses',
 		'limitedToClasses',
-		'stream'
+		'stream',
+		'level',
+		'index'
 	],
 	#category : #'myBecher-Sort-ForPharo'
 }
@@ -14,12 +16,6 @@ Class {
 ClassHierarchyPrinter >> excludedClasses: aCollection [
 
 	excludedClasses := aCollection
-]
-
-{ #category : #accessing }
-ClassHierarchyPrinter >> filteredClasses: aCollection [
-
-	filteredClasses := aCollection
 ]
 
 { #category : #accessing }
@@ -32,6 +28,7 @@ ClassHierarchyPrinter >> initialize [
 	super initialize.
 	excludedClasses := #().
 	limitedToClasses := #().
+	index := 0.
 	stream := (String new: 100) writeStream
 ]
 
@@ -52,19 +49,18 @@ ClassHierarchyPrinter >> print [
 	"Answer a description containing the names and instance variable names 
 	of all of the subclasses and superclasses of the class."
 
-	| index |
-	index := 0.
 	theClass allSuperclasses
 		reverseDo: [ :aClass | 
-			self printClass: aClass level: index.
+			self printClass: aClass.
 			index := index + 1 ].
-	stream cr.
-	self printSubclassesOf: theClass level: index.
+	stream cr.	"to spot the requested class."
+	self printSubclassesOf: theClass.
 	^ stream contents
 ]
 
 { #category : #printing }
-ClassHierarchyPrinter >> printClass: aClass level: index [
+ClassHierarchyPrinter >> printClass: aClass [
+	"Print a single line in the printout."
 	stream crtab: index.
 	stream nextPutAll: aClass name.
 	stream
@@ -73,12 +69,12 @@ ClassHierarchyPrinter >> printClass: aClass level: index [
 ]
 
 { #category : #printing }
-ClassHierarchyPrinter >> printSubclassesOf: aClass level: level [
+ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	"As part of the algorithm for printing a description of the receiver, print the
 	subclass on the file stream, aStream, indenting level times."
 
 	| sortedSubclasses |
-	self printClass: aClass level: level.
+	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
 				crtab: level + 1;
@@ -86,6 +82,7 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass level: level [
 			^ self ].
 	sortedSubclasses := aClass subclasses
 		asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
-	sortedSubclasses
-		do: [ :subclass | self printSubclassesOf: subclass level: level + 1 ]
+	sortedSubclasses do: [ :subclass | 
+			index := index + 1.
+			self printSubclassesOf: subclass ]
 ]

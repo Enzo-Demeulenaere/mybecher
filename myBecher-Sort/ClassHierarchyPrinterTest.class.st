@@ -25,18 +25,6 @@ ProtoObject #()
 ]
 
 { #category : #tests }
-ClassHierarchyPrinterTest >> testPrintHierarchyOfPointWithFilteredClasses [
-
-	printer forClass: Point. 
-	printer filteredClasses: { ProtoObject }.
-	self assert: printer print equals: '
-ProtoObject #()
-	Object #()
-
-		Point #(#x #y)'
-]
-
-{ #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 
 	printer forClass: Rectangle. 
@@ -46,4 +34,16 @@ ProtoObject #()
 
 		Rectangle #(#origin #corner)
 			CharacterBlock #(#stringIndex #text #textLine)'
+]
+
+{ #category : #tests }
+ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleWithFilteredClasses [
+
+	printer forClass: Rectangle. 
+	printer limitedToClasses: { Rectangle }.
+	self assert: printer print equals: '
+ProtoObject #()
+	Object #()
+
+		Rectangle #(#origin #corner)'
 ]
