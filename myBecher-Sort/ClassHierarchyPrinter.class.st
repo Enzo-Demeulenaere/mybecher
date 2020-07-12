@@ -1,3 +1,14 @@
+"
+I'm a class hierarchy printer.
+
+I can 
+	- show or not class instance variables (`ClassHierarchy>>#doNotShowState`)
+	- show or not superclasses (`ClassHierarchy>>#doNotShowState`)
+	- limit the classes to a given set
+	- exclude some classes 
+	
+For examples browse `ClassHierarchyPrinter`
+"
 Class {
 	#name : #ClassHierarchyPrinter,
 	#superclass : #Object,
@@ -75,9 +86,10 @@ ClassHierarchyPrinter >> print [
 { #category : #printing }
 ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
-	stream crtab: index.
+	stream tab: index.
 	stream nextPutAll: aClass name.
-	showState ifTrue: [ stream space; print: aClass instVarNames ]
+	showState ifTrue: [ stream space; print: aClass instVarNames ].
+	stream cr
 ]
 
 { #category : #printing }
@@ -96,14 +108,15 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
-				crtab: level + 1;
+				tab: level + 1;
 				nextPutAll: '[ ... all the Metaclasses ... ]'.
 			^ self ].
 	sortedSubclasses := aClass subclasses
 		asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
 	sortedSubclasses do: [ :subclass | 
 			index := index + 1.
-			self printSubclassesOf: subclass ]
+			self printSubclassesOf: subclass.
+			index := index - 1 ]
 ]
 
 { #category : #printing }
