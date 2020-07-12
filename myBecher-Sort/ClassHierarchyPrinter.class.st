@@ -2,10 +2,17 @@ Class {
 	#name : #ClassHierarchyPrinter,
 	#superclass : #Object,
 	#instVars : [
-		'theClass'
+		'theClass',
+		'filteredClasses'
 	],
 	#category : #'myBecher-Sort-ForPharo'
 }
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> filteredClasses: aCollection [
+
+	filteredClasses := aCollection
+]
 
 { #category : #accessing }
 ClassHierarchyPrinter >> forClass: aClass [ 
@@ -13,53 +20,46 @@ ClassHierarchyPrinter >> forClass: aClass [
 ]
 
 { #category : #printing }
-ClassHierarchyPrinter >> print [
-	^ self printHierarchy
+ClassHierarchyPrinter >> initialize [ 	
+	super initialize.
+	filteredClasses  := #()
 ]
 
-{ #category : #'as yet unclassified' }
-ClassHierarchyPrinter >> printHierarchy [
+{ #category : #printing }
+ClassHierarchyPrinter >> print [
 	"Answer a description containing the names and instance variable names 
 	of all of the subclasses and superclasses of the class."
 
-	| aStream index |
+	| index |
 	index := 0.
-	aStream := WriteStream on: (String new: 16).
-	theClass allSuperclasses reverseDo: 
-		[:aClass | 
-		aStream crtab: index.
-		index := index + 1.
-		aStream nextPutAll: aClass name.
-		aStream space.
-		aStream print: aClass instVarNames].
-	aStream cr.
-	self printSubclassesOn: aStream level: index.
-	^aStream contents
+	^ String streamContents: [ :aStream | 
+		theClass allSuperclasses reverseDo: 
+			[ :aClass | 
+				aStream crtab: index.
+				index := index + 1.
+				aStream nextPutAll: aClass name.
+				aStream space.
+				aStream print: aClass instVarNames ].
+		aStream cr.
+		self printSubclassesOf: theClass on: aStream level: index.
+	 ]
 ]
 
-{ #category : #'as yet unclassified' }
-ClassHierarchyPrinter >> printSubclassesOn: aStream level: level [ 
-
-	self printSubclassesOn: aStream level: level filter: nil
-]
-
-{ #category : #'as yet unclassified' }
-ClassHierarchyPrinter >> printSubclassesOn: aStream level: level filter: filterCollection [
+{ #category : #printing }
+ClassHierarchyPrinter >> printSubclassesOf: aClass on: aStream level: level [
 	"As part of the algorithm for printing a description of the receiver, print the
-	subclass on the file stream, aStream, indenting level times. 
-	An optional filterCollection restricts printing to contained classes only."
+	subclass on the file stream, aStream, indenting level times."
 	
-	| subclassNames |
-	filterCollection ifNotNil: [ (filterCollection includes: theClass) ifFalse: [ ^theClass ]].
+	| sortedSubclasses |
 	aStream crtab: level.
-	aStream nextPutAll: theClass name.
-	aStream space; print: theClass instVarNames.
-	theClass == Class
+	aStream nextPutAll: aClass name.
+	aStream space; print: aClass instVarNames.
+	aClass == Class
 		ifTrue: 
-			[aStream crtab: level + 1; nextPutAll: '[ ... all the Metaclasses ... ]'.
-			^self].
-	subclassNames := theClass subclasses asSortedCollection:[:c1 :c2| c1 name <= c2 name].
+			[ aStream crtab: level + 1; nextPutAll: '[ ... all the Metaclasses ... ]'.
+			^ self ].
+	sortedSubclasses := aClass subclasses asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
 	"Print subclasses in alphabetical order"
-	subclassNames do:
-		[:subclass | subclass printSubclassesOn: aStream level: level + 1 filter: filterCollection]
+	sortedSubclasses do:
+		[ :subclass | self printSubclassesOf: subclass on: aStream level: level + 1 ]
 ]
