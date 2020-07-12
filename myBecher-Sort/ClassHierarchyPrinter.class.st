@@ -7,14 +7,21 @@ Class {
 		'limitedToClasses',
 		'stream',
 		'level',
-		'index'
+		'index',
+		'showSuperclasses'
 	],
 	#category : #'myBecher-Sort-ForPharo'
 }
 
 { #category : #accessing }
-ClassHierarchyPrinter >> excludedClasses: aCollection [
+ClassHierarchyPrinter >> doNotShowSuperclasses [
 
+	showSuperclasses := false
+]
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> excludedClasses: aCollection [
+	"To set the classes that we do not want to see printed."
 	excludedClasses := aCollection
 ]
 
@@ -29,12 +36,14 @@ ClassHierarchyPrinter >> initialize [
 	excludedClasses := #().
 	limitedToClasses := #().
 	index := 0.
+	showSuperclasses := true.
 	stream := (String new: 100) writeStream
 ]
 
 { #category : #accessing }
 ClassHierarchyPrinter >> limitedToClasses: aCollection [
-
+	"To set the only classes that should be printed."
+	
 	limitedToClasses := aCollection
 ]
 
@@ -44,16 +53,13 @@ ClassHierarchyPrinter >> on: aStream [
 	stream := aStream
 ]
 
-{ #category : #printing }
+{ #category : #'public API' }
 ClassHierarchyPrinter >> print [
 	"Answer a description containing the names and instance variable names 
 	of all of the subclasses and superclasses of the class."
-
-	theClass allSuperclasses
-		reverseDo: [ :aClass | 
-			self printClass: aClass.
-			index := index + 1 ].
-	stream cr.	"to spot the requested class."
+	
+	showSuperclasses 
+		ifTrue: [ self printSuperclasses ].
 	self printSubclassesOf: theClass.
 	^ stream contents
 ]
@@ -74,6 +80,13 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	subclass on the file stream, aStream, indenting level times."
 
 	| sortedSubclasses |
+	limitedToClasses ifNotEmpty: [ 
+			(limitedToClasses includes: aClass) 
+				ifFalse: [ ^ self ]
+			].
+	(excludedClasses includes: aClass)
+		ifTrue: [ ^ self ].
+		
 	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
@@ -85,4 +98,20 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	sortedSubclasses do: [ :subclass | 
 			index := index + 1.
 			self printSubclassesOf: subclass ]
+]
+
+{ #category : #printing }
+ClassHierarchyPrinter >> printSuperclasses [
+
+	theClass allSuperclasses
+		reverseDo: [ :aClass | 
+			self printClass: aClass.
+			index := index + 1 ].
+	stream cr.	"to spot the requested class."
+]
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> showSuperclasses [
+
+	showSuperclasses := true
 ]

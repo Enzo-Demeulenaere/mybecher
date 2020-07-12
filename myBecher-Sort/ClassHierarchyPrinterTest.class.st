@@ -25,6 +25,16 @@ ProtoObject #()
 ]
 
 { #category : #tests }
+ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
+
+	printer 
+		forClass: Point;
+		doNotShowSuperclasses.
+	self assert: printer print equals: '
+Point #(#x #y)'
+]
+
+{ #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 
 	printer forClass: Rectangle. 
@@ -34,6 +44,17 @@ ProtoObject #()
 
 		Rectangle #(#origin #corner)
 			CharacterBlock #(#stringIndex #text #textLine)'
+]
+
+{ #category : #tests }
+ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
+
+	printer 
+		forClass: Rectangle; 
+		doNotShowSuperclasses.
+	self assert: printer print equals: '
+Rectangle #(#origin #corner)
+	CharacterBlock #(#stringIndex #text #textLine)'
 ]
 
 { #category : #tests }
