@@ -14,6 +14,18 @@ ClassHierarchyPrinterTest >> setUp [
 ]
 
 { #category : #tests }
+ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
+
+	printer 
+		forClass: Rectangle; 
+		doNotShowState;
+		doNotShowSuperclasses.
+	self assert: printer print equals: '
+Rectangle
+	CharacterBlock'
+]
+
+{ #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 
 	printer forClass: Point. 
@@ -22,6 +34,17 @@ ProtoObject #()
 	Object #()
 
 		Point #(#x #y)'
+]
+
+{ #category : #tests }
+ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoState [
+
+	printer forClass: Point ; doNotShowState.
+	self assert: printer print equals: '
+ProtoObject
+	Object
+
+		Point'
 ]
 
 { #category : #tests }

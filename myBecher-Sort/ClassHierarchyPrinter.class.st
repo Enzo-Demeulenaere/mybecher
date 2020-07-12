@@ -8,10 +8,17 @@ Class {
 		'stream',
 		'level',
 		'index',
-		'showSuperclasses'
+		'showSuperclasses',
+		'showState'
 	],
 	#category : #'myBecher-Sort-ForPharo'
 }
+
+{ #category : #accessing }
+ClassHierarchyPrinter >> doNotShowState [
+
+	showState := false
+]
 
 { #category : #accessing }
 ClassHierarchyPrinter >> doNotShowSuperclasses [
@@ -25,7 +32,7 @@ ClassHierarchyPrinter >> excludedClasses: aCollection [
 	excludedClasses := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #'public API' }
 ClassHierarchyPrinter >> forClass: aClass [ 
 	theClass := aClass
 ]
@@ -37,6 +44,7 @@ ClassHierarchyPrinter >> initialize [
 	limitedToClasses := #().
 	index := 0.
 	showSuperclasses := true.
+	showState := true.
 	stream := (String new: 100) writeStream
 ]
 
@@ -69,9 +77,7 @@ ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
 	stream crtab: index.
 	stream nextPutAll: aClass name.
-	stream
-		space;
-		print: aClass instVarNames
+	showState ifTrue: [ stream space; print: aClass instVarNames ]
 ]
 
 { #category : #printing }
