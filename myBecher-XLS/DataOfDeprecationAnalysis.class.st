@@ -646,6 +646,22 @@ DataOfDeprecationAnalysis >> question1Stats [
 ]
 
 { #category : #queries }
+DataOfDeprecationAnalysis >> question1StatsCrossed [
+	"I want to know both App and library"
+	"self new question1StatsCrossed"
+	| res appdev libdev |
+	res := 0.
+	appdev := self treat: #applicationDeveloper.
+	libdev := self treat: #libraryDeveloper.
+	appdev with: libdev do: [ :app :lib | 
+		(app = 'Yes') & (lib = 'Yes')
+			ifTrue: [ res := res + 1 ]
+		].
+	^ res
+	
+]
+
+{ #category : #queries }
 DataOfDeprecationAnalysis >> question2Stats [
 	"self new question2Stats"
 	
