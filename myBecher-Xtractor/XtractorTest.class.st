@@ -5,13 +5,23 @@ Class {
 }
 
 { #category : #accessing }
-XtractorTest >> testSelector [ 
+XtractorTest >> testSelectorFromComplexMessage [
 	| ext |
 	ext := Xtractor new.
 	ext scripting.
-	ext textArea: (RubEditingArea new setTextWith: 'printString'; yourself).
+	ext textArea: (RubEditingArea new setTextWith: '10 between: (1 + 2) and: 1000'; yourself).
 	
-	self assert: ext findSelectorFromAST equals: #printString
+	self assert: ext findSelectorFromAST equals: #between:and:
+]
+
+{ #category : #accessing }
+XtractorTest >> testSelectorFromComplexMessage2 [
+	| ext |
+	ext := Xtractor new.
+	ext scripting.
+	ext textArea: (RubEditingArea new setTextWith: '10 between: (x includes: y) and: 1000'; yourself).
+	
+	self assert: ext findSelectorFromAST equals: #between:and:
 ]
 
 { #category : #accessing }
