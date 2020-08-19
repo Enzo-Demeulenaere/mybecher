@@ -131,6 +131,35 @@ Xtractor >> selectedSelector [
 ]
 
 { #category : #api }
+Xtractor >> selectedSelectorWithRecursionDepth: depth [
+
+	| node selectorFromAst |
+	self halt.
+	depth > 1 ifTrue: [ ^ nil ].
+	
+	self hasSelection ifFalse: [ 
+		selectorFromAst := self findSelectorFromAST.
+		^ selectorFromAst 
+			ifNotNil: [ selectorFromAst ]
+			ifNil: [ 
+				self selectWord.
+				^ self selectedSelectorWithRecursionDepth: depth + 1 ] ].
+	
+	"why not using editingMode because it hides away the specific parser expression."
+	node := RBParser parseFaultyExpression: self selection string.
+	node
+		nodesDo: [ :n | 
+			n isMessage
+				ifTrue: [ ^ n selector ].
+			n isVariable
+				ifTrue: [ ^ n name ].
+			n isLiteralNode
+				ifTrue: [ ^ n value ] ].
+	"fall back"
+	^ self selection string asSymbol
+]
+
+{ #category : #api }
 Xtractor >> selectedSelectorWithRecursionDepthOrig: depth [
 
 	| node selectorFromAst |
