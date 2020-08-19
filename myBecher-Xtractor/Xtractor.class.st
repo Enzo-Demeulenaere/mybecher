@@ -11,19 +11,17 @@ Class {
 { #category : #api }
 Xtractor >> bestNodeInString: source 
 	at: selectionInterval 
-	editingMode: aRubEdittingMode 
+	editingMode: aRubEditingMode 
 	shouldFavourExpressions: isFavouringExpressions 
 	onError: aBlock [
-	
 	"Find the best node in the source text in the identified selection area"
 	
 	| ast node start stop |
-
 	source ifEmpty: aBlock.
 	start := selectionInterval first min: source size.
 	stop := selectionInterval last min: source size.
 	
-	ast := aRubEdittingMode parseSource: source.
+	ast := aRubEditingMode parseSource: source.
 	
 	ast ifNotNil: [ 
 		"If there is no text selection"
@@ -44,7 +42,7 @@ Xtractor >> bestNodeInString: source
 		
 		node isFaulty ifTrue: [ 
 			node allChildren size = 1 ifTrue: [ 
-				(aRubEdittingMode parseExpression: (node value padLeftTo: source size)) 
+				(aRubEditingMode parseExpression: (node value padLeftTo: source size)) 
 					ifNil: [ ^node ] 
 					ifNotNil: [ :newNode |
 						ast replaceNode: node withNode: newNode.
@@ -100,7 +98,6 @@ Xtractor >> findSelectorFromAST [
 	"Try to make a selector out of the current text selection"
 
 	| node fallbackBlock |
-	self halt.
 	fallbackBlock := [ ^ nil ].
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
 	
