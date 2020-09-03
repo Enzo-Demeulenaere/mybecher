@@ -7,10 +7,10 @@ Class {
 	#name : #StProjectLoader,
 	#superclass : #StPresenter,
 	#instVars : [
-		'projectList',
-		'menuBar',
 		'loadedProjects',
-		'loadableProjects'
+		'loadableProjects',
+		'menuBarPresenter',
+		'projectListPresenter'
 	],
 	#category : #'NewTools-ProjectLoader'
 }
@@ -19,8 +19,8 @@ Class {
 StProjectLoader class >> defaultSpec [ 
 
 	^ SpBoxLayout newVertical 
-			add: #projectList;
-			add: #menuBar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+			add: #projectListPresenter;
+			add: #menuBarPresenter withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 			yourself
 ]
 
@@ -30,7 +30,7 @@ StProjectLoader class >> toolbarHeight [
 	^ 30
 ]
 
-{ #category : #initialization }
+{ #category : #actions }
 StProjectLoader >> boo [
 
 	^ self inform: 'Boo is executed'
@@ -38,42 +38,55 @@ StProjectLoader >> boo [
 
 { #category : #initialization }
 StProjectLoader >> initialize [
-
+	loadedProjects := OrderedCollection new.
+	loadableProjects := { Project named: 'Microdown' . Project named: 'Roassal3.0' }.
 	super initialize.
-	loadableProjects := { Project named: 'Microdown' . Project named: 'Roassal3.0' }
+	
 ]
 
 { #category : #initialization }
 StProjectLoader >> initializePresenters [ 
 
-	projectList := self newTreeTable.
-	projectList addColumn:
+	projectListPresenter := self newTable.
+	projectListPresenter addColumn:
 			((SpCheckBoxTableColumn title: ' ' evaluated: [ :class | self loadedProjects includes: class ])
 				onActivation: [ :class | self loadedProjects add: class ];
 				onDeactivation: [ :class | self loadedProjects remove: class ];
 				width: 20;
 				yourself).
 				
-   projectList addColumn: (SpCompositeTableColumn new
+   projectListPresenter addColumn: (SpCompositeTableColumn new
 			title: 'Name';
 			addColumn: (SpImageTableColumn evaluated: [ :each | 
 				self iconNamed: #glamorousFolder ]);
 			addColumn: (SpStringTableColumn evaluated: [ :each | each name])).
+	projectListPresenter items: loadableProjects.
 
-	menuBar := self newButtonBar.
-	menuBar add: (SpButtonPresenter new label: 'Cancel'; action: [ self close ]; yourself).
-	menuBar add: (SpButtonPresenter new label: 'Ok'; action: [ self boo ]; yourself)
+	menuBarPresenter := self newButtonBar.
+	menuBarPresenter add: (SpButtonPresenter new label: 'Cancel'; action: [ self delete ]; yourself).
+	menuBarPresenter add: (SpButtonPresenter new label: 'Ok'; action: [ self boo ]; yourself)
 	
 	
 ]
 
 { #category : #initialization }
+StProjectLoader >> initializeWindow: aWindowPresenter [
+	aWindowPresenter title: 'Optional project loader'
+]
+
+{ #category : #accessing }
 StProjectLoader >> loadableProjects [
 
 	^ loadableProjects
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
+StProjectLoader >> loadableProjects: aColl [
+
+	loadableProjects := aColl
+]
+
+{ #category : #accessing }
 StProjectLoader >> loadedProjects [
 
 	^ loadedProjects
