@@ -1,13 +1,54 @@
 "
-I'm a class hierarchy printer.
+I'm a nice class hierarchy printer.
 
 I can 
 	- show or not class instance variables (`ClassHierarchy>>#doNotShowState`)
 	- show or not superclasses (`ClassHierarchy>>#doNotShowState`)
 	- limit the classes to a given set
-	- exclude some classes 
+	- exclude some classes
 	
-For examples browse `ClassHierarchyPrinter`
+For examples browse `ClassHierarchyPrinterTest`
+
+```
+ClassHierarchyPrinter new 
+	forClass: MicAbstractBlock;
+	doNotShowState;
+	doNotShowSuperclasses;
+	print
+```
+
+produces
+
+```
+'MicAbstractBlock
+	MicAbstractAnnotatedBlock
+		MicAnnotatedBlock
+	MicContinuousMarkedBlock
+		MicCommentBlock
+		MicQuoteBlock
+		MicTableBlock
+	MicListBlock
+		MicOrderedListBlock
+		MicUnorderedListBlock
+	MicListItemBlock
+	MicParagraphBlock
+	MicRootBlock
+	MicSingleLineBlock
+		MicAnchorBlock
+		MicHeaderBlock
+		MicHorizontalLineBlock
+	MicStartStopMarkupBlock
+		MicEnvironmentBlock
+		MicMetaDataBlock
+		MicSameStartStopMarkupBlock
+			MicCodeBlock
+			MicMathBlock
+'
+```
+
+
+	
+
 "
 Class {
 	#name : #ClassHierarchyPrinter,
