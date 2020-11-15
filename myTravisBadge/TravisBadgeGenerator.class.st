@@ -48,10 +48,11 @@ TravisBadgeGenerator class >> generateReadme [
 			'Booklet-Voyage'
 			'Booklet-ZincHTTP'
 			'BuildingApplicationWithSpec2'
+			'DynamicWebDevelopmentWithSeaside'
 			'PatternsOfDesign'
 			'PharoByExample80'
 			'TinyBlog-EN'
-			'TinyBlog-Tutorial'
+			'TinyBlogTutorial'
 			
 			)   
 ]
