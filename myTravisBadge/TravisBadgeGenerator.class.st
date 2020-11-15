@@ -18,11 +18,12 @@ TravisBadgeGenerator class >> generateReadme [
 
 	^ self new listFor: 
 			#(
+			'Booklet-AI-Technics'
 			'Booklet-AMiniSchemeInPharo'
 			'Booklet-APharoThingsTutorial'
 			'Booklet-BuildingMemoryGameWithBloc'
 			'Booklet-CallStackManagement'
-			'Booklet-ClassCommandLine'
+			'Booklet-ClapCommandLine'
 			'Booklet-Commander' 
 			'Booklet-DataFrame'
 			'Booklet-ConcurrentProgramming' 
@@ -43,6 +44,7 @@ TravisBadgeGenerator class >> generateReadme [
 			'Booklet-Rewriter'
 			'Booklet-AReflectiveKernel'
 			'Booklet-TestingInPharo'
+			'booklet-uFFI'
 			'Booklet-Voyage'
 			'Booklet-ZincHTTP'
 			'BuildingApplicationWithSpec2'
@@ -50,8 +52,8 @@ TravisBadgeGenerator class >> generateReadme [
 			'PharoByExample80'
 			'TinyBlog-EN'
 			'TinyBlog-Tutorial'
-				) 
-
+			
+			)   
 ]
 
 { #category : #'instance creation' }
