@@ -66,6 +66,12 @@ Class {
 	#category : #'myBecher-Sort-ForPharo'
 }
 
+{ #category : #'instance creation' }
+ClassHierarchyPrinter class >> forClass: aClass [
+
+	^ self new forClass: aClass; yourself
+]
+
 { #category : #accessing }
 ClassHierarchyPrinter >> doNotShowState [
 
@@ -97,6 +103,11 @@ ClassHierarchyPrinter >> initialize [
 	index := 0.
 	showSuperclasses := true.
 	showState := true.
+	stream := (String new: 100) writeStream
+]
+
+{ #category : #initialization }
+ClassHierarchyPrinter >> initializeStream [ 
 	stream := (String new: 100) writeStream
 ]
 
@@ -168,6 +179,11 @@ ClassHierarchyPrinter >> printSuperclasses [
 			self printClass: aClass.
 			index := index + 1 ].
 	stream cr.	"to spot the requested class."
+]
+
+{ #category : #initialization }
+ClassHierarchyPrinter >> resetLevel [ 
+	index := 0.
 ]
 
 { #category : #accessing }
