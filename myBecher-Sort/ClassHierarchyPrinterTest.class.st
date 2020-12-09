@@ -66,6 +66,20 @@ ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
 ]
 
 { #category : #tests }
+ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
+
+	printer forClass: Rectangle. 
+	self 
+		assert: printer print  
+		equals: 'ProtoObject #()
+	Object #()
+
+		Rectangle #(#origin #corner)
+			CharacterBlock #(#stringIndex #text #textLine)
+'
+]
+
+{ #category : #tests }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 
 	printer forClass: Point. 
