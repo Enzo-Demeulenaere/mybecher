@@ -18,6 +18,12 @@ DSSingleLinkedList >> addFirst: anObject [
 ]
 
 { #category : 'accessing' }
+DSSingleLinkedList >> first [
+	self isEmpty ifTrue: [ DSEmptyError signal ].
+	^ head value
+]
+
+{ #category : 'accessing' }
 DSSingleLinkedList >> head [
 	^ head
 ]
@@ -31,4 +37,10 @@ DSSingleLinkedList >> isEmpty [
 { #category : 'accessing' }
 DSSingleLinkedList >> next [
 	self shouldBeImplemented.
+]
+
+{ #category : 'adding' }
+DSSingleLinkedList >> removeFirst [
+	self isEmpty ifTrue: [ DSEmptyError signal ].
+	head := head next.
 ]
