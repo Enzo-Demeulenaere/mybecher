@@ -11,7 +11,7 @@ Class {
 { #category : 'adding' }
 DSSingleLinkedList >> addFirst: anObject [
 	| item |
-	item := DSSingleLinkedListItem new.
+	item := DSSingleLinkedNode new.
 	item next: head.
 	item value: anObject.
 	head := item.
@@ -32,11 +32,6 @@ DSSingleLinkedList >> head [
 DSSingleLinkedList >> isEmpty [
 	
 	^ head isNil
-]
-
-{ #category : 'accessing' }
-DSSingleLinkedList >> next [
-	self shouldBeImplemented.
 ]
 
 { #category : 'adding' }

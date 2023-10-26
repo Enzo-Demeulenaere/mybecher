@@ -5,7 +5,7 @@ Class {
 	#package : 'myBecher-DS'
 }
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testAddFirst [
 
 	| ll |
@@ -16,7 +16,7 @@ DSSingleLinkedListTest >> testAddFirst [
 	 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testAddFirstAddFirst [
 
 	| ll |
@@ -28,7 +28,7 @@ DSSingleLinkedListTest >> testAddFirstAddFirst [
 	 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirst [
 
 	| ll |
@@ -38,7 +38,7 @@ DSSingleLinkedListTest >> testFirst [
 	 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
 
 	| ll |
@@ -47,13 +47,13 @@ DSSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
 	 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testIsEmpty [
 
 	self assert: DSSingleLinkedList new isEmpty 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testRemoveFirst [
 
 	| ll |
@@ -63,7 +63,7 @@ DSSingleLinkedListTest >> testRemoveFirst [
 	self assert: ll isEmpty
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
 
 	| ll |

@@ -1,5 +1,5 @@
 Class {
-	#name : 'DSSingleLinkedListItem',
+	#name : 'DSSingleLinkedNode',
 	#superclass : 'Object',
 	#instVars : [
 		'value',
@@ -10,21 +10,21 @@ Class {
 }
 
 { #category : 'accessing' }
-DSSingleLinkedListItem >> next [
+DSSingleLinkedNode >> next [
 	^ next
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedListItem >> next: anItem [
+DSSingleLinkedNode >> next: anItem [
 	next := anItem
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedListItem >> value [
+DSSingleLinkedNode >> value [
 	^ value
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedListItem >> value: anObject [ 
+DSSingleLinkedNode >> value: anObject [ 
 	value := anObject
 ]
