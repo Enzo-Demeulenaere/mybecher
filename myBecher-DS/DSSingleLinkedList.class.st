@@ -17,6 +17,13 @@ DSSingleLinkedList >> addFirst: anObject [
 	head := item.
 ]
 
+{ #category : 'adding' }
+DSSingleLinkedList >> addNodeFirst: aNode [ 
+
+	aNode next: self head.
+	head := aNode
+]
+
 { #category : 'accessing' }
 DSSingleLinkedList >> first [
 	self isEmpty ifTrue: [ DSEmptyError signal ].

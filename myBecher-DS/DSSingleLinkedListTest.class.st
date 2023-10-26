@@ -28,6 +28,18 @@ DSSingleLinkedListTest >> testAddFirstAddFirst [
 	 
 ]
 
+{ #category : 'tests - node' }
+DSSingleLinkedListTest >> testAddFirstNode [
+
+	| ll node |
+	ll := DSSingleLinkedList new.
+	node := DSSingleLinkedNode new value: 33.
+	ll addNodeFirst: node.
+	self deny: ll isEmpty.
+	self assert: ll head value equals: 33
+	 
+]
+
 { #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirst [
 
