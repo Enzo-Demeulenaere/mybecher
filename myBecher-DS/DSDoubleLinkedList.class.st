@@ -23,6 +23,11 @@ DSDoubleLinkedList >> initialize [
 	trail previous: head.
 ]
 
+{ #category : #testing }
+DSDoubleLinkedList >> isEmpty [
+	^ head next == trail
+]
+
 { #category : #accessing }
 DSDoubleLinkedList >> lastNode [
 	^ trail
