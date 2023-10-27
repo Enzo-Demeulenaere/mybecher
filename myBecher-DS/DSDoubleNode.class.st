@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'next',
-		'previous'
+		'previous',
+		'value'
 	],
 	#category : #'myBecher-DS-DoubleLinkedList'
 }
@@ -30,4 +31,26 @@ DSDoubleNode >> previous [
 DSDoubleNode >> previous: anObject [
 
 	previous := anObject
+]
+
+{ #category : #printing }
+DSDoubleNode >> printOn: aStream [
+
+	super printOn: aStream.
+	previous isNil ifTrue: [ aStream nextPutAll: '~' ].
+	aStream print: value.
+	next isNil ifTrue: [ aStream nextPutAll: '~' ].
+	
+]
+
+{ #category : #accessing }
+DSDoubleNode >> value [
+
+	^ value
+]
+
+{ #category : #accessing }
+DSDoubleNode >> value: anObject [
+
+	value := anObject
 ]
