@@ -1,1 +1,1 @@
-Package { #name : 'myBecher-DS' }
+Package { #name : #'myBecher-DS' }
