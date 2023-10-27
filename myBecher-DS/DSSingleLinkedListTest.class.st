@@ -1,8 +1,9 @@
 Class {
 	#name : 'DSSingleLinkedListTest',
 	#superclass : 'TestCase',
-	#category : 'myBecher-DS',
-	#package : 'myBecher-DS'
+	#category : 'myBecher-DS-SingleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'SingleLinkedList'
 }
 
 { #category : 'tests - value' }

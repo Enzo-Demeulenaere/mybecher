@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'head'
 	],
-	#category : 'myBecher-DS',
-	#package : 'myBecher-DS'
+	#category : 'myBecher-DS-SingleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'SingleLinkedList'
 }
 
 { #category : 'adding' }
