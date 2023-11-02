@@ -1,6 +1,6 @@
 "
 I'm double linked list implemented with sentinels.
-	head and trail are pointing to private node that should not be considered during the treatment. 
+	head and trail instance variables are pointing to private nodes that are not be considered during the treatment. They play the role of sentinels in this design.
 	
 An empty list is then composed of 
 - a head node whose next is trail node. 
@@ -57,6 +57,15 @@ DSDoubleLinkedList >> addFirstNode: aNode [
 { #category : #'adding/removing' }
 DSDoubleLinkedList >> addLast: anInteger [ 
 	self add: anInteger beforeNode: trail
+]
+
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> addLastNode: aDSDoubleNode [ 
+	
+	aDSDoubleNode next: trail.
+	aDSDoubleNode previous: trail previous.
+	aDSDoubleNode previous next: aDSDoubleNode.
+	trail previous: aDSDoubleNode
 ]
 
 { #category : #accessing }

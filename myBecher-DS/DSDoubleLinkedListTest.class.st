@@ -69,6 +69,41 @@ DSDoubleLinkedListTest >> testAddLast [
 
 	| dl |
 	dl := DSDoubleLinkedList new.
+	dl addLast: 66.
+	self assert: dl lastNode value equals: 66.
+	self assert: dl lastNode previous next value equals: 66.
+
+]
+
+{ #category : #tests }
+DSDoubleLinkedListTest >> testAddLastNode [
+
+	| dl node node1 |
+	dl := DSDoubleLinkedList new.
+	node := DSDoubleNode new value: 33.
+	node1 := DSDoubleNode new value: 11. 
+	dl addLastNode: node.
+	self assert: dl firstNode value equals: 33.
+	self assert: dl lastNode value equals: 33.
+	
+	dl addLastNode: node1.
+	self assert: dl lastNode value equals: 11.
+	self assert: dl lastNode == node1.
+	
+	self assert: dl firstNode value equals: 33.
+	self assert: dl firstNode next value equals: 11.
+	
+	
+	
+	self assert: dl firstNode next previous equals: dl firstNode.
+	self assert: dl lastNode value equals: 11.
+]
+
+{ #category : #tests }
+DSDoubleLinkedListTest >> testAddLastWithExistingNode [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
 	dl addFirst: 33.
 	dl addFirst: 11.
 	
