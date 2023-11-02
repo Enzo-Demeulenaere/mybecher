@@ -114,7 +114,7 @@ DSDoubleLinkedListTest >> testAddLastWithExistingNode [
 	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - accessing' }
 DSDoubleLinkedListTest >> testFirst [
 
 	| dl |
@@ -142,7 +142,7 @@ DSDoubleLinkedListTest >> testFirstNodeOfAnEmptyListShouldRaiseError [
 	self should: [ dl firstNode ] raise: DSEmptyError
 ]
 
-{ #category : #tests }
+{ #category : #'tests - accessing' }
 DSDoubleLinkedListTest >> testFirstOfEmptyShouldRaiseError [
 
 	| dl |
@@ -158,10 +158,28 @@ DSDoubleLinkedListTest >> testIsEmpty [
 	self assert: dl isEmpty
 ]
 
+{ #category : #'tests - accessing' }
+DSDoubleLinkedListTest >> testLast [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	dl addFirst: 33.
+	self assert: dl last equals: 33.
+
+]
+
 { #category : #'tests - nodes' }
 DSDoubleLinkedListTest >> testLastNodeOfAnEmptyListShouldRaiseError [
 
 	| dl |
 	dl := DSDoubleLinkedList new.
 	self should: [ dl lastNode ] raise: DSEmptyError
+]
+
+{ #category : #'tests - accessing' }
+DSDoubleLinkedListTest >> testLastOfEmptyShouldRaiseError [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	self should: [ dl last ] raise: DSEmptyError
 ]
