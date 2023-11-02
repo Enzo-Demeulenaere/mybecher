@@ -107,6 +107,16 @@ DSDoubleLinkedList >> lastNode [
 	^ trail previous
 ]
 
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> removeNode: aDSDoubleNode [ 
+	"Precondition: aDSDoubleNode belongs to the receiver."
+	
+	| prev |
+	prev := aDSDoubleNode previous.
+	prev next: aDSDoubleNode next. 
+	aDSDoubleNode next previous: prev
+]
+
 { #category : #accessing }
 DSDoubleLinkedList >> size [ 
 

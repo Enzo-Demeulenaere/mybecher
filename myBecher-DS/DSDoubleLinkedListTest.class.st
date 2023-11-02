@@ -184,6 +184,23 @@ DSDoubleLinkedListTest >> testLastOfEmptyShouldRaiseError [
 	self should: [ dl last ] raise: DSEmptyError
 ]
 
+{ #category : #'tests - removing' }
+DSDoubleLinkedListTest >> testRemoveNode [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	dl addFirst: 99.
+	dl addFirst: 66.
+	dl addFirst: 33.
+	self assert: dl size equals: 3.
+	self assert: dl firstNode next value equals: 66.
+	dl removeNode: dl firstNode next. 
+	self assert: dl size equals: 2.
+	
+	self assert: dl firstNode value equals: 33.
+	self assert: dl firstNode next value equals: 99.
+]
+
 { #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testSize [
 
