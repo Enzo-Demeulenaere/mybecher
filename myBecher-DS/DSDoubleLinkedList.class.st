@@ -23,11 +23,15 @@ DSDoubleLinkedList >> addFirst: anInteger [
 	| node | 
 	node := DSDoubleNode new.
 	node value: anInteger.
+	self addFirstNode: node.
+]
 
-	node next: head next.
-	node previous: head.
-	head next previous: node.
-	head next: node.
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> addFirstNode: aNode [ 
+	aNode next: head next.
+	aNode previous: head.
+	head next previous: aNode.
+	head next: aNode.
 ]
 
 { #category : #accessing }

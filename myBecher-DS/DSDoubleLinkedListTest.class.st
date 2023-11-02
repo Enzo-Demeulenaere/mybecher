@@ -28,17 +28,17 @@ DSDoubleLinkedListTest >> testFirst [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 DSDoubleLinkedListTest >> testFirstNode [
 
 	| dl |
 	dl := DSDoubleLinkedList new.
-	dl addFirst: 33.
+	dl addFirstNode: (DSDoubleNode new value: 33); yourself.
 	self assert: dl firstNode value equals: 33.
 	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 DSDoubleLinkedListTest >> testFirstNodeOfAnEmptyListShouldRaiseError [
 
 	| dl |
@@ -62,7 +62,7 @@ DSDoubleLinkedListTest >> testIsEmpty [
 	self assert: dl isEmpty
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 DSDoubleLinkedListTest >> testLastNodeOfAnEmptyListShouldRaiseError [
 
 	| dl |
