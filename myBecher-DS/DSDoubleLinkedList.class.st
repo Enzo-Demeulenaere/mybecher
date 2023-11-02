@@ -19,6 +19,26 @@ Class {
 }
 
 { #category : #'adding/removing' }
+DSDoubleLinkedList >> add: anInteger beforeNode: aDoubleNode [
+	"add a value in a node before the adDoubleNode node."
+	
+	| newNode |
+	newNode := DSDoubleNode new value: anInteger ; yourself.
+	newNode next: aDoubleNode. 
+	newNode previous: aDoubleNode previous.
+	aDoubleNode previous next: newNode. 
+	aDoubleNode previous: newNode
+	
+]
+
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> addFirst2: anInteger [
+	"an alternate addFirst: using add:beforeNode:"
+
+	self add: anInteger beforeNode: head next 
+]
+
+{ #category : #'adding/removing' }
 DSDoubleLinkedList >> addFirst: anInteger [ 
 	| node | 
 	node := DSDoubleNode new.
