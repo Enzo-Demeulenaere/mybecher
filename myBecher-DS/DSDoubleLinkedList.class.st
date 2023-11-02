@@ -54,6 +54,11 @@ DSDoubleLinkedList >> addFirstNode: aNode [
 	head next: aNode.
 ]
 
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> addLast: anInteger [ 
+	self add: anInteger beforeNode: trail
+]
+
 { #category : #accessing }
 DSDoubleLinkedList >> first [
 	^ self firstNode value
