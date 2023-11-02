@@ -4,7 +4,7 @@ Class {
 	#category : #'myBecher-DS-DoubleLinkedList'
 }
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddBeforeNode [
 
 	| dl  |
@@ -20,7 +20,7 @@ DSDoubleLinkedListTest >> testAddBeforeNode [
 	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirst [
 
 	| dl |
@@ -34,7 +34,7 @@ DSDoubleLinkedListTest >> testAddFirst [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirst2 [
 
 	| dl |
@@ -48,7 +48,7 @@ DSDoubleLinkedListTest >> testAddFirst2 [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirstNode [
 
 	| dl node node1 |
@@ -64,7 +64,7 @@ DSDoubleLinkedListTest >> testAddFirstNode [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddLast [
 
 	| dl |
@@ -75,7 +75,7 @@ DSDoubleLinkedListTest >> testAddLast [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddLastNode [
 
 	| dl node node1 |
@@ -99,7 +99,7 @@ DSDoubleLinkedListTest >> testAddLastNode [
 	self assert: dl lastNode value equals: 11.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - adding' }
 DSDoubleLinkedListTest >> testAddLastWithExistingNode [
 
 	| dl |
@@ -150,7 +150,7 @@ DSDoubleLinkedListTest >> testFirstOfEmptyShouldRaiseError [
 	self should: [ dl first ] raise: DSEmptyError
 ]
 
-{ #category : #tests }
+{ #category : #'tests - accessing' }
 DSDoubleLinkedListTest >> testIsEmpty [
 
 	| dl |
@@ -182,4 +182,24 @@ DSDoubleLinkedListTest >> testLastOfEmptyShouldRaiseError [
 	| dl |
 	dl := DSDoubleLinkedList new.
 	self should: [ dl last ] raise: DSEmptyError
+]
+
+{ #category : #'tests - adding' }
+DSDoubleLinkedListTest >> testSize [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	self assert: dl size equals: 0
+	
+
+]
+
+{ #category : #'tests - adding' }
+DSDoubleLinkedListTest >> testSizeNonEmpty [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	dl addFirst: 33.
+	dl addFirst: 11.
+	self assert: dl size equals: 2
 ]

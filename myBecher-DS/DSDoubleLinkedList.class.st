@@ -106,3 +106,16 @@ DSDoubleLinkedList >> lastNode [
 	self isEmpty ifTrue: [  DSEmptyError signal ].
 	^ trail previous
 ]
+
+{ #category : #accessing }
+DSDoubleLinkedList >> size [ 
+
+	| s current |
+	self isEmpty ifTrue: [ ^ 0 ].
+	s := 0.
+	current := head next.  
+	[ current == trail ] whileFalse: [ 
+		current := current next.
+		s := s + 1 ].
+	^ s
+]
