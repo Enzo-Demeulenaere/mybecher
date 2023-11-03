@@ -108,6 +108,16 @@ DSDoubleLinkedList >> lastNode [
 ]
 
 { #category : #'adding/removing' }
+DSDoubleLinkedList >> removeFirst [
+	self removeNode: head next
+]
+
+{ #category : #'adding/removing' }
+DSDoubleLinkedList >> removeLast [
+	self removeNode: trail previous.
+]
+
+{ #category : #'adding/removing' }
 DSDoubleLinkedList >> removeNode: aDSDoubleNode [ 
 	"Precondition: aDSDoubleNode belongs to the receiver."
 	
