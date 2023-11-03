@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+DSCircularLinkedListTest >> testAdd [
+
+	| ll |
+	ll := DSCircularLinkedList new.
+	ll add: 66.
+	self assert: ll first equals: 66
+]
+
+{ #category : #tests }
 DSCircularLinkedListTest >> testAddFirst [
 
 	| ll |
@@ -25,6 +34,33 @@ DSCircularLinkedListTest >> testAddFirstMore [
 	self deny: ll isEmpty.
 	self assert: ll cursor value equals: 11
 	 
+]
+
+{ #category : #tests }
+DSCircularLinkedListTest >> testAddMore [
+
+	| ll |
+	ll := DSCircularLinkedList new.
+	ll add: 66.
+	self assert: ll first equals: 66.
+	ll add: 77.
+	self assert: ll first equals: 66.
+	self assert: ll cursor next value equals: 77.
+	ll add: 88.
+	self assert: ll first equals: 66.
+	self assert: ll cursor next value equals: 88.
+	self assert: ll cursor next next value equals: 77.
+	
+]
+
+{ #category : #tests }
+DSCircularLinkedListTest >> testAddOnEmpty [
+
+	| ll |
+	ll := DSCircularLinkedList new.
+	ll add: 66.
+	self assert: ll first equals: 66.
+	self assert: ll firstNode next value equals: 66.
 ]
 
 { #category : #tests }

@@ -17,6 +17,22 @@ Class {
 	#category : #'myBecher-DS-CircularLinkedList'
 }
 
+{ #category : #adding }
+DSCircularLinkedList >> add: anObject [
+	"Add insert a node after the cursor. Still making the list circular."
+
+	| node |
+	node := DSSingleLinkedNode new value: anObject; yourself.
+
+	self isEmpty
+		ifTrue: [ 
+			node next: node. "yes we have a circular list"
+			cursor := node ]
+		ifFalse: [ 
+			node next: cursor next.
+			cursor next: node ]
+]
+
 { #category : #'adding/removing' }
 DSCircularLinkedList >> addFirst: anObject [ 
 	
