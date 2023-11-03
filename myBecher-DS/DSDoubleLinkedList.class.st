@@ -7,6 +7,9 @@ An empty list is then composed of
 - a head node whose previous is nil.
 - a trail node whose previous is head node.
 - a trail node whose next is nil.
+
+
+Compared to the linked list, this implementation does not expose head because it is an internal implementation choice. This is a hint that may be head should not be part of the API of SingleLinkedList either.
 "
 Class {
 	#name : #DSDoubleLinkedList,
