@@ -140,7 +140,13 @@ ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
 	stream tab: index.
 	stream nextPutAll: aClass name.
-	showState ifTrue: [ stream space; print: aClass instVarNames ].
+	aClass instVarNames ifNotEmpty: [ :vars | 
+		showState ifTrue: [ stream space. 
+								stream nextPutAll: '( '.
+								aClass instVarNames
+									do: [ :iv | stream nextPutAll:  iv asString ]
+									separatedBy: [ stream space ].
+								stream  nextPutAll: ' )' ] ].
 	stream cr
 ]
 
