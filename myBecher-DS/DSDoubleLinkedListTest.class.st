@@ -199,6 +199,15 @@ DSDoubleLinkedListTest >> testRemoveFirst [
 ]
 
 { #category : #'tests - removing' }
+DSDoubleLinkedListTest >> testRemoveFirstOnEmptyShouldBark [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	self should: [ dl removeFirst ] raise: DSEmptyError.
+	
+]
+
+{ #category : #'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveLast [
 
 	| dl |
@@ -210,6 +219,14 @@ DSDoubleLinkedListTest >> testRemoveLast [
 	self assert: dl size equals: 2.
 	self assert: dl firstNode value equals: 33.
 	self assert: dl firstNode next value equals: 66.
+]
+
+{ #category : #'tests - removing' }
+DSDoubleLinkedListTest >> testRemoveLastOnEmptyShouldBark [
+
+	| dl |
+	dl := DSDoubleLinkedList new.
+	self should: [ dl removeLast ] raise: DSEmptyError 
 ]
 
 { #category : #'tests - removing' }
