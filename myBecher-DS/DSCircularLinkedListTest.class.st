@@ -11,6 +11,15 @@ DSCircularLinkedListTest >> testAddFirst [
 	ll := DSCircularLinkedList new.
 	ll addFirst: 33.
 	self deny: ll isEmpty.
-	self assert: ll head value equals: 33
+	self assert: ll cursor value equals: 33
 	 
+]
+
+{ #category : #tests }
+DSCircularLinkedListTest >> testIsEmpty [
+
+	| ll |
+	ll := DSCircularLinkedList new.
+	self assert: ll isEmpty.
+	
 ]
