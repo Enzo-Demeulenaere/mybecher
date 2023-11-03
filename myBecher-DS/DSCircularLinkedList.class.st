@@ -27,8 +27,28 @@ DSCircularLinkedList >> addFirst: anObject [
 	cursor := item.
 ]
 
+{ #category : #operations }
+DSCircularLinkedList >> advance [
+	cursor := cursor next
+]
+
 { #category : #accessing }
 DSCircularLinkedList >> cursor [
+	^ cursor
+]
+
+{ #category : #accessing }
+DSCircularLinkedList >> first [
+	"Return the first element value based on the current cursor."
+	
+	^ self firstNode value
+	
+]
+
+{ #category : #accessing }
+DSCircularLinkedList >> firstNode [
+	
+	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ cursor
 ]
 
