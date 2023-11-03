@@ -1,7 +1,7 @@
 Class {
 	#name : #DSSingleLinkedListTest,
 	#superclass : #TestCase,
-	#category : 'myBecher-DS-SingleLinkedList'
+	#category : #'myBecher-DS-SingleLinkedList'
 }
 
 { #category : #'tests - value' }
@@ -46,6 +46,26 @@ DSSingleLinkedListTest >> testFirst [
 	ll := DSSingleLinkedList new.
 	ll addFirst: 33.
 	self assert: ll first equals: 33
+	 
+]
+
+{ #category : #'tests - value' }
+DSSingleLinkedListTest >> testFirstNode [
+
+	| ll |
+	ll := DSSingleLinkedList new.
+	ll addFirst: 33.
+	self assert: ll firstNode value equals: 33.
+	self assert: ll firstNode next equals: nil.
+	 
+]
+
+{ #category : #'tests - value' }
+DSSingleLinkedListTest >> testFirstNodeWhenEmptyRaiseError [
+
+	| ll |
+	ll := DSSingleLinkedList new.
+	self should: [ ll firstNode ] raise: DSEmptyError
 	 
 ]
 

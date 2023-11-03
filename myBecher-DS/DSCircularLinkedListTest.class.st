@@ -1,11 +1,11 @@
 Class {
-	#name : #DSCircularListTest,
+	#name : #DSCircularLinkedListTest,
 	#superclass : #TestCase,
 	#category : #'myBecher-DS-CircularLinkedList'
 }
 
 { #category : #tests }
-DSCircularListTest >> testAddFirst [
+DSCircularLinkedListTest >> testAddFirst [
 
 	| ll |
 	ll := DSCircularLinkedList new.
