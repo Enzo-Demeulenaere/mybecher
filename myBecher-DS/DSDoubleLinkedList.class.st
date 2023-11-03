@@ -112,13 +112,13 @@ DSDoubleLinkedList >> lastNode [
 
 { #category : #'adding/removing' }
 DSDoubleLinkedList >> removeFirst [
-	self isEmpty ifTrue: [ DSEmptyError signal ].
+	self signalIfEmpty.
 	self removeNode: head next
 ]
 
 { #category : #'adding/removing' }
 DSDoubleLinkedList >> removeLast [
-	self isEmpty ifTrue: [ DSEmptyError signal ].
+	self signalIfEmpty.
 	self removeNode: trail previous.
 ]
 
@@ -130,6 +130,11 @@ DSDoubleLinkedList >> removeNode: aDSDoubleNode [
 	prev := aDSDoubleNode previous.
 	prev next: aDSDoubleNode next. 
 	aDSDoubleNode next previous: prev
+]
+
+{ #category : #private }
+DSDoubleLinkedList >> signalIfEmpty [
+	self isEmpty ifTrue: [ DSEmptyError signal ]
 ]
 
 { #category : #accessing }
