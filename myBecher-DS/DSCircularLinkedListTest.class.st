@@ -119,3 +119,17 @@ DSCircularLinkedListTest >> testIsEmpty [
 	self assert: ll isEmpty.
 	
 ]
+
+{ #category : #tests }
+DSCircularLinkedListTest >> testLast [
+
+	| ll |
+	ll := DSCircularLinkedList new.
+	ll add: 66.
+	ll add: 33.
+	ll add: 11.
+	"the order is really bad right now I have 66 11 33"
+	self assert: ll firstNode next value equals: 11.
+	self assert: ll last equals: 66
+ 
+]
