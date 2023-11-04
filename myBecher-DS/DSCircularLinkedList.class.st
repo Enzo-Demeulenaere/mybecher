@@ -3,22 +3,12 @@ Basically a linked list but circular.
 A circular linked list has a cursor.
 
 - cursor next is the head (or front) of the linked list
-- cursor is also the last element (or back) of the linked list.
+- cursor points to also the last element (or back) of the linked list.
 
 A future version may try to refactor and share the logic with SingleLinkedList.
 
-I do not like the implementation of add: based on the book Data Structures and Algorithems in C++ (Goodricjh, Tamassai, Mount) because adding in sequence does not conserve the order. 
-
-```
-	| ll |
-	ll := DSCircularLinkedList new.
-	ll add: 66.
-	ll add: 33.
-	ll add: 11.
-	""the order is really bad right now I have 66 11 33""
-```
-
-The idea of `add:` adding after the cursor means that the cursor (first element) keeps the first added element and then the others are added first after it. This mess up the order. 
+The implementation is based on the book Data Structures and Algorithems in C++ (Goodricjh, Tamassai, Mount).
+The key point is to see that the cursor is always pointing to the last element. 
 
 ``` 
 const Elem& CircleList::back() const {
@@ -73,16 +63,6 @@ DSCircularLinkedList >> add: anObject [
 			cursor next: node ]
 ]
 
-{ #category : #'adding/removing' }
-DSCircularLinkedList >> addFirst: anObject [ 
-	
-	| item |
-	item := DSSingleLinkedNode new.
-	item next: cursor.
-	item value: anObject.
-	cursor := item.
-]
-
 { #category : #operations }
 DSCircularLinkedList >> advance [
 	cursor := cursor next
@@ -95,7 +75,7 @@ DSCircularLinkedList >> cursor [
 
 { #category : #accessing }
 DSCircularLinkedList >> first [
-	"Return the first element value based on the current cursor."
+	"Return the first element value based on the current cursor. Remember that the cursor refer to the last element."
 	
 	^ self firstNode value
 	
@@ -103,9 +83,11 @@ DSCircularLinkedList >> first [
 
 { #category : #accessing }
 DSCircularLinkedList >> firstNode [
+	"Remember that the first element (back in book) is the next one of the cursor node.
+	Cursor points to last (back)."
 	
 	self isEmpty ifTrue: [ DSEmptyError signal ].
-	^ cursor
+	^ cursor next
 ]
 
 { #category : #testing }
@@ -120,4 +102,14 @@ DSCircularLinkedList >> last [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ self cursor value
 	
+]
+
+{ #category : #'adding/removing' }
+DSCircularLinkedList >> remove [
+	
+	self isEmpty ifTrue: [ ^ self ].
+	cursor == cursor next
+		ifTrue: [ cursor := nil ]
+		ifFalse: [  
+				cursor next: cursor next next ]
 ]
