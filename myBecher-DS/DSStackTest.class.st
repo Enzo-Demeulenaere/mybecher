@@ -68,7 +68,7 @@ DSStackTest >> testPop [
 
 	| aStack res elem |
 	elem := 'anElement'.	
-	aStack := self stackClass  new.
+	aStack := self stackClass new.
 	self assert: aStack isEmpty.
 	
 	aStack push: 'a'.

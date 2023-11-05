@@ -13,6 +13,19 @@ DSStack >> initialize [
 	contents := DSSingleLinkedList new.
 ]
 
+{ #category : #testing }
+DSStack >> isEmpty [
+	^ contents isEmpty
+]
+
+{ #category : #operations }
+DSStack >> pop [
+	| first |
+	first := contents first.
+	contents removeFirst.
+	^ first
+]
+
 { #category : #operations }
 DSStack >> push: anInteger [ 
 	contents addFirst: anInteger
@@ -22,4 +35,9 @@ DSStack >> push: anInteger [
 DSStack >> size [
 
 	^ contents size
+]
+
+{ #category : #accessing }
+DSStack >> top [
+	^ contents first
 ]
