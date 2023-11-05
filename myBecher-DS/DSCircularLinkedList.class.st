@@ -8,7 +8,9 @@ A circular linked list has a cursor.
 A future version may try to refactor and share the logic with SingleLinkedList.
 
 The implementation is based on the book Data Structures and Algorithems in C++ (Goodricjh, Tamassai, Mount).
-The key point is to see that the cursor is always pointing to the last element. 
+The key point is to see that the cursor is always pointing to the last element and that the next of cursor is the first element. 
+
+
 
 ``` 
 const Elem& CircleList::back() const {
@@ -19,6 +21,8 @@ const Elem& CircleList::front() const {
 	return cursor -> next -> elem
 	}	
 ```
+
+if we do not follow this convention, then adding a sequence of objects will not lead to a linked list with the same order.
 
 ```
 void CircleList::add(const Elem& e) {
@@ -35,6 +39,11 @@ void CircleList::add(const Elem& e) {
 }
 
 ```
+
+### Discussions
+
+- There is no insert methods. Now inserting anywhere is different than at the end because at the end the we should update the cursor to point to the newly inserted node.
+
 
 
 "

@@ -64,3 +64,14 @@ DSSingleLinkedList >> removeFirst [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	head := head next.
 ]
+
+{ #category : #accessing }
+DSSingleLinkedList >> size [ 
+
+	| size current |
+	self isEmpty ifTrue: [ ^ 0 ].
+	size := 0.
+	current := head. 
+	[ current isNil ] whileFalse: [ current := current next. size := size + 1 ].
+	^ size 
+]

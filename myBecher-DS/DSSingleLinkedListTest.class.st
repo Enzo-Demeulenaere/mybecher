@@ -102,3 +102,16 @@ DSSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
 	self should: [ ll removeFirst ] raise: DSEmptyError.
 	
 ]
+
+{ #category : #'tests - value' }
+DSSingleLinkedListTest >> testSize [
+
+	| ll |
+	ll := DSSingleLinkedList new.
+	self assert: ll size equals: 0.
+	ll addFirst: 33.
+	self assert: ll size equals: 1.
+	ll addFirst: 33.
+	self assert: ll size equals: 2.
+	 
+]
