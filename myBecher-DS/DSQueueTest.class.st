@@ -25,6 +25,21 @@ DSQueueTest >> testDequeue [
 ]
 
 { #category : 'tests' }
+DSQueueTest >> testDequeue2 [
+	
+	| q |
+	q := self queueClass new.
+	q enqueue: 5.
+	q enqueue: 3.
+	q dequeue.  
+	q enqueue: 7.
+	self assert: q size equals: 2.
+	self assert: q front equals: 3.
+	q dequeue.
+	self assert: q front equals: 7.
+]
+
+{ #category : 'tests' }
 DSQueueTest >> testDequeueRaiseAnError [
 	
 	| q |
