@@ -12,15 +12,17 @@ Now this implementation provides head as a lower-level API when the user does no
 
 "
 Class {
-	#name : #DSSingleLinkedList,
-	#superclass : #Object,
+	#name : 'DSSingleLinkedList',
+	#superclass : 'Object',
 	#instVars : [
 		'head'
 	],
-	#category : #'myBecher-DS-SingleLinkedList'
+	#category : 'myBecher-DS-SingleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'SingleLinkedList'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 DSSingleLinkedList >> addFirst: anObject [
 	| item |
 	item := DSSingleLinkedNode new.
@@ -29,43 +31,43 @@ DSSingleLinkedList >> addFirst: anObject [
 	head := item.
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DSSingleLinkedList >> addNodeFirst: aNode [ 
 
 	aNode next: self head.
 	head := aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedList >> first [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ head value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedList >> firstNode [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ head
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedList >> head [
 	^ head
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DSSingleLinkedList >> isEmpty [
 	
 	^ head isNil
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DSSingleLinkedList >> removeFirst [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	head := head next.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedList >> size [ 
 
 	| size current |

@@ -1,29 +1,31 @@
 Class {
-	#name : #DSSingleLinkedNode,
-	#superclass : #Object,
+	#name : 'DSSingleLinkedNode',
+	#superclass : 'Object',
 	#instVars : [
 		'value',
 		'next'
 	],
-	#category : 'myBecher-DS-SingleLinkedList'
+	#category : 'myBecher-DS-SingleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'SingleLinkedList'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedNode >> next [
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedNode >> next: anItem [
 	next := anItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedNode >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSSingleLinkedNode >> value: anObject [ 
 	value := anObject
 ]

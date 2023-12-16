@@ -1,10 +1,12 @@
 Class {
-	#name : #DSSingleLinkedListTest,
-	#superclass : #TestCase,
-	#category : #'myBecher-DS-SingleLinkedList'
+	#name : 'DSSingleLinkedListTest',
+	#superclass : 'TestCase',
+	#category : 'myBecher-DS-SingleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'SingleLinkedList'
 }
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testAddFirst [
 
 	| ll |
@@ -15,7 +17,7 @@ DSSingleLinkedListTest >> testAddFirst [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testAddFirstAddFirst [
 
 	| ll |
@@ -27,7 +29,7 @@ DSSingleLinkedListTest >> testAddFirstAddFirst [
 	 
 ]
 
-{ #category : #'tests - node' }
+{ #category : 'tests - node' }
 DSSingleLinkedListTest >> testAddFirstNode [
 
 	| ll node |
@@ -39,7 +41,7 @@ DSSingleLinkedListTest >> testAddFirstNode [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirst [
 
 	| ll |
@@ -49,7 +51,7 @@ DSSingleLinkedListTest >> testFirst [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirstNode [
 
 	| ll |
@@ -60,7 +62,7 @@ DSSingleLinkedListTest >> testFirstNode [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirstNodeWhenEmptyRaiseError [
 
 	| ll |
@@ -69,7 +71,7 @@ DSSingleLinkedListTest >> testFirstNodeWhenEmptyRaiseError [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
 
 	| ll |
@@ -78,13 +80,13 @@ DSSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
 	 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testIsEmpty [
 
 	self assert: DSSingleLinkedList new isEmpty 
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testRemoveFirst [
 
 	| ll |
@@ -94,7 +96,7 @@ DSSingleLinkedListTest >> testRemoveFirst [
 	self assert: ll isEmpty
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
 
 	| ll |
@@ -103,7 +105,7 @@ DSSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
 	
 ]
 
-{ #category : #'tests - value' }
+{ #category : 'tests - value' }
 DSSingleLinkedListTest >> testSize [
 
 	| ll |

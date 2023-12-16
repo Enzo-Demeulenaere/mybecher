@@ -48,15 +48,17 @@ void CircleList::add(const Elem& e) {
 
 "
 Class {
-	#name : #DSCircularLinkedList,
-	#superclass : #Object,
+	#name : 'DSCircularLinkedList',
+	#superclass : 'Object',
 	#instVars : [
 		'cursor'
 	],
-	#category : #'myBecher-DS-CircularLinkedList'
+	#category : 'myBecher-DS-CircularLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'CircularLinkedList'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 DSCircularLinkedList >> add: anObject [
 	"Add insert a node after the cursor. Still making the list circular."
 
@@ -72,17 +74,17 @@ DSCircularLinkedList >> add: anObject [
 			cursor next: node ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 DSCircularLinkedList >> advance [
 	cursor := cursor next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSCircularLinkedList >> cursor [
 	^ cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSCircularLinkedList >> first [
 	"Return the first element value based on the current cursor. Remember that the cursor refer to the last element."
 	
@@ -90,7 +92,7 @@ DSCircularLinkedList >> first [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSCircularLinkedList >> firstNode [
 	"Remember that the first element (back in book) is the next one of the cursor node.
 	Cursor points to last (back)."
@@ -99,13 +101,13 @@ DSCircularLinkedList >> firstNode [
 	^ cursor next
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DSCircularLinkedList >> isEmpty [
 
 	^ cursor isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSCircularLinkedList >> last [
 	"Return the first element value based on the current cursor."
 	self isEmpty ifTrue: [ DSEmptyError signal ].
@@ -113,7 +115,7 @@ DSCircularLinkedList >> last [
 	
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSCircularLinkedList >> remove [
 	
 	self isEmpty ifTrue: [ ^ self ].

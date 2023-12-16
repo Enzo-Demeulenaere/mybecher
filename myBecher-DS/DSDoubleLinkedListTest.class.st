@@ -1,10 +1,12 @@
 Class {
-	#name : #DSDoubleLinkedListTest,
-	#superclass : #TestCase,
-	#category : #'myBecher-DS-DoubleLinkedList'
+	#name : 'DSDoubleLinkedListTest',
+	#superclass : 'TestCase',
+	#category : 'myBecher-DS-DoubleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'DoubleLinkedList'
 }
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddBeforeNode [
 
 	| dl  |
@@ -20,7 +22,7 @@ DSDoubleLinkedListTest >> testAddBeforeNode [
 	
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirst [
 
 	| dl |
@@ -34,7 +36,7 @@ DSDoubleLinkedListTest >> testAddFirst [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirst2 [
 
 	| dl |
@@ -48,7 +50,7 @@ DSDoubleLinkedListTest >> testAddFirst2 [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddFirstNode [
 
 	| dl node node1 |
@@ -64,7 +66,7 @@ DSDoubleLinkedListTest >> testAddFirstNode [
 	self assert: dl lastNode value equals: 33.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddLast [
 
 	| dl |
@@ -75,7 +77,7 @@ DSDoubleLinkedListTest >> testAddLast [
 
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddLastNode [
 
 	| dl node node1 |
@@ -99,7 +101,7 @@ DSDoubleLinkedListTest >> testAddLastNode [
 	self assert: dl lastNode value equals: 11.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testAddLastWithExistingNode [
 
 	| dl |
@@ -114,7 +116,7 @@ DSDoubleLinkedListTest >> testAddLastWithExistingNode [
 	
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 DSDoubleLinkedListTest >> testFirst [
 
 	| dl |
@@ -124,7 +126,7 @@ DSDoubleLinkedListTest >> testFirst [
 
 ]
 
-{ #category : #'tests - nodes' }
+{ #category : 'tests - nodes' }
 DSDoubleLinkedListTest >> testFirstNode [
 
 	| dl |
@@ -134,7 +136,7 @@ DSDoubleLinkedListTest >> testFirstNode [
 	
 ]
 
-{ #category : #'tests - nodes' }
+{ #category : 'tests - nodes' }
 DSDoubleLinkedListTest >> testFirstNodeOfAnEmptyListShouldRaiseError [
 
 	| dl |
@@ -142,7 +144,7 @@ DSDoubleLinkedListTest >> testFirstNodeOfAnEmptyListShouldRaiseError [
 	self should: [ dl firstNode ] raise: DSEmptyError
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 DSDoubleLinkedListTest >> testFirstOfEmptyShouldRaiseError [
 
 	| dl |
@@ -150,7 +152,7 @@ DSDoubleLinkedListTest >> testFirstOfEmptyShouldRaiseError [
 	self should: [ dl first ] raise: DSEmptyError
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 DSDoubleLinkedListTest >> testIsEmpty [
 
 	| dl |
@@ -158,7 +160,7 @@ DSDoubleLinkedListTest >> testIsEmpty [
 	self assert: dl isEmpty
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 DSDoubleLinkedListTest >> testLast [
 
 	| dl |
@@ -168,7 +170,7 @@ DSDoubleLinkedListTest >> testLast [
 
 ]
 
-{ #category : #'tests - nodes' }
+{ #category : 'tests - nodes' }
 DSDoubleLinkedListTest >> testLastNodeOfAnEmptyListShouldRaiseError [
 
 	| dl |
@@ -176,7 +178,7 @@ DSDoubleLinkedListTest >> testLastNodeOfAnEmptyListShouldRaiseError [
 	self should: [ dl lastNode ] raise: DSEmptyError
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 DSDoubleLinkedListTest >> testLastOfEmptyShouldRaiseError [
 
 	| dl |
@@ -184,7 +186,7 @@ DSDoubleLinkedListTest >> testLastOfEmptyShouldRaiseError [
 	self should: [ dl last ] raise: DSEmptyError
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveFirst [
 
 	| dl |
@@ -198,7 +200,7 @@ DSDoubleLinkedListTest >> testRemoveFirst [
 	self assert: dl firstNode next value equals: 99.
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveFirstOnEmptyShouldBark [
 
 	| dl |
@@ -207,7 +209,7 @@ DSDoubleLinkedListTest >> testRemoveFirstOnEmptyShouldBark [
 	
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveLast [
 
 	| dl |
@@ -221,7 +223,7 @@ DSDoubleLinkedListTest >> testRemoveLast [
 	self assert: dl firstNode next value equals: 66.
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveLastOnEmptyShouldBark [
 
 	| dl |
@@ -229,7 +231,7 @@ DSDoubleLinkedListTest >> testRemoveLastOnEmptyShouldBark [
 	self should: [ dl removeLast ] raise: DSEmptyError 
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DSDoubleLinkedListTest >> testRemoveNode [
 
 	| dl |
@@ -246,7 +248,7 @@ DSDoubleLinkedListTest >> testRemoveNode [
 	self assert: dl firstNode next value equals: 99.
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testSize [
 
 	| dl |
@@ -256,7 +258,7 @@ DSDoubleLinkedListTest >> testSize [
 
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DSDoubleLinkedListTest >> testSizeNonEmpty [
 
 	| dl |

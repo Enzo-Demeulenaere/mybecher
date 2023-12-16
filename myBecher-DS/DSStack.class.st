@@ -1,24 +1,26 @@
 Class {
-	#name : #DSStack,
-	#superclass : #Object,
+	#name : 'DSStack',
+	#superclass : 'Object',
 	#instVars : [
 		'contents'
 	],
-	#category : #'myBecher-DS-Stack'
+	#category : 'myBecher-DS-Stack',
+	#package : 'myBecher-DS',
+	#tag : 'Stack'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DSStack >> initialize [ 
 	super initialize.
 	contents := DSSingleLinkedList new.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DSStack >> isEmpty [
 	^ contents isEmpty
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 DSStack >> pop [
 	| first |
 	first := contents first.
@@ -26,18 +28,18 @@ DSStack >> pop [
 	^ first
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 DSStack >> push: anInteger [ 
 	contents addFirst: anInteger
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 DSStack >> size [
 
 	^ contents size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSStack >> top [
 	^ contents first
 ]

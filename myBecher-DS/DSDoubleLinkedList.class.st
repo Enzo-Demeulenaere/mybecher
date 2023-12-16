@@ -12,16 +12,18 @@ An empty list is then composed of
 Compared to the linked list, this implementation does not expose head because it is an internal implementation choice. This is a hint that may be head should not be part of the API of SingleLinkedList either.
 "
 Class {
-	#name : #DSDoubleLinkedList,
-	#superclass : #Object,
+	#name : 'DSDoubleLinkedList',
+	#superclass : 'Object',
 	#instVars : [
 		'head',
 		'trail'
 	],
-	#category : #'myBecher-DS-DoubleLinkedList'
+	#category : 'myBecher-DS-DoubleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'DoubleLinkedList'
 }
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> add: anInteger beforeNode: aDoubleNode [
 	"add a value in a node before the adDoubleNode node."
 	
@@ -34,14 +36,14 @@ DSDoubleLinkedList >> add: anInteger beforeNode: aDoubleNode [
 	
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> addFirst2: anInteger [
 	"an alternate addFirst: using add:beforeNode:"
 
 	self add: anInteger beforeNode: head next 
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> addFirst: anInteger [ 
 	| node | 
 	node := DSDoubleNode new.
@@ -49,7 +51,7 @@ DSDoubleLinkedList >> addFirst: anInteger [
 	self addFirstNode: node.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> addFirstNode: aNode [ 
 	aNode next: head next.
 	aNode previous: head.
@@ -57,12 +59,12 @@ DSDoubleLinkedList >> addFirstNode: aNode [
 	head next: aNode.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> addLast: anInteger [ 
 	self add: anInteger beforeNode: trail
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> addLastNode: aDSDoubleNode [ 
 	
 	aDSDoubleNode next: trail.
@@ -71,18 +73,18 @@ DSDoubleLinkedList >> addLastNode: aDSDoubleNode [
 	trail previous: aDSDoubleNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleLinkedList >> first [
 	^ self firstNode value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleLinkedList >> firstNode [
 	self isEmpty ifTrue: [  DSEmptyError signal ].
 	^ head next
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DSDoubleLinkedList >> initialize [ 
 	
 	super initialize.
@@ -94,35 +96,35 @@ DSDoubleLinkedList >> initialize [
 	trail previous: head.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DSDoubleLinkedList >> isEmpty [
 	^ head next == trail
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleLinkedList >> last [
 	^ self lastNode value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleLinkedList >> lastNode [
 	self isEmpty ifTrue: [  DSEmptyError signal ].
 	^ trail previous
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> removeFirst [
 	self signalIfEmpty.
 	self removeNode: head next
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> removeLast [
 	self signalIfEmpty.
 	self removeNode: trail previous.
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DSDoubleLinkedList >> removeNode: aDSDoubleNode [ 
 	"Precondition: aDSDoubleNode belongs to the receiver."
 	
@@ -132,12 +134,12 @@ DSDoubleLinkedList >> removeNode: aDSDoubleNode [
 	aDSDoubleNode next previous: prev
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DSDoubleLinkedList >> signalIfEmpty [
 	self isEmpty ifTrue: [ DSEmptyError signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleLinkedList >> size [ 
 
 	| s current |

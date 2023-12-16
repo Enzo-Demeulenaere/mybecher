@@ -1,10 +1,12 @@
 Class {
-	#name : #DSCircularLinkedListTest,
-	#superclass : #TestCase,
-	#category : #'myBecher-DS-CircularLinkedList'
+	#name : 'DSCircularLinkedListTest',
+	#superclass : 'TestCase',
+	#category : 'myBecher-DS-CircularLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'CircularLinkedList'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testAdd [
 
 	| ll |
@@ -13,7 +15,7 @@ DSCircularLinkedListTest >> testAdd [
 	self assert: ll first equals: 66
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testAddMore [
 
 	| ll |
@@ -27,7 +29,7 @@ DSCircularLinkedListTest >> testAddMore [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testAddOnEmpty [
 
 	| ll |
@@ -37,7 +39,7 @@ DSCircularLinkedListTest >> testAddOnEmpty [
 	self assert: ll firstNode next value equals: 66.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testAdvance [
 
 	| ll |
@@ -54,7 +56,7 @@ DSCircularLinkedListTest >> testAdvance [
 	 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testFirstOnEmptyShouldBark [
 
 	| ll |
@@ -63,7 +65,7 @@ DSCircularLinkedListTest >> testFirstOnEmptyShouldBark [
  
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testIsEmpty [
 
 	| ll |
@@ -73,7 +75,7 @@ DSCircularLinkedListTest >> testIsEmpty [
 	self deny: ll isEmpty.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testLast [
 
 	| ll |
@@ -86,7 +88,7 @@ DSCircularLinkedListTest >> testLast [
  
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSCircularLinkedListTest >> testRemoveFirstMore [
 
 	| ll |

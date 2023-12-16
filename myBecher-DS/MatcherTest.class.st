@@ -1,10 +1,12 @@
 Class {
-	#name : #MatcherTest,
-	#superclass : #TestCase,
-	#category : #'myBecher-DS-Fun'
+	#name : 'MatcherTest',
+	#superclass : 'TestCase',
+	#category : 'myBecher-DS-Fun',
+	#package : 'myBecher-DS',
+	#tag : 'Fun'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MatcherTest >> testGoodMatches [
 
 	| matcher |
@@ -12,7 +14,7 @@ MatcherTest >> testGoodMatches [
 	self assert: (matcher matches: '(( 1 ( 1 )))').
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MatcherTest >> testGoodMatchesSequences [
 
 	| matcher |
@@ -20,7 +22,7 @@ MatcherTest >> testGoodMatchesSequences [
 	self assert: (matcher matches: '(( 1 (9) ( 1 )) (9))')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MatcherTest >> testWrongMatches [
 
 	| matcher |

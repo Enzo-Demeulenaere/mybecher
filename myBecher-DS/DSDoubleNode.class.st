@@ -1,39 +1,41 @@
 Class {
-	#name : #DSDoubleNode,
-	#superclass : #Object,
+	#name : 'DSDoubleNode',
+	#superclass : 'Object',
 	#instVars : [
 		'next',
 		'previous',
 		'value'
 	],
-	#category : #'myBecher-DS-DoubleLinkedList'
+	#category : 'myBecher-DS-DoubleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'DoubleLinkedList'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> next [
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> next: anObject [
 
 	next := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> previous [
 
 	^ previous
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> previous: anObject [
 
 	previous := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DSDoubleNode >> printOn: aStream [
 
 	super printOn: aStream.
@@ -43,13 +45,13 @@ DSDoubleNode >> printOn: aStream [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DSDoubleNode >> value: anObject [
 
 	value := anObject

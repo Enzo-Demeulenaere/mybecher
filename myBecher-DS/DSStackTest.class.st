@@ -1,26 +1,28 @@
 Class {
-	#name : #DSStackTest,
-	#superclass : #TestCase,
+	#name : 'DSStackTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'empty',
 		'nonEmpty'
 	],
-	#category : #'myBecher-DS-Stack'
+	#category : 'myBecher-DS-Stack',
+	#package : 'myBecher-DS',
+	#tag : 'Stack'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 DSStackTest >> empty [
 	
 	^ empty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 DSStackTest >> nonEmpty [
 	
 	^ nonEmpty
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 DSStackTest >> setUp [
 	super setUp.
 	empty := self stackClass new.
@@ -32,13 +34,13 @@ DSStackTest >> setUp [
 	
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 DSStackTest >> stackClass [
 
 	^ DSStack
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testEmptyError [
 
 	| aStack |
@@ -52,7 +54,7 @@ DSStackTest >> testEmptyError [
 	self should: [ aStack pop ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testIsEmpty [
 
 	| aStack |
@@ -63,7 +65,7 @@ DSStackTest >> testIsEmpty [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testPop [
 
 	| aStack res elem |
@@ -84,7 +86,7 @@ DSStackTest >> testPop [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testPush [
 	
 	| aStack |
@@ -96,7 +98,7 @@ DSStackTest >> testPush [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testSize [
 	
 	| aStack |
@@ -118,7 +120,7 @@ DSStackTest >> testSize [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSStackTest >> testTop [
 
 	| aStack |

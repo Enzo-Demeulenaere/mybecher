@@ -1,10 +1,12 @@
 Class {
-	#name : #DSDoubleNodeTest,
-	#superclass : #TestCase,
-	#category : #'myBecher-DS-DoubleLinkedList'
+	#name : 'DSDoubleNodeTest',
+	#superclass : 'TestCase',
+	#category : 'myBecher-DS-DoubleLinkedList',
+	#package : 'myBecher-DS',
+	#tag : 'DoubleLinkedList'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DSDoubleNodeTest >> testPrintNil [
 
 	| node | 

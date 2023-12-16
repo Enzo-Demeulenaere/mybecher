@@ -7,7 +7,9 @@ A circular linked list has a cursor.
 
 "
 Class {
-	#name : #ManifestmyBecherDS,
-	#superclass : #PackageManifest,
-	#category : #'myBecher-DS-Manifest'
+	#name : 'ManifestmyBecherDS',
+	#superclass : 'PackageManifest',
+	#category : 'myBecher-DS-Manifest',
+	#package : 'myBecher-DS',
+	#tag : 'Manifest'
 }

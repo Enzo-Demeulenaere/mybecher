@@ -1,19 +1,21 @@
 Class {
-	#name : #DSMatcher,
-	#superclass : #Object,
+	#name : 'DSMatcher',
+	#superclass : 'Object',
 	#instVars : [
 		's'
 	],
-	#category : #'myBecher-DS-Fun'
+	#category : 'myBecher-DS-Fun',
+	#package : 'myBecher-DS',
+	#tag : 'Fun'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DSMatcher >> initialize [ 
 	super initialize.
 	s := DSStack new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DSMatcher >> matches: aCollection [
 
 	| opening closing |
