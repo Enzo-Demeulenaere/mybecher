@@ -1,11 +1,14 @@
 "
 ## Next implementation target 
 
-- Queue
+
 - Dequeue
 
-## Done
+May be implementing a queue based on a linked-list and an array can be useful 
+in scenario where we do not have OrderedCollection at hand. 
 
+## Done
+- Queue
 - circular linked list
 - Stack
 - Double linked list 

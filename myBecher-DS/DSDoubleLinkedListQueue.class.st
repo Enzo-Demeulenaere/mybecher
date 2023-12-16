@@ -20,7 +20,7 @@ that is called the front of the queue. Element insertion is conceptually restric
 ```
 "
 Class {
-	#name : 'DSQueue',
+	#name : 'DSDoubleLinkedListQueue',
 	#superclass : 'Object',
 	#instVars : [
 		'contents'
@@ -31,36 +31,36 @@ Class {
 }
 
 { #category : 'actions' }
-DSQueue >> dequeue [
+DSDoubleLinkedListQueue >> dequeue [
 	contents isEmpty ifTrue: [ DSEmptyError signal ].
 	contents removeFirst
 ]
 
 { #category : 'actions' }
-DSQueue >> enqueue: anObject [ 
+DSDoubleLinkedListQueue >> enqueue: anObject [ 
 		
 	contents addLast: anObject
 ]
 
 { #category : 'accessing' }
-DSQueue >> front [
+DSDoubleLinkedListQueue >> front [
 	self isEmpty ifTrue: [ ^ DSEmptyError signal ].
 	^ contents first
 ]
 
 { #category : 'initialization' }
-DSQueue >> initialize [
+DSDoubleLinkedListQueue >> initialize [
 	super initialize.
-	contents := OrderedCollection new
+	contents := DSDoubleLinkedList new
 ]
 
 { #category : 'testing' }
-DSQueue >> isEmpty [
+DSDoubleLinkedListQueue >> isEmpty [
 	^ contents isEmpty
 ]
 
 { #category : 'initialization' }
-DSQueue >> size [ 
+DSDoubleLinkedListQueue >> size [ 
 
 	^ contents size
 ]
