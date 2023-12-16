@@ -1,7 +1,9 @@
 "
-Pretty straighforward implementation of a linked-list.
+Pretty minimalistic implementation of a linked-list.
+It only offers to add/remove the first element.
+This is quite limited because we could also have the possibility to insert nodes and more.  
 
-Compared to the doubly linked list, this implementation expose head while the doublelinkedlist 
+Compared to the doubly linked list, this implementation exposes `head` while the doublelinkedlist 
 does not since it uses sentinels. This is a hint that may be head should not be part of the API of SingleLinkedList either.
 
 It means that we should provide also `firstNode` too.
@@ -12,7 +14,7 @@ Now this implementation provides head as a lower-level API when the user does no
 
 "
 Class {
-	#name : 'DSSingleLinkedList',
+	#name : 'DSMinimalSingleLinkedList',
 	#superclass : 'Object',
 	#instVars : [
 		'head'
@@ -23,7 +25,7 @@ Class {
 }
 
 { #category : 'adding' }
-DSSingleLinkedList >> addFirst: anObject [
+DSMinimalSingleLinkedList >> addFirst: anObject [
 	| item |
 	item := DSSingleLinkedNode new.
 	item next: head.
@@ -32,43 +34,43 @@ DSSingleLinkedList >> addFirst: anObject [
 ]
 
 { #category : 'adding' }
-DSSingleLinkedList >> addNodeFirst: aNode [ 
+DSMinimalSingleLinkedList >> addNodeFirst: aNode [ 
 
 	aNode next: self head.
 	head := aNode
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedList >> first [
+DSMinimalSingleLinkedList >> first [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ head value
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedList >> firstNode [
+DSMinimalSingleLinkedList >> firstNode [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	^ head
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedList >> head [
+DSMinimalSingleLinkedList >> head [
 	^ head
 ]
 
 { #category : 'testing' }
-DSSingleLinkedList >> isEmpty [
+DSMinimalSingleLinkedList >> isEmpty [
 	
 	^ head isNil
 ]
 
 { #category : 'adding' }
-DSSingleLinkedList >> removeFirst [
+DSMinimalSingleLinkedList >> removeFirst [
 	self isEmpty ifTrue: [ DSEmptyError signal ].
 	head := head next.
 ]
 
 { #category : 'accessing' }
-DSSingleLinkedList >> size [ 
+DSMinimalSingleLinkedList >> size [ 
 
 	| size current |
 	self isEmpty ifTrue: [ ^ 0 ].

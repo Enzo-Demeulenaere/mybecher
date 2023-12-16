@@ -1,5 +1,5 @@
 Class {
-	#name : 'DSSingleLinkedListTest',
+	#name : 'DSMinimalSingleLinkedListTest',
 	#superclass : 'TestCase',
 	#category : 'myBecher-DS-SingleLinkedList',
 	#package : 'myBecher-DS',
@@ -7,10 +7,10 @@ Class {
 }
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testAddFirst [
+DSMinimalSingleLinkedListTest >> testAddFirst [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	ll addFirst: 33.
 	self deny: ll isEmpty.
 	self assert: ll head value equals: 33
@@ -18,10 +18,10 @@ DSSingleLinkedListTest >> testAddFirst [
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testAddFirstAddFirst [
+DSMinimalSingleLinkedListTest >> testAddFirstAddFirst [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	ll addFirst: 33.
 	ll addFirst: 11.
 	self assert: ll head value equals: 11.
@@ -30,10 +30,10 @@ DSSingleLinkedListTest >> testAddFirstAddFirst [
 ]
 
 { #category : 'tests - node' }
-DSSingleLinkedListTest >> testAddFirstNode [
+DSMinimalSingleLinkedListTest >> testAddFirstNode [
 
 	| ll node |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	node := DSSingleLinkedNode new value: 33.
 	ll addNodeFirst: node.
 	self deny: ll isEmpty.
@@ -42,20 +42,20 @@ DSSingleLinkedListTest >> testAddFirstNode [
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testFirst [
+DSMinimalSingleLinkedListTest >> testFirst [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	ll addFirst: 33.
 	self assert: ll first equals: 33
 	 
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testFirstNode [
+DSMinimalSingleLinkedListTest >> testFirstNode [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	ll addFirst: 33.
 	self assert: ll firstNode value equals: 33.
 	self assert: ll firstNode next equals: nil.
@@ -63,53 +63,53 @@ DSSingleLinkedListTest >> testFirstNode [
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testFirstNodeWhenEmptyRaiseError [
+DSMinimalSingleLinkedListTest >> testFirstNodeWhenEmptyRaiseError [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	self should: [ ll firstNode ] raise: DSEmptyError
 	 
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
+DSMinimalSingleLinkedListTest >> testFirstWhenEmptyRaiseError [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	self should: [ ll first ] raise: DSEmptyError
 	 
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testIsEmpty [
+DSMinimalSingleLinkedListTest >> testIsEmpty [
 
-	self assert: DSSingleLinkedList new isEmpty 
+	self assert: DSMinimalSingleLinkedList new isEmpty 
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testRemoveFirst [
+DSMinimalSingleLinkedListTest >> testRemoveFirst [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	ll addFirst: 33.
 	ll removeFirst.
 	self assert: ll isEmpty
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
+DSMinimalSingleLinkedListTest >> testRemoveFirstWhenEmptyRaisesAnException [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	self should: [ ll removeFirst ] raise: DSEmptyError.
 	
 ]
 
 { #category : 'tests - value' }
-DSSingleLinkedListTest >> testSize [
+DSMinimalSingleLinkedListTest >> testSize [
 
 	| ll |
-	ll := DSSingleLinkedList new.
+	ll := DSMinimalSingleLinkedList new.
 	self assert: ll size equals: 0.
 	ll addFirst: 33.
 	self assert: ll size equals: 1.

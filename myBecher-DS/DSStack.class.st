@@ -12,7 +12,7 @@ Class {
 { #category : 'initialization' }
 DSStack >> initialize [ 
 	super initialize.
-	contents := DSSingleLinkedList new.
+	contents := DSMinimalSingleLinkedList new.
 ]
 
 { #category : 'testing' }
