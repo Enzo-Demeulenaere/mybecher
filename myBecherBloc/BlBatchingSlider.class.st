@@ -44,7 +44,8 @@ BlBatchingSlider class >> alainVisual1 [
 	bl buildSlider.
 	bl validatedValueCallback: [ :e | "self changedTimeValue: e" ].
 	bl margin: (BlInsets top: 5).
-	bl openInSpace
+	bl openInSpace.
+	bl inspect
 ]
 
 { #category : #testing }
@@ -104,9 +105,7 @@ BlBatchingSlider class >> defaultMaxPixelDistance [
 { #category : #building }
 BlBatchingSlider class >> interactionDefaultColor [
 
-	^ Color green alpha: 0.
-	
-	
+	^ Color pink alpha: 0
 ]
 
 { #category : #building }
@@ -210,11 +209,25 @@ BlBatchingSlider >> barHeight: anObject [
 ]
 
 { #category : #'private - building' }
+BlBatchingSlider >> buildDefaultInteractor [
+
+	| bl pt |
+	pt := 20 @ 20.
+	bl := BlElement new
+		      geometry: BlCircleGeometry new;
+		      background: self class interactorDefaultColor;
+		      size: pt;
+		      transformDo: [ :t | t translateBy: pt negated / 2 ].
+	^ bl
+]
+
+{ #category : #'private - building' }
 BlBatchingSlider >> buildHorizontalSlider [
 
 	| bl pt |
 	"foreground"
 	bl := BlElement new.
+	bl id: #sliderForeground.
 	bl size: self widgetSize.
 	bl background: self class interactionDefaultColor.
 	bl zIndex: 50.
@@ -247,7 +260,8 @@ BlBatchingSlider >> buildHorizontalSlider [
 	self sliderBar: bl.
 
 	"interactor"
-	bl := self class buildDefaultInteractor.
+	bl := self buildDefaultInteractor.
+	bl id: #sliderInteractor.
 	pt := (self valueToCoord: self currentValue)
 	      @ (self widgetSize y / 2).
 	bl position: pt.
@@ -269,7 +283,9 @@ BlBatchingSlider >> buildVerticalSlider [
 	| bl pt pt1 pt2 |
 	"foreground"
 	bl := BlElement new.
+	bl id: #sliderForeground.
 	bl size: self widgetSize.
+
 	bl background: self class interactionDefaultColor.
 	bl zIndex: 50.
 	self addChild: bl.
@@ -303,7 +319,8 @@ BlBatchingSlider >> buildVerticalSlider [
 	self sliderBar: bl.
 
 	"interactor"
-	bl := self class buildDefaultInteractor.
+	bl := self  buildDefaultInteractor.
+	bl id: #sliderInteractor.
 	pt := self widgetSize x / 2 @ (self valueToCoord: self currentValue).
 	bl position: pt.
 	bl zIndex: 3.
@@ -405,13 +422,12 @@ BlBatchingSlider >> currentValue [
 ]
 
 { #category : #private }
-BlBatchingSlider >> currentValue: anObject [
+BlBatchingSlider >> currentValue: aNumber [
 
-	(anObject <= maxValue and: [ anObject >= minValue ]) ifFalse: [ ^ self ].
-	currentValue := anObject.
-
-	"SmockTracer warn: 'CVal = ' , currentValue printString."
-	self changedCurrentValue: anObject
+	(aNumber <= maxValue and: [ aNumber >= minValue ]) ifFalse: [
+		^ self ].
+	currentValue := aNumber.
+	self changedCurrentValue: aNumber
 ]
 
 { #category : #'api - slider' }

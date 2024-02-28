@@ -268,9 +268,11 @@ BlSimpleVerticalSlider >> buildSlider [
 BlSimpleVerticalSlider >> buildVerticalSlider [
 
 	| bl pt pt1 pt2 |
+	
 	"foreground"
 	bl := BlElement new.
-	bl size: self widgetSize.
+	bl id: #sliderForeground.
+	bl size: widgetSize.
 	bl background: self class interactionDefaultColor.
 	bl zIndex: 50.
 	self addChild: bl.
@@ -278,8 +280,7 @@ BlSimpleVerticalSlider >> buildVerticalSlider [
 
 	"background"
 	bl := BlElement new.
-	pt1 := self barHeight
-	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
+	pt1 := self barHeight	@ (self widgetSize y - (2 * self sliderPixelMargin)).
 	bl size: pt1.
 	bl id: #sliderBackground.
 	pt2 := self widgetSize x / 2 - (self barHeight / 2)
@@ -305,6 +306,7 @@ BlSimpleVerticalSlider >> buildVerticalSlider [
 
 	"interactor"
 	bl := self class buildDefaultInteractor.
+	bl id: #sliderInteractor.
 	pt := self widgetSize x / 2 @ (self valueToCoord: self currentValue).
 	bl position: pt.
 	bl zIndex: 3.
