@@ -85,18 +85,6 @@ BlBatchingSlider class >> barDefaultColor [
 ]
 
 { #category : #building }
-BlBatchingSlider class >> buildDefaultInteractor [
-
-	| bl |
-	bl := BlElement new
-		      geometry: BlCircleGeometry new;
-		      background: self interactorDefaultColor;
-		      size: 20 asPoint;
-		      transformDo: [ :t | t translateBy: -10 asPoint ].
-	^ bl
-]
-
-{ #category : #building }
 BlBatchingSlider class >> defaultMaxPixelDistance [
 
 	^ 25
