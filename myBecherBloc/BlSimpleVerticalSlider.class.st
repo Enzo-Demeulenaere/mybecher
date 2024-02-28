@@ -1,5 +1,5 @@
 Class {
-	#name : #BlBatchingSlider,
+	#name : #BlSimpleVerticalSlider,
 	#superclass : #BlElement,
 	#instVars : [
 		'minValue',
@@ -30,7 +30,7 @@ Class {
 }
 
 { #category : #testing }
-BlBatchingSlider class >> alainVisual1 [
+BlSimpleVerticalSlider class >> alainVisual1 [
 
 	<script>
 	| bl |
@@ -48,7 +48,7 @@ BlBatchingSlider class >> alainVisual1 [
 ]
 
 { #category : #testing }
-BlBatchingSlider class >> alainVisual2 [
+BlSimpleVerticalSlider class >> alainVisual2 [
 
 	<script>
 	| bl2 |
@@ -72,19 +72,19 @@ BlBatchingSlider class >> alainVisual2 [
 ]
 
 { #category : #building }
-BlBatchingSlider class >> backgroundDefaultColor [
+BlSimpleVerticalSlider class >> backgroundDefaultColor [
 
 	^ Color gray
 ]
 
 { #category : #building }
-BlBatchingSlider class >> barDefaultColor [
+BlSimpleVerticalSlider class >> barDefaultColor [
 
 	^ Color blue 
 ]
 
 { #category : #building }
-BlBatchingSlider class >> buildDefaultInteractor [
+BlSimpleVerticalSlider class >> buildDefaultInteractor [
 
 	| bl |
 	bl := BlElement new
@@ -96,13 +96,13 @@ BlBatchingSlider class >> buildDefaultInteractor [
 ]
 
 { #category : #building }
-BlBatchingSlider class >> defaultMaxPixelDistance [
+BlSimpleVerticalSlider class >> defaultMaxPixelDistance [
 
 	^ 25
 ]
 
 { #category : #building }
-BlBatchingSlider class >> interactionDefaultColor [
+BlSimpleVerticalSlider class >> interactionDefaultColor [
 
 	^ Color green alpha: 0.
 	
@@ -110,13 +110,13 @@ BlBatchingSlider class >> interactionDefaultColor [
 ]
 
 { #category : #building }
-BlBatchingSlider class >> interactorDefaultColor [
+BlSimpleVerticalSlider class >> interactorDefaultColor [
 
 	^ Color red 
 ]
 
 { #category : #testing }
-BlBatchingSlider class >> visualTest1 [
+BlSimpleVerticalSlider class >> visualTest1 [
 
 	<script>
 	| bl space val |
@@ -134,7 +134,7 @@ BlBatchingSlider class >> visualTest1 [
 ]
 
 { #category : #testing }
-BlBatchingSlider class >> visualTest2 [
+BlSimpleVerticalSlider class >> visualTest2 [
 
 	<script>
 	| bl space val |
@@ -153,7 +153,7 @@ BlBatchingSlider class >> visualTest2 [
 ]
 
 { #category : #testing }
-BlBatchingSlider class >> visualTest3 [
+BlSimpleVerticalSlider class >> visualTest3 [
 
 	<script>
 	| bl space val |
@@ -172,7 +172,7 @@ BlBatchingSlider class >> visualTest3 [
 ]
 
 { #category : #testing }
-BlBatchingSlider class >> visualTestVertical1 [
+BlSimpleVerticalSlider class >> visualTestVertical1 [
 
 	<script>
 	| bl space val |
@@ -192,29 +192,30 @@ BlBatchingSlider class >> visualTestVertical1 [
 ]
 
 { #category : #private }
-BlBatchingSlider >> addSliderEventHandler: aAssoc [
+BlSimpleVerticalSlider >> addSliderEventHandler: aAssoc [
 
 	sliderEventHandlerList add: aAssoc
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> barHeight [
+BlSimpleVerticalSlider >> barHeight [
 
 	^ barHeight
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> barHeight: anObject [
+BlSimpleVerticalSlider >> barHeight: anObject [
 
 	barHeight := anObject
 ]
 
 { #category : #'private - building' }
-BlBatchingSlider >> buildHorizontalSlider [
+BlSimpleVerticalSlider >> buildHorizontalSlider [
 
 	| bl pt |
 	"foreground"
 	bl := BlElement new.
+	bl id: #sliderForeground.
 	bl size: self widgetSize.
 	bl background: self class interactionDefaultColor.
 	bl zIndex: 50.
@@ -257,14 +258,14 @@ BlBatchingSlider >> buildHorizontalSlider [
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> buildSlider [
+BlSimpleVerticalSlider >> buildSlider [
 	
 		self changeOrientation: self orientation.
 		self initializeEventHandlers.
 ]
 
 { #category : #'private - building' }
-BlBatchingSlider >> buildVerticalSlider [
+BlSimpleVerticalSlider >> buildVerticalSlider [
 
 	| bl pt pt1 pt2 |
 	"foreground"
@@ -312,7 +313,7 @@ BlBatchingSlider >> buildVerticalSlider [
 ]
 
 { #category : #'changing state' }
-BlBatchingSlider >> changeOrientation: aSymbol [
+BlSimpleVerticalSlider >> changeOrientation: aSymbol [
 
 	self removeAllShapes.
 	aSymbol = #horizontal ifTrue: [
@@ -328,13 +329,13 @@ BlBatchingSlider >> changeOrientation: aSymbol [
 ]
 
 { #category : #'changing state' }
-BlBatchingSlider >> changedCurrentValue: aValue [
+BlSimpleVerticalSlider >> changedCurrentValue: aValue [
 
 ^self changedCurrentValue: aValue withSlider: false
 ]
 
 { #category : #'changing state' }
-BlBatchingSlider >> changedCurrentValue: aValue withSlider: aBool [
+BlSimpleVerticalSlider >> changedCurrentValue: aValue withSlider: aBool [
 
 	| v color |
 	v := self valueToCoord: aValue.
@@ -361,7 +362,7 @@ BlBatchingSlider >> changedCurrentValue: aValue withSlider: aBool [
 ]
 
 { #category : #'changing state' }
-BlBatchingSlider >> changedCursorPosition: v [
+BlSimpleVerticalSlider >> changedCursorPosition: v [
 
 	self orientation = #horizontal
 		ifTrue: [
@@ -373,7 +374,7 @@ BlBatchingSlider >> changedCursorPosition: v [
 ]
 
 { #category : #private }
-BlBatchingSlider >> cleanSliderParts [
+BlSimpleVerticalSlider >> cleanSliderParts [
 
 	sliderInteractionRectangle := nil.
 	sliderBackground := nil.
@@ -383,7 +384,7 @@ BlBatchingSlider >> cleanSliderParts [
 ]
 
 { #category : #private }
-BlBatchingSlider >> colorForValue: aValue [
+BlSimpleVerticalSlider >> colorForValue: aValue [
 
 	| i |
 	self enumeratedColors
@@ -399,13 +400,13 @@ BlBatchingSlider >> colorForValue: aValue [
 ]
 
 { #category : #private }
-BlBatchingSlider >> currentValue [
+BlSimpleVerticalSlider >> currentValue [
 
 	^ currentValue
 ]
 
 { #category : #private }
-BlBatchingSlider >> currentValue: anObject [
+BlSimpleVerticalSlider >> currentValue: anObject [
 
 	(anObject <= maxValue and: [ anObject >= minValue ]) ifFalse: [ ^ self ].
 	currentValue := anObject.
@@ -415,13 +416,13 @@ BlBatchingSlider >> currentValue: anObject [
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> decrementValue [
+BlSimpleVerticalSlider >> decrementValue [
 
 	self decrementValue: self stepValue.
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> decrementValue: aValue [
+BlSimpleVerticalSlider >> decrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue - aValue.
@@ -429,43 +430,43 @@ BlBatchingSlider >> decrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> disabledRebuilding [
+BlSimpleVerticalSlider >> disabledRebuilding [
 
 	^ disabledRebuilding
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> disabledRebuilding: anObject [
+BlSimpleVerticalSlider >> disabledRebuilding: anObject [
 
 	disabledRebuilding := anObject
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> endColor [
+BlSimpleVerticalSlider >> endColor [
 
 	^ endColor
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> endColor: anObject [
+BlSimpleVerticalSlider >> endColor: anObject [
 
 	endColor := anObject
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> enumeratedColors [
+BlSimpleVerticalSlider >> enumeratedColors [
 
 	^ enumeratedColors
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> enumeratedColors: anObject [
+BlSimpleVerticalSlider >> enumeratedColors: anObject [
 
 	enumeratedColors := anObject
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> enumeratedValues [
+BlSimpleVerticalSlider >> enumeratedValues [
 
 	enumeratedValues ifNil: [
 		enumeratedValues := (self minValue to: self maxValue by:
@@ -474,19 +475,19 @@ BlBatchingSlider >> enumeratedValues [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> enumeratedValues: anObject [
+BlSimpleVerticalSlider >> enumeratedValues: anObject [
 
 	enumeratedValues := anObject
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> incrementValue [
+BlSimpleVerticalSlider >> incrementValue [
 
 	self incrementValue: self stepValue
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> incrementValue: aValue [
+BlSimpleVerticalSlider >> incrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue + aValue.
@@ -494,19 +495,19 @@ BlBatchingSlider >> incrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> initColor [
+BlSimpleVerticalSlider >> initColor [
 
 	^ initColor
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> initColor: anObject [
+BlSimpleVerticalSlider >> initColor: anObject [
 
 	initColor := anObject
 ]
 
 { #category : #initialization }
-BlBatchingSlider >> initialize [
+BlSimpleVerticalSlider >> initialize [
 
 	super initialize.
 	barHeight := 8.
@@ -525,7 +526,7 @@ BlBatchingSlider >> initialize [
 ]
 
 { #category : #initialization }
-BlBatchingSlider >> initializeEventHandlers [
+BlSimpleVerticalSlider >> initializeEventHandlers [
 
 	| bl |
 	self isBuildSlider ifFalse: [
@@ -554,7 +555,7 @@ BlBatchingSlider >> initializeEventHandlers [
 ]
 
 { #category : #initialization }
-BlBatchingSlider >> initializeSpaceEventHandlers [
+BlSimpleVerticalSlider >> initializeSpaceEventHandlers [
 
 	self space
 		addEventHandlerOn: BlMouseUpEvent
@@ -562,50 +563,50 @@ BlBatchingSlider >> initializeSpaceEventHandlers [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> interactorPushedPoint [
+BlSimpleVerticalSlider >> interactorPushedPoint [
 
 	^ interactorPushedPoint
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> interactorPushedPoint: anObject [
+BlSimpleVerticalSlider >> interactorPushedPoint: anObject [
 
 	interactorPushedPoint := anObject
 ]
 
 { #category : #private }
-BlBatchingSlider >> is: aValue near: aValue2 [
+BlSimpleVerticalSlider >> is: aValue near: aValue2 [
 
 	^(aValue - aValue2) abs < self maxPixelDistance
 ]
 
 { #category : #'private - building' }
-BlBatchingSlider >> isBuildSlider [
+BlSimpleVerticalSlider >> isBuildSlider [
 	"if no interactor, no slider"
 
 	^ self sliderInteractor isNil not
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> maxPixelDistance [
+BlSimpleVerticalSlider >> maxPixelDistance [
 
 	^ maxPixelDistance 
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> maxPixelDistance: anObject [
+BlSimpleVerticalSlider >> maxPixelDistance: anObject [
 
 	maxPixelDistance := anObject
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> maxValue [
+BlSimpleVerticalSlider >> maxValue [
 
 	^ maxValue
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> maxValue: anObject [
+BlSimpleVerticalSlider >> maxValue: anObject [
 	"when we change the maxValue, we rebuilding the slider"
 	
 	maxValue := anObject.
@@ -615,13 +616,13 @@ BlBatchingSlider >> maxValue: anObject [
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> minValue [
+BlSimpleVerticalSlider >> minValue [
 
 	^ minValue
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> minValue: anObject [
+BlSimpleVerticalSlider >> minValue: anObject [
 
 	minValue := anObject.
 	enumeratedValues := nil.
@@ -630,7 +631,7 @@ BlBatchingSlider >> minValue: anObject [
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> nearestValue: aValue [
+BlSimpleVerticalSlider >> nearestValue: aValue [
 
 	| val minResult tmp tmp2 |
 	self enumeratedValues ifNil: [ ^ aValue ].
@@ -647,13 +648,13 @@ BlBatchingSlider >> nearestValue: aValue [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> orientation [
+BlSimpleVerticalSlider >> orientation [
 
 	^ orientation
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> orientation: anObject [
+BlSimpleVerticalSlider >> orientation: anObject [
 
 	self orientation = anObject ifTrue: [ ^ self ].
 	self size: self widgetSize transposed.
@@ -662,7 +663,7 @@ BlBatchingSlider >> orientation: anObject [
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> pointToValue: point [
+BlSimpleVerticalSlider >> pointToValue: point [
 
 	^  self orientation = #horizontal
 			ifTrue: [ self pointToXValue: point ]
@@ -670,7 +671,7 @@ BlBatchingSlider >> pointToValue: point [
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> pointToXValue: point [
+BlSimpleVerticalSlider >> pointToXValue: point [
 
 	| facteur valeur |
 	facteur := point x / self sliderBackground size x.
@@ -682,7 +683,7 @@ BlBatchingSlider >> pointToXValue: point [
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> pointToYValue: point [
+BlSimpleVerticalSlider >> pointToYValue: point [
 
 	| facteur valeur |
 	facteur := 1 - (point y / self sliderBackground size y).
@@ -694,21 +695,21 @@ BlBatchingSlider >> pointToYValue: point [
 ]
 
 { #category : #private }
-BlBatchingSlider >> proportionOf: aValue [
+BlSimpleVerticalSlider >> proportionOf: aValue [
 	| i |
 	i := self enumeratedValues indexOf: aValue.
 	^ (i/self enumeratedValues size)
 ]
 
 { #category : #'private - building' }
-BlBatchingSlider >> rebuildSlider [
+BlSimpleVerticalSlider >> rebuildSlider [
 
 	self disabledRebuilding ifTrue: [ ^ self ].
 	self changeOrientation: self orientation.
 ]
 
 { #category : #private }
-BlBatchingSlider >> removeAllShapes [
+BlSimpleVerticalSlider >> removeAllShapes [
 
 	| list |
 	list := self sliderParts.
@@ -718,33 +719,33 @@ BlBatchingSlider >> removeAllShapes [
 ]
 
 { #category : #private }
-BlBatchingSlider >> removeAllSliderEventHandlers [
+BlSimpleVerticalSlider >> removeAllSliderEventHandlers [
 
 	sliderEventHandlerList do: [ :e | e key removeEventHandler: e value ].
 	sliderEventHandlerList := OrderedCollection new
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> setMaxValue [
+BlSimpleVerticalSlider >> setMaxValue [
 
 	self setValue: self maxValue.
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> setMinValue [
+BlSimpleVerticalSlider >> setMinValue [
 
 	self setValue: self minValue
 ]
 
 { #category : #'api - slider' }
-BlBatchingSlider >> setValue: aValue [
+BlSimpleVerticalSlider >> setValue: aValue [
 
 	(aValue < self maxValue and: [ aValue > self minValue ]) ifTrue: [
 		self validatedValue: aValue ].
 ]
 
 { #category : #'api - bounds' }
-BlBatchingSlider >> size: aValue [
+BlSimpleVerticalSlider >> size: aValue [
 
 	super size: aValue.
 	self widgetSize: aValue.
@@ -752,31 +753,31 @@ BlBatchingSlider >> size: aValue [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderBackground [
+BlSimpleVerticalSlider >> sliderBackground [
 
 	^ sliderBackground
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderBackground: anObject [
+BlSimpleVerticalSlider >> sliderBackground: anObject [
 
 	sliderBackground := anObject
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderBar [
+BlSimpleVerticalSlider >> sliderBar [
 
 	^ sliderBar
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderBar: anObject [
+BlSimpleVerticalSlider >> sliderBar: anObject [
 
 	sliderBar := anObject
 ]
 
 { #category : #'events - bar' }
-BlBatchingSlider >> sliderBarClicked: event [
+BlSimpleVerticalSlider >> sliderBarClicked: event [
 
 	| tmp val |
 	tmp := self sliderBackground globalPointToLocal: event position.
@@ -785,43 +786,43 @@ BlBatchingSlider >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderDecorations [
+BlSimpleVerticalSlider >> sliderDecorations [
 
 	^ sliderDecorations
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderDecorations: anObject [
+BlSimpleVerticalSlider >> sliderDecorations: anObject [
 
 	sliderDecorations := anObject
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderInteractionRectangle [
+BlSimpleVerticalSlider >> sliderInteractionRectangle [
 
 	^ sliderInteractionRectangle
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderInteractionRectangle: anObject [
+BlSimpleVerticalSlider >> sliderInteractionRectangle: anObject [
 
 	sliderInteractionRectangle := anObject
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderInteractor [
+BlSimpleVerticalSlider >> sliderInteractor [
 
 	^ sliderInteractor
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderInteractor: anObject [
+BlSimpleVerticalSlider >> sliderInteractor: anObject [
 
 	sliderInteractor := anObject
 ]
 
 { #category : #'events - interactor' }
-BlBatchingSlider >> sliderInteractorMoved: event [
+BlSimpleVerticalSlider >> sliderInteractorMoved: event [
 
 	| val tmp v |
 	self interactorPushedPoint isNil ifTrue: [ ^ self ].
@@ -843,7 +844,7 @@ BlBatchingSlider >> sliderInteractorMoved: event [
 ]
 
 { #category : #'events - interactor' }
-BlBatchingSlider >> sliderInteractorPushed: event [
+BlSimpleVerticalSlider >> sliderInteractorPushed: event [
 
 	| value pt1 pt2 |
 	self sliderBar ifNil: [ ^ self ].
@@ -856,7 +857,7 @@ BlBatchingSlider >> sliderInteractorPushed: event [
 ]
 
 { #category : #'events - interactor' }
-BlBatchingSlider >> sliderInteractorReleased: event [
+BlSimpleVerticalSlider >> sliderInteractorReleased: event [
 
 	self interactorPushedPoint isNil ifTrue: [ ^ self ].
 	self interactorPushedPoint: nil.
@@ -864,7 +865,7 @@ BlBatchingSlider >> sliderInteractorReleased: event [
 ]
 
 { #category : #private }
-BlBatchingSlider >> sliderParts [
+BlSimpleVerticalSlider >> sliderParts [
 
 	| oc |
 	oc := OrderedCollection new.
@@ -877,13 +878,13 @@ BlBatchingSlider >> sliderParts [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderPixelMargin [
+BlSimpleVerticalSlider >> sliderPixelMargin [
 
 	^ sliderPixelMargin
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> sliderPixelMargin: anObject [
+BlSimpleVerticalSlider >> sliderPixelMargin: anObject [
 
 	sliderPixelMargin := anObject.
 	self isBuildSlider ifTrue: [ 
@@ -891,32 +892,32 @@ BlBatchingSlider >> sliderPixelMargin: anObject [
 ]
 
 { #category : #'api - space' }
-BlBatchingSlider >> space: aSpace [
+BlSimpleVerticalSlider >> space: aSpace [
 	super space: aSpace.
 	self initializeSpaceEventHandlers
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> stepValue [
+BlSimpleVerticalSlider >> stepValue [
 
 	^ stepValue
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> stepValue: anObject [
+BlSimpleVerticalSlider >> stepValue: anObject [
 
 	stepValue := anObject.
 	enumeratedValues := nil.
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> validatedValue [
+BlSimpleVerticalSlider >> validatedValue [
 
 	^ validatedValue
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> validatedValue: aValue [
+BlSimpleVerticalSlider >> validatedValue: aValue [
 
 	currentValue := aValue.
 	self changedCurrentValue: aValue withSlider: true. 
@@ -925,19 +926,19 @@ BlBatchingSlider >> validatedValue: aValue [
 ]
 
 { #category : #private }
-BlBatchingSlider >> validatedValueCallback [
+BlSimpleVerticalSlider >> validatedValueCallback [
 
 	^ validatedValueCallback
 ]
 
 { #category : #'api - values' }
-BlBatchingSlider >> validatedValueCallback: anObject [
+BlSimpleVerticalSlider >> validatedValueCallback: anObject [
 
 	validatedValueCallback := anObject
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> valueToCoord: aValue [
+BlSimpleVerticalSlider >> valueToCoord: aValue [
 
 	^ self orientation = #horizontal 
 		ifTrue: [ self valueToX: aValue ]
@@ -946,7 +947,7 @@ BlBatchingSlider >> valueToCoord: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> valueToX: aValue [
+BlSimpleVerticalSlider >> valueToX: aValue [
 
 	| valeurCourante valeurTotale facteur |
 	valeurCourante := aValue - self minValue.
@@ -957,7 +958,7 @@ BlBatchingSlider >> valueToX: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlBatchingSlider >> valueToY: aValue [
+BlSimpleVerticalSlider >> valueToY: aValue [
 
 	| valeurCourante valeurTotale facteur |
 	valeurCourante := aValue - self minValue.
@@ -970,7 +971,7 @@ BlBatchingSlider >> valueToY: aValue [
 ]
 
 { #category : #private }
-BlBatchingSlider >> whenEvent: anEventClass do: aBlock [
+BlSimpleVerticalSlider >> whenEvent: anEventClass do: aBlock [
 
 	| anEventHandler |
 	anEventHandler := BlEventHandler
@@ -981,7 +982,7 @@ BlBatchingSlider >> whenEvent: anEventClass do: aBlock [
 ]
 
 { #category : #private }
-BlBatchingSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
+BlSimpleVerticalSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
 
 	| anEventHandler |
 	anEventHandler := BlEventHandler
@@ -992,13 +993,13 @@ BlBatchingSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
 ]
 
 { #category : #accessing }
-BlBatchingSlider >> widgetSize [
+BlSimpleVerticalSlider >> widgetSize [
 
 	^ widgetSize
 ]
 
 { #category : #private }
-BlBatchingSlider >> widgetSize: anObject [
+BlSimpleVerticalSlider >> widgetSize: anObject [
 
 	widgetSize := anObject
 ]
