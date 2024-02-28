@@ -93,7 +93,7 @@ BlBatchingSlider class >> defaultMaxPixelDistance [
 { #category : #building }
 BlBatchingSlider class >> interactionDefaultColor [
 
-	^ Color pink alpha: 0
+	^ Color pink alpha: 0.5
 ]
 
 { #category : #building }
@@ -862,7 +862,7 @@ BlBatchingSlider >> sliderInteractorPushed: event [
 { #category : #'events - interactor' }
 BlBatchingSlider >> sliderInteractorReleased: event [
 
-	self interactorPushedPoint isNil ifTrue: [ ^ self ].
+	self interactorPushedPoint ifNil: [ ^ self ].
 	self interactorPushedPoint: nil.
 	self validatedValue: self currentValue
 ]
