@@ -1,3 +1,6 @@
+"
+I'm a copy of the segmented Slider to play with it.
+"
 Class {
 	#name : #BlCleanSlider,
 	#superclass : #BlElement,
@@ -17,14 +20,14 @@ Class {
 		'orientation',
 		'disabledRebuilding',
 		'sliderEventHandlerList',
-		'barHeight',
 		'widgetSize',
 		'interactorPushedPoint',
 		'maxPixelDistance',
 		'enumeratedValues',
 		'enumeratedColors',
 		'initColor',
-		'endColor'
+		'endColor',
+		'barThickness'
 	],
 	#category : #myBecherBloc
 }
@@ -186,15 +189,15 @@ BlCleanSlider >> addSliderEventHandler: aAssoc [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> barHeight [
+BlCleanSlider >> barThickness [
 
-	^ barHeight
+	^ barThickness
 ]
 
 { #category : #accessing }
-BlCleanSlider >> barHeight: anObject [
+BlCleanSlider >> barThickness: anObject [
 
-	barHeight := anObject
+	barThickness := anObject
 ]
 
 { #category : #'private - building' }
@@ -226,10 +229,10 @@ BlCleanSlider >> buildHorizontalSlider [
 	"background"
 	bl := BlElement new.
 	bl size:
-		self widgetSize x - (2 * self sliderPixelMargin) @ self barHeight.
+		self widgetSize x - (2 * self sliderPixelMargin) @ self barThickness.
 	bl id: #sliderBackground.
 	bl position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barHeight / 2)).
+		@ (self widgetSize y / 2 - (self barThickness / 2)).
 	bl background: self class backgroundDefaultColor.
 	bl zIndex: 0.
 	self addChild: bl.
@@ -239,10 +242,10 @@ BlCleanSlider >> buildHorizontalSlider [
 	bl := BlElement new.
 	bl size:
 		(self valueToCoord: self currentValue)
-		- (1 * self sliderPixelMargin) @ self barHeight.
+		- (1 * self sliderPixelMargin) @ self barThickness.
 	bl id: #sliderBar.
 	bl position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barHeight / 2)).
+		@ (self widgetSize y / 2 - (self barThickness / 2)).
 	bl background: self class barDefaultColor.
 	bl zIndex: 2.
 	self addChild: bl.
@@ -282,11 +285,11 @@ BlCleanSlider >> buildVerticalSlider [
 
 	"background"
 	bl := BlElement new.
-	pt1 := self barHeight
+	pt1 := self barThickness
 	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
 	bl size: pt1.
 	bl id: #sliderBackground.
-	pt2 := self widgetSize x / 2 - (self barHeight / 2)
+	pt2 := self widgetSize x / 2 - (self barThickness / 2)
 	       @ self sliderPixelMargin.
 	bl position: pt2.
 	bl background: self class backgroundDefaultColor.
@@ -296,11 +299,11 @@ BlCleanSlider >> buildVerticalSlider [
 
 	"bar"
 	bl := BlElement new.
-	bl size: self barHeight
+	bl size: self barThickness
 		@ (self widgetSize y - (self valueToCoord: self currentValue)
 			 - self sliderPixelMargin).
 	bl id: #sliderBar.
-	bl position: self widgetSize x / 2 - (self barHeight / 2)
+	bl position: self widgetSize x / 2 - (self barThickness / 2)
 		@ (self valueToCoord: self currentValue).
 	bl background: self class barDefaultColor.
 	bl zIndex: 2.
@@ -355,11 +358,11 @@ BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
 			aBool ifTrue: [
 				self sliderInteractor ifNotNil: [ :sl |
 					sl position: sl constraints position x @ v ] ].
-			self sliderBar size: self barHeight
+			self sliderBar size: self barThickness
 				@ (self widgetSize y - (self valueToCoord: self currentValue)
 					 - self sliderPixelMargin).
 			self sliderBar position:
-				self widgetSize x / 2 - (self barHeight / 2)
+				self widgetSize x / 2 - (self barThickness / 2)
 				@ (self valueToCoord: self currentValue) ].
 	color := self colorForValue: aValue.
 	self sliderInteractor background: color.
@@ -471,11 +474,12 @@ BlCleanSlider >> enumeratedColors: anObject [
 
 { #category : #'api - values' }
 BlCleanSlider >> enumeratedValues [
-
+	"since the enumerated value are derived from min, max and step, we lazy initialize it."
+	
 	enumeratedValues ifNil: [
 		enumeratedValues := (self minValue to: self maxValue by:
 		                     self stepValue) asOrderedCollection ].
-	^enumeratedValues 
+	^ enumeratedValues
 ]
 
 { #category : #accessing }
@@ -514,7 +518,7 @@ BlCleanSlider >> initColor: anObject [
 BlCleanSlider >> initialize [
 
 	super initialize.
-	barHeight := 8.
+	barThickness := 8.
 	maxValue := 100.0.
 	minValue := 0.0.
 	self size: 300 @ 30.
@@ -611,12 +615,11 @@ BlCleanSlider >> maxValue [
 
 { #category : #'api - values' }
 BlCleanSlider >> maxValue: anObject [
-	"when we change the maxValue, we rebuilding the slider"
-	
+	"when we change the maxValue, we rebuilding the enumerated values and slider"
+
 	maxValue := anObject.
 	enumeratedValues := nil.
-	self isBuildSlider ifTrue: [ 
-		self rebuildSlider ]
+	self isBuildSlider ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #'api - values' }
