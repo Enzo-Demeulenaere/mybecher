@@ -16,8 +16,6 @@ Class {
 		'sliderInteractor',
 		'sliderInteractionRectangle',
 		'sliderBackground',
-		'sliderDecorations',
-		'orientation',
 		'disabledRebuilding',
 		'sliderEventHandlerList',
 		'widgetSize',
@@ -27,7 +25,8 @@ Class {
 		'enumeratedColors',
 		'initColor',
 		'endColor',
-		'barThickness'
+		'barThickness',
+		'isHorizontal'
 	],
 	#category : #myBecherBloc
 }
@@ -68,7 +67,6 @@ BlCleanSlider class >> alainVisual2 [
 	bl2 stepValue: 50.
 	bl2 size: 550 @ 48.
 	bl2 sliderPixelMargin: 35.
-	bl2 orientation: #vertical.
 	bl2 buildSlider.
 	bl2 validatedValueCallback: [ :e | "self changedOperationalActivityValue: e"
 		 ].
@@ -119,8 +117,7 @@ BlCleanSlider class >> visualTest1 [
 	space windowExtent: 1920 @ 1050.
 	space setPosition: 0 @ 30.
 	val := space -> bl.
-	val inspect.
-	^val.
+	^ val
 ]
 
 { #category : #testing }
@@ -150,7 +147,7 @@ BlCleanSlider class >> visualTest3 [
 	bl := self new.
 	bl minValue: 10.
 	bl maxValue: 50.
-	bl stepValue: 1.
+	bl stepValue: 0.1.
 	bl buildSlider.
 	space := bl openInNewSpace.
 	space windowExtent: 1920 @ 1050.
@@ -170,7 +167,6 @@ BlCleanSlider class >> visualTestVertical1 [
 	bl minValue: 10.
 	bl maxValue: 50.
 	bl stepValue: 1.
-	bl orientation: #vertical.
 	bl buildSlider.
 	space := bl openInNewSpace.
 	space windowExtent: 1920 @ 1050.
@@ -200,6 +196,18 @@ BlCleanSlider >> barThickness: anObject [
 	barThickness := anObject
 ]
 
+{ #category : #accessing }
+BlCleanSlider >> beHorizontal [  
+
+	self horizontal: true.
+]
+
+{ #category : #accessing }
+BlCleanSlider >> beVertical [ 
+
+	self horizontal: false
+]
+
 { #category : #'private - building' }
 BlCleanSlider >> buildDefaultInteractor [
 
@@ -213,127 +221,143 @@ BlCleanSlider >> buildDefaultInteractor [
 	^ bl
 ]
 
+{ #category : #'as yet unclassified' }
+BlCleanSlider >> buildForeground [ 
+
+	
+	| fgElt |
+	fgElt := BlElement new.
+	fgElt id: #sliderInteractionForeground.
+	fgElt size: self widgetSize.
+	fgElt background: self class interactionDefaultColor.
+	fgElt zIndex: 50.
+	self addChild: fgElt.
+	self sliderInteractionRectangle: fgElt.
+]
+
+{ #category : #'as yet unclassified' }
+BlCleanSlider >> buildHorizontalBackground [
+
+	| bgElt |
+	bgElt := BlElement new.
+	bgElt size:
+		self widgetSize x - (2 * self sliderPixelMargin) @ self barThickness.
+	bgElt id: #sliderBackground.
+	bgElt position: self sliderPixelMargin
+		@ (self widgetSize y / 2 - (self barThickness / 2)).
+	bgElt background: self class backgroundDefaultColor.
+	bgElt zIndex: 0.
+	self addChild: bgElt.
+	self sliderBackground: bgElt
+]
+
+{ #category : #'as yet unclassified' }
+BlCleanSlider >> buildHorizontalBar [
+
+	| bar |
+	bar := BlElement new.
+	bar size:
+		(self valueToCoord: self currentValue)
+		- (self sliderPixelMargin) @ self barThickness.
+	bar id: #sliderBar.
+	bar position: self sliderPixelMargin
+		@ (self widgetSize y / 2 - (self barThickness / 2)).
+	bar background: self class barDefaultColor.
+	bar zIndex: 2.
+	self addChild: bar.
+	self sliderBar: bar
+]
+
+{ #category : #'as yet unclassified' }
+BlCleanSlider >> buildHorizontalInteractor [ 
+
+	| interactor pt |
+	interactor := self buildDefaultInteractor.
+	interactor id: #sliderInteractor.
+	pt := (self valueToCoord: self currentValue)
+	      @ (self widgetSize y / 2).
+	interactor position: pt.
+	interactor zIndex: 3.
+	self addChild: interactor.
+	self sliderInteractor: interactor
+]
+
 { #category : #'private - building' }
 BlCleanSlider >> buildHorizontalSlider [
 
-	| bl pt |
-	"foreground"
-	bl := BlElement new.
-	bl id: #sliderInteractionForeground.
-	bl size: self widgetSize.
-	bl background: self class interactionDefaultColor.
-	bl zIndex: 50.
-	self addChild: bl.
-	self sliderInteractionRectangle: bl.
+	self buildForeground.
+	self buildHorizontalBackground.
+	self buildHorizontalBar.
+	self buildHorizontalInteractor
+]
 
-	"background"
-	bl := BlElement new.
-	bl size:
-		self widgetSize x - (2 * self sliderPixelMargin) @ self barThickness.
-	bl id: #sliderBackground.
-	bl position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barThickness / 2)).
-	bl background: self class backgroundDefaultColor.
-	bl zIndex: 0.
-	self addChild: bl.
-	self sliderBackground: bl.
+{ #category : #'changing state' }
+BlCleanSlider >> buildOrientation [
 
-	"bar"
-	bl := BlElement new.
-	bl size:
-		(self valueToCoord: self currentValue)
-		- (1 * self sliderPixelMargin) @ self barThickness.
-	bl id: #sliderBar.
-	bl position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barThickness / 2)).
-	bl background: self class barDefaultColor.
-	bl zIndex: 2.
-	self addChild: bl.
-	self sliderBar: bl.
-
-	"interactor"
-	bl := self buildDefaultInteractor.
-	bl id: #sliderInteractor.
-	pt := (self valueToCoord: self currentValue)
-	      @ (self widgetSize y / 2).
-	bl position: pt.
-	bl zIndex: 3.
-	self addChild: bl.
-	self sliderInteractor: bl
+	self removeAllShapes.
+	self size: self widgetSize.
+	self isHorizontal
+		ifTrue: [ self buildHorizontalSlider ]
+		ifFalse: [ self buildVerticalSlider ].
+	^ self initializeEventHandlers
 ]
 
 { #category : #'api - slider' }
 BlCleanSlider >> buildSlider [
-	
-		self changeOrientation: self orientation.
-		self initializeEventHandlers.
+
+	self buildOrientation.
+	self initializeEventHandlers
 ]
 
 { #category : #'private - building' }
 BlCleanSlider >> buildVerticalSlider [
 
-	| bl pt pt1 pt2 |
+	| fgElt bgElt bar interactor pt pt1 pt2 |
 	"foreground"
-	bl := BlElement new.
-	bl id: #sliderForeground.
-	bl size: self widgetSize.
+	fgElt := BlElement new.
+	fgElt id: #sliderForeground.
+	fgElt size: self widgetSize.
 
-	bl background: self class interactionDefaultColor.
-	bl zIndex: 50.
-	self addChild: bl.
-	self sliderInteractionRectangle: bl.
+	fgElt background: self class interactionDefaultColor.
+	fgElt zIndex: 50.
+	self addChild: fgElt.
+	self sliderInteractionRectangle: fgElt.
 
 	"background"
-	bl := BlElement new.
+	bgElt := BlElement new.
 	pt1 := self barThickness
 	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
-	bl size: pt1.
-	bl id: #sliderBackground.
+	bgElt size: pt1.
+	bgElt id: #sliderBackground.
 	pt2 := self widgetSize x / 2 - (self barThickness / 2)
 	       @ self sliderPixelMargin.
-	bl position: pt2.
-	bl background: self class backgroundDefaultColor.
-	bl zIndex: 0.
-	self addChild: bl.
-	self sliderBackground: bl.
+	bgElt position: pt2.
+	bgElt background: self class backgroundDefaultColor.
+	bgElt zIndex: 0.
+	self addChild: bgElt.
+	self sliderBackground: bgElt.
 
 	"bar"
-	bl := BlElement new.
-	bl size: self barThickness
+	bar := BlElement new.
+	bar size: self barThickness
 		@ (self widgetSize y - (self valueToCoord: self currentValue)
 			 - self sliderPixelMargin).
-	bl id: #sliderBar.
-	bl position: self widgetSize x / 2 - (self barThickness / 2)
+	bar id: #sliderBar.
+	bar position: self widgetSize x / 2 - (self barThickness / 2)
 		@ (self valueToCoord: self currentValue).
-	bl background: self class barDefaultColor.
-	bl zIndex: 2.
-	self addChild: bl.
-	self sliderBar: bl.
+	bar background: self class barDefaultColor.
+	bar zIndex: 2.
+	self addChild: bar.
+	self sliderBar: bar.
 
 	"interactor"
-	bl := self  buildDefaultInteractor.
-	bl id: #sliderInteractor.
+	interactor := self buildDefaultInteractor.
+	interactor id: #sliderInteractor.
 	pt := self widgetSize x / 2 @ (self valueToCoord: self currentValue).
-	bl position: pt.
-	bl zIndex: 3.
-	self addChild: bl.
-	self sliderInteractor: bl
-]
-
-{ #category : #'changing state' }
-BlCleanSlider >> changeOrientation: aSymbol [
-
-	self removeAllShapes.
-	aSymbol = #horizontal ifTrue: [
-		self size: self widgetSize.
-		self buildHorizontalSlider.
-		^self initializeEventHandlers. ].
-	aSymbol = #vertical ifTrue: [
-		self size: self widgetSize.
-		self buildVerticalSlider.
-		^self initializeEventHandlers
-		 ].
-	^ self error: 'Unknown orientation : ' , aSymbol
+	interactor position: pt.
+	interactor zIndex: 3.
+	self addChild: interactor.
+	self sliderInteractor: interactor
 ]
 
 { #category : #'changing state' }
@@ -347,7 +371,7 @@ BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
 
 	| v color |
 	v := self valueToCoord: aValue.
-	self orientation = #horizontal
+	self isHorizontal 
 		ifTrue: [
 			aBool ifTrue: [
 				self sliderInteractor ifNotNil: [ :sl |
@@ -372,7 +396,7 @@ BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
 { #category : #'changing state' }
 BlCleanSlider >> changedCursorPosition: v [
 
-	self orientation = #horizontal
+	self isHorizontal 
 		ifTrue: [
 			self sliderInteractor ifNotNil: [ :sl |
 				sl position: v @ sl constraints position y ] ]
@@ -386,7 +410,6 @@ BlCleanSlider >> cleanSliderParts [
 
 	sliderInteractionRectangle := nil.
 	sliderBackground := nil.
-	sliderDecorations := nil.
 	sliderBar := nil.
 	sliderInteractor := nil
 ]
@@ -488,6 +511,12 @@ BlCleanSlider >> enumeratedValues: anObject [
 	enumeratedValues := anObject
 ]
 
+{ #category : #accessing }
+BlCleanSlider >> horizontal: aBoolean [
+
+	isHorizontal := aBoolean 
+]
+
 { #category : #'api - slider' }
 BlCleanSlider >> incrementValue [
 
@@ -523,7 +552,7 @@ BlCleanSlider >> initialize [
 	minValue := 0.0.
 	self size: 300 @ 30.
 	currentValue := 0.0.
-	orientation := #horizontal.
+	self beHorizontal.
 	sliderPixelMargin := 5.
 	disabledRebuilding := false.
 	stepValue := 1.
@@ -592,7 +621,13 @@ BlCleanSlider >> is: aValue near: aValue2 [
 BlCleanSlider >> isBuildSlider [
 	"if no interactor, no slider"
 
-	^ self sliderInteractor isNil not
+	^ self sliderInteractor isNotNil
+]
+
+{ #category : #accessing }
+BlCleanSlider >> isHorizontal [ 
+
+	^ isHorizontal 
 ]
 
 { #category : #accessing }
@@ -654,27 +689,12 @@ BlCleanSlider >> nearestValue: aValue [
 	^ val
 ]
 
-{ #category : #accessing }
-BlCleanSlider >> orientation [
-
-	^ orientation
-]
-
-{ #category : #accessing }
-BlCleanSlider >> orientation: anObject [
-
-	self orientation = anObject ifTrue: [ ^ self ].
-	self size: self widgetSize transposed.
-	orientation := anObject.
-	self changeOrientation: anObject
-]
-
 { #category : #'api - transformations' }
 BlCleanSlider >> pointToValue: point [
 
-	^  self orientation = #horizontal
-			ifTrue: [ self pointToXValue: point ]
-			ifFalse: [ self pointToYValue: point ].
+	^ self isHorizontal 
+		  ifTrue: [ self pointToXValue: point ]
+		  ifFalse: [ self pointToYValue: point ]
 ]
 
 { #category : #'api - transformations' }
@@ -712,7 +732,7 @@ BlCleanSlider >> proportionOf: aValue [
 BlCleanSlider >> rebuildSlider [
 
 	self disabledRebuilding ifTrue: [ ^ self ].
-	self changeOrientation: self orientation.
+	self buildOrientation
 ]
 
 { #category : #private }
@@ -793,18 +813,6 @@ BlCleanSlider >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderDecorations [
-
-	^ sliderDecorations
-]
-
-{ #category : #accessing }
-BlCleanSlider >> sliderDecorations: anObject [
-
-	sliderDecorations := anObject
-]
-
-{ #category : #accessing }
 BlCleanSlider >> sliderInteractionRectangle [
 
 	^ sliderInteractionRectangle
@@ -832,11 +840,11 @@ BlCleanSlider >> sliderInteractor: anObject [
 BlCleanSlider >> sliderInteractorMoved: event [
 
 	| val tmp v |
-	self interactorPushedPoint isNil ifTrue: [ ^ self ].
+	self interactorPushedPoint ifNil: [ ^ self ].
 	tmp := self sliderBackground globalPointToLocal: event position.
 	val := self pointToValue: tmp.
 	tmp := self globalPointToLocal: event position.
-	self orientation = #horizontal
+	self isHorizontal
 		ifTrue: [
 			v := tmp x.
 			v := v min: (self valueToX: self maxValue).
@@ -878,7 +886,6 @@ BlCleanSlider >> sliderParts [
 	oc := OrderedCollection new.
 	self sliderInteractionRectangle ifNotNil: [ :e | oc add: e ].
 	self sliderBackground ifNotNil: [ :e | oc add: e ].
-	self sliderDecorations ifNotNil: [ :e | oc add: e ].
 	self sliderBar ifNotNil: [ :e | oc add: e ].
 	self sliderInteractor ifNotNil: [ :e | oc add: e ].
 	^ oc
@@ -887,7 +894,7 @@ BlCleanSlider >> sliderParts [
 { #category : #accessing }
 BlCleanSlider >> sliderPixelMargin [
 
-	^ sliderPixelMargin
+	^ sliderPixelMargin 
 ]
 
 { #category : #accessing }
@@ -947,21 +954,20 @@ BlCleanSlider >> validatedValueCallback: anObject [
 { #category : #'api - transformations' }
 BlCleanSlider >> valueToCoord: aValue [
 
-	^ self orientation = #horizontal 
-		ifTrue: [ self valueToX: aValue ]
-		ifFalse: [ self valueToY: aValue  ]
-	
+	^ self isHorizontal 
+		  ifTrue: [ self valueToX: aValue ]
+		  ifFalse: [ self valueToY: aValue ]
 ]
 
 { #category : #'api - transformations' }
 BlCleanSlider >> valueToX: aValue [
 
-	| valeurCourante valeurTotale facteur |
-	valeurCourante := aValue - self minValue.
-	valeurTotale := self maxValue - self minValue.
-	facteur := valeurCourante / valeurTotale.
+	| current total coeff |
+	current := aValue - self minValue.
+	total := self maxValue - self minValue.
+	coeff := current / total.
 	^ self sliderPixelMargin
-	  + (self sliderBackground constraints horizontal resizer size * facteur roundTo: 1)
+	  + (self sliderBackground constraints horizontal resizer size * coeff roundTo: 1)
 ]
 
 { #category : #'api - transformations' }
