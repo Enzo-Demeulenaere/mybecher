@@ -1,5 +1,5 @@
 Class {
-	#name : #BlSimpleVerticalSlider2,
+	#name : #BlSimpleSlider,
 	#superclass : #BlElement,
 	#instVars : [
 		'widgetSize',
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : #testing }
-BlSimpleVerticalSlider2 class >> alainVisual1 [
+BlSimpleSlider class >> alainVisual1 [
 
 	<script>
 	| bl |
@@ -37,75 +37,75 @@ BlSimpleVerticalSlider2 class >> alainVisual1 [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 class >> beHorizontal [
+BlSimpleSlider class >> beHorizontal [
 
 	^ self new beHorizontal 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 class >> beVertical [ 
+BlSimpleSlider class >> beVertical [ 
 	
 	^ self new beVertical 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> bar [
+BlSimpleSlider >> bar [
 	^ bar
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> bar: aBlElement [ 
+BlSimpleSlider >> bar: aBlElement [ 
 	bar := aBlElement
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> barDefaultColor [ 
+BlSimpleSlider >> barDefaultColor [ 
 
 	^ Color lightGray 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> barLength [
+BlSimpleSlider >> barLength [
 
 	^ barLength
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> barLength: aNumber [
+BlSimpleSlider >> barLength: aNumber [
 
 	barLength := aNumber.
 	self rebuild
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> barThickness [ 
+BlSimpleSlider >> barThickness [ 
 
 	^ barThickness 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> barThickness: aNumber [
+BlSimpleSlider >> barThickness: aNumber [
 
 	barThickness := aNumber.
 	self rebuild
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> beHorizontal [
+BlSimpleSlider >> beHorizontal [
 
 	self horizontal: true.
 	self buildHorizontal
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> beVertical [
+BlSimpleSlider >> beVertical [
 
 	self horizontal: false.
 	self buildVertical
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> buildHorizontal [
+BlSimpleSlider >> buildHorizontal [
 
 	widgetSize y > widgetSize x ifTrue: [
 		self widgetSize: widgetSize y @ widgetSize x ].
@@ -114,7 +114,7 @@ BlSimpleVerticalSlider2 >> buildHorizontal [
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> buildVertical [
+BlSimpleSlider >> buildVertical [
 
 	widgetSize y > widgetSize x ifFalse: [
 		self widgetSize: widgetSize y @ widgetSize x ].
@@ -124,20 +124,20 @@ BlSimpleVerticalSlider2 >> buildVertical [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> currentValue [ 
+BlSimpleSlider >> currentValue [ 
 
 	^ currentValue 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> currentValue: aNumber [
+BlSimpleSlider >> currentValue: aNumber [
 
 	(aNumber < self minValue or: [ aNumber > self maxValue ]) ifTrue: [ ^ self ].
 	currentValue := aNumber
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultBar [
+BlSimpleSlider >> defaultBar [
 
 	| size |
 	size := self isHorizontal
@@ -152,25 +152,25 @@ BlSimpleVerticalSlider2 >> defaultBar [
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultBarLength [
+BlSimpleSlider >> defaultBarLength [
 
 	^ 200
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultBarThickness [
+BlSimpleSlider >> defaultBarThickness [
 
 	^ 10
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultColor [ 
+BlSimpleSlider >> defaultColor [ 
 
 	^ Color lightRed 
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultHandle [
+BlSimpleSlider >> defaultHandle [
 
 	| size elt offset |
 	size := 15 asPoint.
@@ -194,25 +194,25 @@ BlSimpleVerticalSlider2 >> defaultHandle [
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultMargin [
+BlSimpleSlider >> defaultMargin [
 
 	^ 10
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> defaultMarginLength [ 
+BlSimpleSlider >> defaultMarginLength [ 
 
 	^ 10
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> defaultMarginThickness [
+BlSimpleSlider >> defaultMarginThickness [
 
 	^ 10
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultSize [
+BlSimpleSlider >> defaultSize [
 	"self bar size maybe"
 	^ (self isHorizontal
 		   ifTrue: [ self defaultBarLength @ self defaultBarThickness ]
@@ -221,29 +221,29 @@ BlSimpleVerticalSlider2 >> defaultSize [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> handle [
+BlSimpleSlider >> handle [
 	^ handle
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> handle: aBlElement [ 
+BlSimpleSlider >> handle: aBlElement [ 
 	handle := aBlElement
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> handleDefaultColor [ 
+BlSimpleSlider >> handleDefaultColor [ 
 
 	^ Color red
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> horizontal: aBoolean [
+BlSimpleSlider >> horizontal: aBoolean [
 
 	isHorizontal := aBoolean 
 ]
 
 { #category : #initialization }
-BlSimpleVerticalSlider2 >> initialize [
+BlSimpleSlider >> initialize [
 
 	super initialize.
 	isHorizontal := true.
@@ -255,7 +255,7 @@ BlSimpleVerticalSlider2 >> initialize [
 ]
 
 { #category : #initialization }
-BlSimpleVerticalSlider2 >> initializeParts [
+BlSimpleSlider >> initializeParts [
 
 	self bar: self defaultBar.
 	self positionDefaultBar.
@@ -267,7 +267,7 @@ BlSimpleVerticalSlider2 >> initializeParts [
 ]
 
 { #category : #initialization }
-BlSimpleVerticalSlider2 >> initializeSizes [ 
+BlSimpleSlider >> initializeSizes [ 
 
 		barLength := self defaultBarLength.
 	barThickness := self defaultBarThickness.
@@ -276,7 +276,7 @@ BlSimpleVerticalSlider2 >> initializeSizes [
 ]
 
 { #category : #initialization }
-BlSimpleVerticalSlider2 >> initializeValues [ 
+BlSimpleSlider >> initializeValues [ 
 
 	self minValue: 0.
 	self maxValue: 50.
@@ -284,63 +284,63 @@ BlSimpleVerticalSlider2 >> initializeValues [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> isHorizontal [ 
+BlSimpleSlider >> isHorizontal [ 
 
 	^ isHorizontal 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> marginLength [
+BlSimpleSlider >> marginLength [
 
 	^ marginLength
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> marginLength: aNumber [
+BlSimpleSlider >> marginLength: aNumber [
 
 	marginLength := aNumber.
 	self rebuild
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> marginThickness [ 
+BlSimpleSlider >> marginThickness [ 
 
 	^ marginThickness 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> marginThickness: aNumber [
+BlSimpleSlider >> marginThickness: aNumber [
 
 	marginThickness := aNumber.
 	self rebuild
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> maxValue [
+BlSimpleSlider >> maxValue [
 
 	^ maxValue
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> maxValue: aNumber [
+BlSimpleSlider >> maxValue: aNumber [
 
 	maxValue := aNumber
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> minValue [ 
+BlSimpleSlider >> minValue [ 
 
 	^ minValue 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> minValue: aNumber [
+BlSimpleSlider >> minValue: aNumber [
 
 	minValue := aNumber 
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> moveHandleTo: aPosition [
+BlSimpleSlider >> moveHandleTo: aPosition [
 
 	| newPos |
 	newPos := aPosition.
@@ -363,7 +363,7 @@ BlSimpleVerticalSlider2 >> moveHandleTo: aPosition [
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> positionDefaultBar [
+BlSimpleSlider >> positionDefaultBar [
 
 	self isHorizontal
 		ifTrue: [ bar position: self defaultMarginLength @ self defaultMarginThickness ]
@@ -373,7 +373,7 @@ BlSimpleVerticalSlider2 >> positionDefaultBar [
 ]
 
 { #category : #'as yet unclassified' }
-BlSimpleVerticalSlider2 >> positionDefaultHandle [
+BlSimpleSlider >> positionDefaultHandle [
 
 	self isHorizontal
 		ifTrue: [ handle position: self defaultMargin @ (widgetSize y / 2) ]
@@ -381,13 +381,13 @@ BlSimpleVerticalSlider2 >> positionDefaultHandle [
 ]
 
 { #category : #building }
-BlSimpleVerticalSlider2 >> rebuild [ 
+BlSimpleSlider >> rebuild [ 
 
 	self isHorizontal ifTrue: [ self buildHorizontal ] ifFalse: [ self buildVertical ]
 ]
 
 { #category : #removing }
-BlSimpleVerticalSlider2 >> removeParts [
+BlSimpleSlider >> removeParts [
 
 	self removeChildren. 
 	bar := nil.
@@ -395,7 +395,7 @@ BlSimpleVerticalSlider2 >> removeParts [
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> size: aValue [
+BlSimpleSlider >> size: aValue [
 	"just to keep the widgset size"
 
 	super size: aValue.
@@ -407,27 +407,27 @@ BlSimpleVerticalSlider2 >> size: aValue [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> stepValue [
+BlSimpleSlider >> stepValue [
 
 	^ stepValue 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> stepValue: aNumber [
+BlSimpleSlider >> stepValue: aNumber [
 
 	stepValue := aNumber 
 	
 ]
 
 { #category : #protocol }
-BlSimpleVerticalSlider2 >> updateValue [
+BlSimpleSlider >> updateValue [
 
 	| value |
 	value := self valueAtCoord: handle position.
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueAtCoord: aPoint [
+BlSimpleSlider >> valueAtCoord: aPoint [
 
 	^ self isHorizontal
 		  ifTrue: [ self valueAtX: aPoint  ]
@@ -435,7 +435,7 @@ BlSimpleVerticalSlider2 >> valueAtCoord: aPoint [
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueAtX: aPoint [
+BlSimpleSlider >> valueAtX: aPoint [
 
 	| dist valueDiff value coeff |
 	dist := (aPoint - bar position) x.
@@ -449,7 +449,7 @@ BlSimpleVerticalSlider2 >> valueAtX: aPoint [
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueAtY: aPoint [
+BlSimpleSlider >> valueAtY: aPoint [
 
 	| dist valueDiff value coeff |
 	dist := (bar position y + barLength) - aPoint y.
@@ -463,7 +463,7 @@ BlSimpleVerticalSlider2 >> valueAtY: aPoint [
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueToCoord: aValue [
+BlSimpleSlider >> valueToCoord: aValue [
 
 	^ self isHorizontal
 		  ifTrue: [ self valueToX: aValue ]
@@ -471,7 +471,7 @@ BlSimpleVerticalSlider2 >> valueToCoord: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueToX: aValue [
+BlSimpleSlider >> valueToX: aValue [
 
 	| current total coeff |
 	current := aValue - self minValue.
@@ -483,7 +483,7 @@ BlSimpleVerticalSlider2 >> valueToX: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlSimpleVerticalSlider2 >> valueToY: aValue [
+BlSimpleSlider >> valueToY: aValue [
 
 	| current total coeff |
 	current := aValue - self minValue.
@@ -494,13 +494,13 @@ BlSimpleVerticalSlider2 >> valueToY: aValue [
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> widgetSize [ 
+BlSimpleSlider >> widgetSize [ 
 
 	^ widgetSize 
 ]
 
 { #category : #accessing }
-BlSimpleVerticalSlider2 >> widgetSize: aNumber [
+BlSimpleSlider >> widgetSize: aNumber [
 
 	widgetSize := aNumber.
 	self size: aNumber 
