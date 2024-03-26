@@ -11,7 +11,9 @@ Class {
 		'stepValue',
 		'currentValue',
 		'barThickness',
-		'barLength'
+		'barLength',
+		'marginThickness',
+		'marginLength'
 	],
 	#category : #myBecherBloc
 }
@@ -32,6 +34,18 @@ BlSimpleVerticalSlider2 class >> alainVisual1 [
 	bl margin: (BlInsets top: 5).
 	bl openInSpace.
 	bl inspect
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 class >> beHorizontal [
+
+	^ self new beHorizontal 
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 class >> beVertical [ 
+	
+	^ self new beVertical 
 ]
 
 { #category : #accessing }
@@ -59,7 +73,8 @@ BlSimpleVerticalSlider2 >> barLength [
 { #category : #accessing }
 BlSimpleVerticalSlider2 >> barLength: aNumber [
 
-	barLength := aNumber 
+	barLength := aNumber.
+	self rebuild
 ]
 
 { #category : #accessing }
@@ -71,7 +86,8 @@ BlSimpleVerticalSlider2 >> barThickness [
 { #category : #accessing }
 BlSimpleVerticalSlider2 >> barThickness: aNumber [
 
-	barThickness := aNumber 
+	barThickness := aNumber.
+	self rebuild
 ]
 
 { #category : #accessing }
@@ -91,7 +107,8 @@ BlSimpleVerticalSlider2 >> beVertical [
 { #category : #'as yet unclassified' }
 BlSimpleVerticalSlider2 >> buildHorizontal [
 
-	self widgetSize: widgetSize x @ widgetSize y.
+	widgetSize y > widgetSize x ifTrue: [
+		self widgetSize: widgetSize y @ widgetSize x ].
 	self removeParts.
 	self initializeParts
 ]
@@ -99,7 +116,9 @@ BlSimpleVerticalSlider2 >> buildHorizontal [
 { #category : #'as yet unclassified' }
 BlSimpleVerticalSlider2 >> buildVertical [
 
-	self widgetSize: widgetSize y @ widgetSize x.
+	widgetSize y > widgetSize x ifFalse: [
+		self widgetSize: widgetSize y @ widgetSize x ].
+
 	self removeParts.
 	self initializeParts
 ]
@@ -122,15 +141,26 @@ BlSimpleVerticalSlider2 >> defaultBar [
 
 	| size |
 	size := self isHorizontal
-		        ifTrue: [ self defaultLength @ self defaultThickness ]
-		        ifFalse: [ self defaultThickness @ self defaultLength ].
+		        ifTrue: [ self defaultBarLength @ self defaultBarThickness ]
+		        ifFalse: [ self defaultBarThickness @ self defaultBarLength ].
 
 	^ BlElement new
 		  geometry: (BlRoundedRectangleGeometry cornerRadius: 5);
 		  background: self barDefaultColor;
 		  size: size;
-			position: self defaultMargin asPoint;
 		  yourself
+]
+
+{ #category : #'api - bounds' }
+BlSimpleVerticalSlider2 >> defaultBarLength [
+
+	^ 200
+]
+
+{ #category : #'api - bounds' }
+BlSimpleVerticalSlider2 >> defaultBarThickness [
+
+	^ 10
 ]
 
 { #category : #'api - bounds' }
@@ -164,13 +194,19 @@ BlSimpleVerticalSlider2 >> defaultHandle [
 ]
 
 { #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultLength [
+BlSimpleVerticalSlider2 >> defaultMargin [
 
-	^ 200
+	^ 10
 ]
 
-{ #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultMargin [
+{ #category : #'as yet unclassified' }
+BlSimpleVerticalSlider2 >> defaultMarginLength [ 
+
+	^ 10
+]
+
+{ #category : #'as yet unclassified' }
+BlSimpleVerticalSlider2 >> defaultMarginThickness [
 
 	^ 10
 ]
@@ -179,15 +215,9 @@ BlSimpleVerticalSlider2 >> defaultMargin [
 BlSimpleVerticalSlider2 >> defaultSize [
 	"self bar size maybe"
 	^ (self isHorizontal
-		   ifTrue: [ self defaultLength @ self defaultThickness ]
-		   ifFalse: [ self defaultThickness @ self defaultLength ])
+		   ifTrue: [ self defaultBarLength @ self defaultBarThickness ]
+		   ifFalse: [ self defaultBarThickness @ self defaultBarLength ])
 	  + (2 * self defaultMargin)
-]
-
-{ #category : #'api - bounds' }
-BlSimpleVerticalSlider2 >> defaultThickness [
-
-	^ 10
 ]
 
 { #category : #accessing }
@@ -217,8 +247,7 @@ BlSimpleVerticalSlider2 >> initialize [
 
 	super initialize.
 	isHorizontal := true.
-	barLength := self defaultLength.
-	barThickness := self defaultThickness.
+	self initializeSizes.
 	self widgetSize: self defaultSize.
 	self background: self defaultColor.
 	self initializeValues.
@@ -229,10 +258,21 @@ BlSimpleVerticalSlider2 >> initialize [
 BlSimpleVerticalSlider2 >> initializeParts [
 
 	self bar: self defaultBar.
+	self positionDefaultBar.
+	self addChild: self bar.
+	
 	self handle: self defaultHandle.
 	self positionDefaultHandle.
-	self addChild: self bar.
 	self addChild: self handle
+]
+
+{ #category : #initialization }
+BlSimpleVerticalSlider2 >> initializeSizes [ 
+
+		barLength := self defaultBarLength.
+	barThickness := self defaultBarThickness.
+	marginLength := self defaultMarginLength.
+	marginThickness := self defaultMarginThickness.
 ]
 
 { #category : #initialization }
@@ -247,6 +287,32 @@ BlSimpleVerticalSlider2 >> initializeValues [
 BlSimpleVerticalSlider2 >> isHorizontal [ 
 
 	^ isHorizontal 
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 >> marginLength [
+
+	^ marginLength
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 >> marginLength: aNumber [
+
+	marginLength := aNumber.
+	self rebuild
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 >> marginThickness [ 
+
+	^ marginThickness 
+]
+
+{ #category : #accessing }
+BlSimpleVerticalSlider2 >> marginThickness: aNumber [
+
+	marginThickness := aNumber.
+	self rebuild
 ]
 
 { #category : #accessing }
@@ -297,11 +363,27 @@ BlSimpleVerticalSlider2 >> moveHandleTo: aPosition [
 ]
 
 { #category : #'as yet unclassified' }
+BlSimpleVerticalSlider2 >> positionDefaultBar [
+
+	self isHorizontal
+		ifTrue: [ bar position: self defaultMarginLength @ self defaultMarginThickness ]
+		ifFalse: [
+			bar position:
+				self defaultMarginThickness @ self defaultMarginLength  ]
+]
+
+{ #category : #'as yet unclassified' }
 BlSimpleVerticalSlider2 >> positionDefaultHandle [
 
 	self isHorizontal
 		ifTrue: [ handle position: self defaultMargin @ (widgetSize y / 2) ]
 		ifFalse: [ handle position: widgetSize x / 2 @ (self defaultMargin + barLength) ]
+]
+
+{ #category : #building }
+BlSimpleVerticalSlider2 >> rebuild [ 
+
+	self isHorizontal ifTrue: [ self buildHorizontal ] ifFalse: [ self buildVertical ]
 ]
 
 { #category : #removing }
