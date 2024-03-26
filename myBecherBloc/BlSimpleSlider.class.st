@@ -5,6 +5,7 @@ Class {
 		'widgetSize',
 		'handle',
 		'bar',
+		'coloredBar',
 		'isHorizontal',
 		'minValue',
 		'maxValue',
@@ -124,6 +125,24 @@ BlSimpleSlider >> buildVertical [
 ]
 
 { #category : #accessing }
+BlSimpleSlider >> coloredBar [ 
+
+	^ coloredBar 
+]
+
+{ #category : #accessing }
+BlSimpleSlider >> coloredBar: aBlElement [
+
+	coloredBar := aBlElement 
+]
+
+{ #category : #'as yet unclassified' }
+BlSimpleSlider >> coloredBarDefaultColor [
+
+	^ Color red
+]
+
+{ #category : #accessing }
 BlSimpleSlider >> currentValue [ 
 
 	^ currentValue 
@@ -167,6 +186,21 @@ BlSimpleSlider >> defaultBarThickness [
 BlSimpleSlider >> defaultColor [ 
 
 	^ Color lightRed 
+]
+
+{ #category : #'as yet unclassified' }
+BlSimpleSlider >> defaultColoredBar [
+
+	| size |
+	size := self isHorizontal
+		        ifTrue: [ 0 @ self defaultBarThickness ]
+		        ifFalse: [ self defaultBarThickness @ 0 ].
+
+	^ BlElement new
+		  geometry: (BlRoundedRectangleGeometry cornerRadius: 5);
+		  background: self coloredBarDefaultColor;
+		  size: size;
+		  yourself
 ]
 
 { #category : #'api - bounds' }
@@ -260,10 +294,16 @@ BlSimpleSlider >> initializeParts [
 	self bar: self defaultBar.
 	self positionDefaultBar.
 	self addChild: self bar.
-	
+
+	self coloredBar: self defaultColoredBar.
+	self positionDefaultColoredBar.
+	self addChild: self coloredBar.
+
 	self handle: self defaultHandle.
 	self positionDefaultHandle.
-	self addChild: self handle
+	self addChild: self handle.
+
+	
 ]
 
 { #category : #initialization }
@@ -359,6 +399,7 @@ BlSimpleSlider >> moveHandleTo: aPosition [
 			newPos y > (bar position y + barLength) ifTrue: [
 				newPosY := bar position y + barLength ].
 			handle position: handle position x @ newPosY ].
+	self updateColoredBar.
 	self updateValue
 ]
 
@@ -370,6 +411,12 @@ BlSimpleSlider >> positionDefaultBar [
 		ifFalse: [
 			bar position:
 				self defaultMarginThickness @ self defaultMarginLength  ]
+]
+
+{ #category : #'as yet unclassified' }
+BlSimpleSlider >> positionDefaultColoredBar [
+
+	self positionDefaultBar
 ]
 
 { #category : #'as yet unclassified' }
@@ -419,6 +466,22 @@ BlSimpleSlider >> stepValue: aNumber [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+BlSimpleSlider >> updateColoredBar [
+
+	self isHorizontal
+		ifTrue: [
+			coloredBar position:
+				bar position.
+			coloredBar size:
+				(handle position - coloredBar position) x @ barThickness ]
+		ifFalse: [
+			coloredBar position:
+				handle position x - (barThickness / 2) @ handle position y.
+			coloredBar size:
+				barThickness @ (bar position x + barLength - handle position y) ]
+]
+
 { #category : #protocol }
 BlSimpleSlider >> updateValue [
 
@@ -460,37 +523,6 @@ BlSimpleSlider >> valueAtY: aPoint [
 			coeff := barLength / dist.
 			value := minValue + (valueDiff / coeff) ].
 	value asFloat traceCr
-]
-
-{ #category : #'api - transformations' }
-BlSimpleSlider >> valueToCoord: aValue [
-
-	^ self isHorizontal
-		  ifTrue: [ self valueToX: aValue ]
-		  ifFalse: [ self valueToY: aValue ]
-]
-
-{ #category : #'api - transformations' }
-BlSimpleSlider >> valueToX: aValue [
-
-	| current total coeff |
-	current := aValue - self minValue.
-	total := self maxValue - self minValue.
-	coeff := current / total.
-	^ 
-		  (self bar constraints horizontal resizer size * coeff
-			   roundTo: 1)
-]
-
-{ #category : #'api - transformations' }
-BlSimpleSlider >> valueToY: aValue [
-
-	| current total coeff |
-	current := aValue - self minValue.
-	total := self maxValue - self minValue.
-	coeff := current / total.
-	^ (self bar constraints vertical resizer size * coeff
-			   roundTo: 1)
 ]
 
 { #category : #accessing }
