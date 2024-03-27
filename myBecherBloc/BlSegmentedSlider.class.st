@@ -802,18 +802,6 @@ BlSegmentedSlider >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlSegmentedSlider >> sliderDecorations [
-
-	^ sliderDecorations
-]
-
-{ #category : #accessing }
-BlSegmentedSlider >> sliderDecorations: anObject [
-
-	sliderDecorations := anObject
-]
-
-{ #category : #accessing }
 BlSegmentedSlider >> sliderInteractionRectangle [
 
 	^ sliderInteractionRectangle
@@ -832,9 +820,9 @@ BlSegmentedSlider >> sliderInteractor [
 ]
 
 { #category : #accessing }
-BlSegmentedSlider >> sliderInteractor: anObject [
+BlSegmentedSlider >> sliderInteractor: aBlElement [
 
-	sliderInteractor := anObject
+	sliderInteractor := aBlElement
 ]
 
 { #category : #'events - interactor' }
@@ -887,7 +875,6 @@ BlSegmentedSlider >> sliderParts [
 	oc := OrderedCollection new.
 	self sliderInteractionRectangle ifNotNil: [ :e | oc add: e ].
 	self sliderBackground ifNotNil: [ :e | oc add: e ].
-	self sliderDecorations ifNotNil: [ :e | oc add: e ].
 	self sliderBar ifNotNil: [ :e | oc add: e ].
 	self sliderInteractor ifNotNil: [ :e | oc add: e ].
 	^ oc
