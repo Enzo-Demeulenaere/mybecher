@@ -28,7 +28,6 @@ BlSimpleSlider class >> alainVisual1 [
 	bl minValue: 0.
 	bl maxValue: 20.
 	bl stepValue: 1.
-	bl sliderPixelMargin: 20.
 	bl size: 500 @ 25.
 	bl buildSlider.
 	bl validatedValueCallback: [ :e | "self changedTimeValue: e" ].
