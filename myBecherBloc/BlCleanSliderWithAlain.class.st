@@ -92,7 +92,7 @@ BlCleanSliderWithAlain class >> defaultMaxPixelDistance [
 { #category : #building }
 BlCleanSliderWithAlain class >> interactionDefaultColor [
 
-	^ Color pink alpha: 0
+	^ Color pink alpha: 0.5
 ]
 
 { #category : #building }

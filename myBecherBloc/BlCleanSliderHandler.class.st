@@ -4,44 +4,44 @@ Class {
 	#category : #myBecherBloc
 }
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> clickEvent: anEvent [
 
 	self sliderBarClicked: anEvent
 ]
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> dragEndEvent: anEvent [
 
 	self sliderInteractorReleased: anEvent
 	
 ]
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> eventsToHandle [
 	^ { BlMouseDownEvent . BlDragEndEvent . BlMouseUpEvent . BlMouseMoveEvent . BlClickEvent}
 ]
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> mouseDownEvent: anEvent [
 
 	self sliderInteractorPushed: anEvent
 	
 ]
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> mouseMoveEvent: anEvent [
 
 	self sliderInteractorMoved: anEvent.
 ]
 
-{ #category : #methods }
+{ #category : #'event management' }
 BlCleanSliderHandler >> mouseUpEvent: anEvent [
 
 	self sliderInteractorReleased: anEvent
 ]
 
-{ #category : #methods }
+{ #category : #actions }
 BlCleanSliderHandler >> sliderBarClicked: event [
 
 	| tmp val slider |
@@ -51,10 +51,10 @@ BlCleanSliderHandler >> sliderBarClicked: event [
 	slider validatedValue: val.
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #actions }
 BlCleanSliderHandler >> sliderInteractorMoved: event [
 
-	| val tmp v slider interactor |
+	| val tmp v slider |
 	
 	slider := event currentTarget.
 	
@@ -76,7 +76,7 @@ BlCleanSliderHandler >> sliderInteractorMoved: event [
 	slider currentValue: val
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #actions }
 BlCleanSliderHandler >> sliderInteractorPushed: event [
 
 	| value pt1 pt2 slider |
@@ -90,11 +90,12 @@ BlCleanSliderHandler >> sliderInteractorPushed: event [
 		slider  interactorPushedPoint: event position copy ]
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #actions }
 BlCleanSliderHandler >> sliderInteractorReleased: event [
-	| slider | 
+
+	| slider |
 	slider := event currentTarget.
-	slider interactorPushedPoint isNil ifTrue: [ ^ self ].
+	slider interactorPushedPoint ifNil: [ ^ self ].
 	slider interactorPushedPoint: nil.
 	slider validatedValue: slider currentValue
 ]
