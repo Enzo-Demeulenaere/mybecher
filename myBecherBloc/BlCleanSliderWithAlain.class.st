@@ -782,7 +782,7 @@ BlCleanSliderWithAlain >> sliderHandle: anObject [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSliderWithAlain >> sliderInteractorMoved: event [
+BlCleanSliderWithAlain >> sliderHandleMoved: event [
 
 	| val tmp v |
 	self interactorPushedPoint ifNil: [ ^ self ].
@@ -804,24 +804,24 @@ BlCleanSliderWithAlain >> sliderInteractorMoved: event [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSliderWithAlain >> sliderInteractorPushed: event [
+BlCleanSliderWithAlain >> sliderHandlePushed: event [
 
 	| value pt1 pt2 |
 	self sliderBar ifNil: [ ^ self ].
 	value := self pointToValue:
 		         (self sliderBackground globalPointToLocal: event position).
 	pt1 := self valueToX: value.
-	pt2 := self valueToX: self currentValue.
+	pt2 := self valueToX: currentValue.
 	(self is: pt1 near: pt2) ifTrue: [
 		self interactorPushedPoint: event position copy ]
 ]
 
 { #category : #'events - interactor' }
-BlCleanSliderWithAlain >> sliderInteractorReleased: event [
+BlCleanSliderWithAlain >> sliderHandleReleased: event [
 
 	self interactorPushedPoint ifNil: [ ^ self ].
 	self interactorPushedPoint: nil.
-	self validatedValue: self currentValue
+	self validatedValue: currentValue
 ]
 
 { #category : #private }
@@ -845,7 +845,7 @@ BlCleanSliderWithAlain >> sliderPixelMargin [
 BlCleanSliderWithAlain >> sliderPixelMargin: anObject [
 
 	sliderPixelMargin := anObject.
-	self isBuildSlider ifTrue: [ 
+	self isSliderBuilt ifTrue: [ 
 		self rebuildSlider ]
 ]
 

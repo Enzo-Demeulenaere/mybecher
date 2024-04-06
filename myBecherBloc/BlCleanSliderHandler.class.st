@@ -13,7 +13,7 @@ BlCleanSliderHandler >> clickEvent: anEvent [
 { #category : #'event management' }
 BlCleanSliderHandler >> dragEndEvent: anEvent [
 
-	self sliderInteractorReleased: anEvent
+	self sliderHandleReleased: anEvent
 	
 ]
 
@@ -25,20 +25,20 @@ BlCleanSliderHandler >> eventsToHandle [
 { #category : #'event management' }
 BlCleanSliderHandler >> mouseDownEvent: anEvent [
 
-	self sliderInteractorPushed: anEvent
+	self sliderHandlePushed: anEvent
 	
 ]
 
 { #category : #'event management' }
 BlCleanSliderHandler >> mouseMoveEvent: anEvent [
 
-	self sliderInteractorMoved: anEvent.
+	self sliderHandleMoved: anEvent.
 ]
 
 { #category : #'event management' }
 BlCleanSliderHandler >> mouseUpEvent: anEvent [
 
-	self sliderInteractorReleased: anEvent
+	self sliderHandleReleased: anEvent
 ]
 
 { #category : #actions }
@@ -52,7 +52,7 @@ BlCleanSliderHandler >> sliderBarClicked: event [
 ]
 
 { #category : #actions }
-BlCleanSliderHandler >> sliderInteractorMoved: event [
+BlCleanSliderHandler >> sliderHandleMoved: event [
 
 	| val tmp v slider |
 	
@@ -77,7 +77,7 @@ BlCleanSliderHandler >> sliderInteractorMoved: event [
 ]
 
 { #category : #actions }
-BlCleanSliderHandler >> sliderInteractorPushed: event [
+BlCleanSliderHandler >> sliderHandlePushed: event [
 
 	| value pt1 pt2 slider |
 	slider := event currentTarget.
@@ -85,13 +85,13 @@ BlCleanSliderHandler >> sliderInteractorPushed: event [
 	value := slider  pointToValue:
 		         (slider   sliderBackground globalPointToLocal: event position).
 	pt1 := slider  valueToX: value.
-	pt2 := slider  valueToX: slider  currentValue.
+	pt2 := slider  valueToX: slider currentValue.
 	(slider  is: pt1 near: pt2) ifTrue: [
 		slider  interactorPushedPoint: event position copy ]
 ]
 
 { #category : #actions }
-BlCleanSliderHandler >> sliderInteractorReleased: event [
+BlCleanSliderHandler >> sliderHandleReleased: event [
 
 	| slider |
 	slider := event currentTarget.

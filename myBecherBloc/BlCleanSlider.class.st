@@ -1,5 +1,7 @@
 "
 I'm a copy of the segmented Slider to play with it.
+I have a useless interactionRectangle. Do not use me. 
+Here just for archival purposes
 "
 Class {
 	#name : #BlCleanSlider,
@@ -572,19 +574,19 @@ BlCleanSlider >> initializeEventHandlers [
 	self
 		whenEvent: BlMouseDownEvent
 		on: bl
-		do: [ :event | self sliderInteractorPushed: event ].
+		do: [ :event | self sliderHandlePushed: event ].
 	self
 		whenEvent: BlDragEndEvent
 		on: bl
-		do: [ :event | self sliderInteractorReleased: event ].
+		do: [ :event | self sliderHandleReleased: event ].
 	self
 		whenEvent: BlMouseUpEvent
 		on: bl
-		do: [ :event | self sliderInteractorReleased: event ].
+		do: [ :event | self sliderHandleReleased: event ].
 	self
 		whenEvent: BlMouseMoveEvent
 		on: bl
-		do: [ :event | self sliderInteractorMoved: event ].
+		do: [ :event | self sliderHandleMoved: event ].
 	self
 		whenEvent: BlClickEvent
 		on: bl
@@ -596,7 +598,7 @@ BlCleanSlider >> initializeSpaceEventHandlers [
 
 	self space
 		addEventHandlerOn: BlMouseUpEvent
-		do: [ :event | self sliderInteractorReleased: event ]
+		do: [ :event | self sliderHandleReleased: event ]
 ]
 
 { #category : #accessing }
@@ -824,20 +826,8 @@ BlCleanSlider >> sliderHandle: anObject [
 	sliderInteractor := anObject
 ]
 
-{ #category : #accessing }
-BlCleanSlider >> sliderInteractionRectangle [
-
-	^ sliderInteractionRectangle
-]
-
-{ #category : #accessing }
-BlCleanSlider >> sliderInteractionRectangle: anObject [
-
-	sliderInteractionRectangle := anObject
-]
-
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderInteractorMoved: event [
+BlCleanSlider >> sliderHandleMoved: event [
 
 	| val tmp v |
 	self interactorPushedPoint ifNil: [ ^ self ].
@@ -859,24 +849,36 @@ BlCleanSlider >> sliderInteractorMoved: event [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderInteractorPushed: event [
+BlCleanSlider >> sliderHandlePushed: event [
 
 	| value pt1 pt2 |
 	self sliderBar ifNil: [ ^ self ].
 	value := self pointToValue:
 		         (self sliderBackground globalPointToLocal: event position).
 	pt1 := self valueToX: value.
-	pt2 := self valueToX: self currentValue.
+	pt2 := self valueToX: currentValue.
 	(self is: pt1 near: pt2) ifTrue: [
 		self interactorPushedPoint: event position copy ]
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderInteractorReleased: event [
+BlCleanSlider >> sliderHandleReleased: event [
 
 	self interactorPushedPoint isNil ifTrue: [ ^ self ].
 	self interactorPushedPoint: nil.
-	self validatedValue: self currentValue
+	self validatedValue: currentValue
+]
+
+{ #category : #accessing }
+BlCleanSlider >> sliderInteractionRectangle [
+
+	^ sliderInteractionRectangle
+]
+
+{ #category : #accessing }
+BlCleanSlider >> sliderInteractionRectangle: anObject [
+
+	sliderInteractionRectangle := anObject
 ]
 
 { #category : #private }
