@@ -13,7 +13,6 @@ Class {
 		'sliderBackground',
 		'disabledRebuilding',
 		'widgetSize',
-		'interactorPushedPoint',
 		'maxPixelDistance',
 		'enumeratedValues',
 		'enumeratedColors',
@@ -22,7 +21,8 @@ Class {
 		'barThickness',
 		'isHorizontal',
 		'eventHandler',
-		'sliderHandle'
+		'sliderHandle',
+		'handlePushedPoint'
 	],
 	#category : #myBecherBloc
 }
@@ -494,6 +494,18 @@ BlCleanSliderWithAlain >> enumeratedValues: anObject [
 ]
 
 { #category : #accessing }
+BlCleanSliderWithAlain >> handlePushedPoint [
+
+	^ handlePushedPoint
+]
+
+{ #category : #accessing }
+BlCleanSliderWithAlain >> handlePushedPoint: anObject [
+
+	handlePushedPoint := anObject
+]
+
+{ #category : #accessing }
 BlCleanSliderWithAlain >> horizontal: aBoolean [
 
 	isHorizontal := aBoolean 
@@ -555,18 +567,6 @@ BlCleanSliderWithAlain >> initializeEventHandlers [
 	self  addEventHandler: eventHandler
 	
 
-]
-
-{ #category : #accessing }
-BlCleanSliderWithAlain >> interactorPushedPoint [
-
-	^ interactorPushedPoint
-]
-
-{ #category : #accessing }
-BlCleanSliderWithAlain >> interactorPushedPoint: anObject [
-
-	interactorPushedPoint := anObject
 ]
 
 { #category : #private }
@@ -797,7 +797,7 @@ BlCleanSliderWithAlain >> sliderHandle: anObject [
 BlCleanSliderWithAlain >> sliderHandleMoved: event [
 
 	| val tmp v |
-	self interactorPushedPoint ifNil: [ ^ self ].
+	self handlePushedPoint ifNil: [ ^ self ].
 	tmp := self sliderBackground globalPointToLocal: event position.
 	val := self pointToValue: tmp.
 	tmp := self globalPointToLocal: event position.
@@ -825,14 +825,14 @@ BlCleanSliderWithAlain >> sliderHandlePushed: event [
 	pt1 := self valueToX: value.
 	pt2 := self valueToX: currentValue.
 	(self is: pt1 near: pt2) ifTrue: [
-		self interactorPushedPoint: event position copy ]
+		self handlePushedPoint: event position copy ]
 ]
 
 { #category : #'events - interactor' }
 BlCleanSliderWithAlain >> sliderHandleReleased: event [
 
-	self interactorPushedPoint ifNil: [ ^ self ].
-	self interactorPushedPoint: nil.
+	self handlePushedPoint ifNil: [ ^ self ].
+	self handlePushedPoint: nil.
 	self validatedValue: currentValue
 ]
 

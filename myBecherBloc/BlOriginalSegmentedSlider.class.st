@@ -514,6 +514,18 @@ BlOriginalSegmentedSlider >> enumeratedValues: anObject [
 ]
 
 { #category : #accessing }
+BlOriginalSegmentedSlider >> handlePushedPoint [
+
+	^ interactorPushedPoint
+]
+
+{ #category : #accessing }
+BlOriginalSegmentedSlider >> handlePushedPoint: anObject [
+
+	interactorPushedPoint := anObject
+]
+
+{ #category : #accessing }
 BlOriginalSegmentedSlider >> horizontal: aBoolean [
 
 	isHorizontal := aBoolean 
@@ -599,18 +611,6 @@ BlOriginalSegmentedSlider >> initializeSpaceEventHandlers [
 	self space
 		addEventHandlerOn: BlMouseUpEvent
 		do: [ :event | self sliderHandleReleased: event ]
-]
-
-{ #category : #accessing }
-BlOriginalSegmentedSlider >> interactorPushedPoint [
-
-	^ interactorPushedPoint
-]
-
-{ #category : #accessing }
-BlOriginalSegmentedSlider >> interactorPushedPoint: anObject [
-
-	interactorPushedPoint := anObject
 ]
 
 { #category : #private }
@@ -830,7 +830,7 @@ BlOriginalSegmentedSlider >> sliderHandle: anObject [
 BlOriginalSegmentedSlider >> sliderHandleMoved: event [
 
 	| val tmp v |
-	self interactorPushedPoint ifNil: [ ^ self ].
+	self handlePushedPoint ifNil: [ ^ self ].
 	tmp := self sliderBackground globalPointToLocal: event position.
 	val := self pointToValue: tmp.
 	tmp := self globalPointToLocal: event position.
@@ -858,14 +858,14 @@ BlOriginalSegmentedSlider >> sliderHandlePushed: event [
 	pt1 := self valueToX: value.
 	pt2 := self valueToX: currentValue.
 	(self is: pt1 near: pt2) ifTrue: [
-		self interactorPushedPoint: event position copy ]
+		self handlePushedPoint: event position copy ]
 ]
 
 { #category : #'events - interactor' }
 BlOriginalSegmentedSlider >> sliderHandleReleased: event [
 
-	self interactorPushedPoint isNil ifTrue: [ ^ self ].
-	self interactorPushedPoint: nil.
+	self handlePushedPoint isNil ifTrue: [ ^ self ].
+	self handlePushedPoint: nil.
 	self validatedValue: currentValue
 ]
 

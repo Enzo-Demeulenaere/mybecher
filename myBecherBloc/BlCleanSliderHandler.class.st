@@ -58,7 +58,7 @@ BlCleanSliderHandler >> sliderHandleMoved: event [
 	
 	slider := event currentTarget.
 	
-	slider interactorPushedPoint ifNil: [ ^ self ].
+	slider handlePushedPoint ifNil: [ ^ self ].
 	tmp := slider sliderBackground globalPointToLocal: event position.
 	val := slider pointToValue: tmp.
 	tmp := slider globalPointToLocal: event position.
@@ -87,7 +87,7 @@ BlCleanSliderHandler >> sliderHandlePushed: event [
 	pt1 := slider  valueToX: value.
 	pt2 := slider  valueToX: slider currentValue.
 	(slider  is: pt1 near: pt2) ifTrue: [
-		slider  interactorPushedPoint: event position copy ]
+		slider  handlePushedPoint: event position copy ]
 ]
 
 { #category : #actions }
@@ -95,7 +95,7 @@ BlCleanSliderHandler >> sliderHandleReleased: event [
 
 	| slider |
 	slider := event currentTarget.
-	slider interactorPushedPoint ifNil: [ ^ self ].
-	slider interactorPushedPoint: nil.
+	slider handlePushedPoint ifNil: [ ^ self ].
+	slider handlePushedPoint: nil.
 	slider validatedValue: slider currentValue
 ]
