@@ -442,12 +442,6 @@ BlCleanSliderWithAlain >> disabledRebuilding: anObject [
 ]
 
 { #category : #accessing }
-BlCleanSliderWithAlain >> endColor [
-
-	^ endColor
-]
-
-{ #category : #accessing }
 BlCleanSliderWithAlain >> endColor: anObject [
 
 	endColor := anObject
