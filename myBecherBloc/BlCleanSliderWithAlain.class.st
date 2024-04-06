@@ -849,12 +849,6 @@ BlCleanSliderWithAlain >> sliderPixelMargin: anObject [
 		self rebuildSlider ]
 ]
 
-{ #category : #'api - space' }
-BlCleanSliderWithAlain >> space: aSpace [
-	super space: aSpace.
-	self initializeSpaceEventHandlers
-]
-
 { #category : #'api - values' }
 BlCleanSliderWithAlain >> stepValue [
 
