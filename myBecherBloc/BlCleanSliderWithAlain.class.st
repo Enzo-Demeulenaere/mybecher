@@ -288,13 +288,10 @@ BlCleanSliderWithAlain >> buildSlider [
 ]
 
 { #category : #'private - building' }
-BlCleanSliderWithAlain >> buildVerticalSlider [
+BlCleanSliderWithAlain >> buildVerticalBackground [
 
-	| bgElt bar handle pt pt1 pt2 |
-	"foreground"
-	self buildForeground.
-
-	"background"
+	
+	| bgElt pt1 pt2 |
 	bgElt := BlElement new.
 	pt1 := barThickness
 	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
@@ -308,7 +305,12 @@ BlCleanSliderWithAlain >> buildVerticalSlider [
 	self addChild: bgElt.
 	self sliderBackground: bgElt.
 
-	"bar"
+]
+
+{ #category : #'private - building' }
+BlCleanSliderWithAlain >> buildVerticalBar [
+
+	| bar |
 	bar := BlElement new.
 	bar size: barThickness
 		@ (self widgetSize y - (self valueToCoord: currentValue)
@@ -321,7 +323,14 @@ BlCleanSliderWithAlain >> buildVerticalSlider [
 	self addChild: bar.
 	self sliderBar: bar.
 
-	"interactor"
+	
+]
+
+{ #category : #'private - building' }
+BlCleanSliderWithAlain >> buildVerticalHandle [
+
+	| handle pt |
+
 	handle := self buildDefaultHandle.
 	handle id: #sliderHandle.
 	pt := self widgetSize x / 2 @ (self valueToCoord: currentValue).
@@ -329,6 +338,15 @@ BlCleanSliderWithAlain >> buildVerticalSlider [
 	handle zIndex: 3.
 	self addChild: handle.
 	self sliderHandle: handle
+]
+
+{ #category : #'private - building' }
+BlCleanSliderWithAlain >> buildVerticalSlider [
+
+	self buildForeground.
+	self buildVerticalBackground.
+	self buildVerticalBar.
+	self buildVerticalHandle
 ]
 
 { #category : #'changing state' }
