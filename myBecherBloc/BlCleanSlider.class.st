@@ -241,10 +241,10 @@ BlCleanSlider >> buildHorizontalBackground [
 	| bgElt |
 	bgElt := BlElement new.
 	bgElt size:
-		self widgetSize x - (2 * self sliderPixelMargin) @ self barThickness.
+		self widgetSize x - (2 * self sliderPixelMargin) @ barThickness.
 	bgElt id: #sliderBackground.
 	bgElt position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barThickness / 2)).
+		@ (self widgetSize y / 2 - (barThickness / 2)).
 	bgElt background: self class backgroundDefaultColor.
 	bgElt zIndex: 0.
 	self addChild: bgElt.
@@ -257,11 +257,11 @@ BlCleanSlider >> buildHorizontalBar [
 	| bar |
 	bar := BlElement new.
 	bar size:
-		(self valueToCoord: self currentValue)
-		- (self sliderPixelMargin) @ self barThickness.
+		(self valueToCoord: currentValue)
+		- (self sliderPixelMargin) @ barThickness.
 	bar id: #sliderBar.
 	bar position: self sliderPixelMargin
-		@ (self widgetSize y / 2 - (self barThickness / 2)).
+		@ (self widgetSize y / 2 - (barThickness / 2)).
 	bar background: self class barDefaultColor.
 	bar zIndex: 2.
 	self addChild: bar.
