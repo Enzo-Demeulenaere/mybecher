@@ -4,7 +4,7 @@ I have a useless interactionRectangle. Do not use me.
 Here just for archival purposes
 "
 Class {
-	#name : #BlCleanSlider,
+	#name : #BlOriginalSegmentedSlider,
 	#superclass : #BlElement,
 	#instVars : [
 		'minValue',
@@ -34,7 +34,7 @@ Class {
 }
 
 { #category : #testing }
-BlCleanSlider class >> alainVisual1 [
+BlOriginalSegmentedSlider class >> alainVisual1 [
 
 	<script>
 	| bl |
@@ -53,7 +53,7 @@ BlCleanSlider class >> alainVisual1 [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> alainVisual2 [
+BlOriginalSegmentedSlider class >> alainVisual2 [
 
 	<script>
 	| bl2 |
@@ -76,37 +76,37 @@ BlCleanSlider class >> alainVisual2 [
 ]
 
 { #category : #building }
-BlCleanSlider class >> backgroundDefaultColor [
+BlOriginalSegmentedSlider class >> backgroundDefaultColor [
 
 	^ Color gray
 ]
 
 { #category : #building }
-BlCleanSlider class >> barDefaultColor [
+BlOriginalSegmentedSlider class >> barDefaultColor [
 
 	^ Color blue 
 ]
 
 { #category : #building }
-BlCleanSlider class >> defaultMaxPixelDistance [
+BlOriginalSegmentedSlider class >> defaultMaxPixelDistance [
 
 	^ 25
 ]
 
 { #category : #building }
-BlCleanSlider class >> interactionDefaultColor [
+BlOriginalSegmentedSlider class >> interactionDefaultColor [
 
 	^ Color pink alpha: 0.5
 ]
 
 { #category : #building }
-BlCleanSlider class >> interactorDefaultColor [
+BlOriginalSegmentedSlider class >> interactorDefaultColor [
 
 	^ Color red 
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTest1 [
+BlOriginalSegmentedSlider class >> visualTest1 [
 
 	<script>
 	| bl space val |
@@ -123,7 +123,7 @@ BlCleanSlider class >> visualTest1 [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTest2 [
+BlOriginalSegmentedSlider class >> visualTest2 [
 
 	<script>
 	| bl space val |
@@ -142,7 +142,7 @@ BlCleanSlider class >> visualTest2 [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTest3 [
+BlOriginalSegmentedSlider class >> visualTest3 [
 
 	<script>
 	| bl space val |
@@ -161,7 +161,7 @@ BlCleanSlider class >> visualTest3 [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTestVertical1 [
+BlOriginalSegmentedSlider class >> visualTestVertical1 [
 
 	<script>
 	| bl space val |
@@ -180,38 +180,38 @@ BlCleanSlider class >> visualTestVertical1 [
 ]
 
 { #category : #private }
-BlCleanSlider >> addSliderEventHandler: aAssoc [
+BlOriginalSegmentedSlider >> addSliderEventHandler: aAssoc [
 
 	('addSliderEventHandler: with' , aAssoc printString) traceCr.
 	sliderEventHandlerList add: aAssoc
 ]
 
 { #category : #accessing }
-BlCleanSlider >> barThickness [
+BlOriginalSegmentedSlider >> barThickness [
 
 	^ barThickness
 ]
 
 { #category : #accessing }
-BlCleanSlider >> barThickness: anObject [
+BlOriginalSegmentedSlider >> barThickness: anObject [
 
 	barThickness := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> beHorizontal [  
+BlOriginalSegmentedSlider >> beHorizontal [  
 
 	self horizontal: true.
 ]
 
 { #category : #accessing }
-BlCleanSlider >> beVertical [ 
+BlOriginalSegmentedSlider >> beVertical [ 
 
 	self horizontal: false
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildDefaultHandle [
+BlOriginalSegmentedSlider >> buildDefaultHandle [
 
 	| bl pt |
 	pt := 20 @ 20.
@@ -224,7 +224,7 @@ BlCleanSlider >> buildDefaultHandle [
 ]
 
 { #category : #'as yet unclassified' }
-BlCleanSlider >> buildForeground [ 
+BlOriginalSegmentedSlider >> buildForeground [ 
 
 	
 	| fgElt |
@@ -238,7 +238,7 @@ BlCleanSlider >> buildForeground [
 ]
 
 { #category : #'as yet unclassified' }
-BlCleanSlider >> buildHorizontalBackground [
+BlOriginalSegmentedSlider >> buildHorizontalBackground [
 
 	| bgElt |
 	bgElt := BlElement new.
@@ -254,7 +254,7 @@ BlCleanSlider >> buildHorizontalBackground [
 ]
 
 { #category : #'as yet unclassified' }
-BlCleanSlider >> buildHorizontalBar [
+BlOriginalSegmentedSlider >> buildHorizontalBar [
 
 	| bar |
 	bar := BlElement new.
@@ -271,7 +271,7 @@ BlCleanSlider >> buildHorizontalBar [
 ]
 
 { #category : #'as yet unclassified' }
-BlCleanSlider >> buildHorizontalHandle [ 
+BlOriginalSegmentedSlider >> buildHorizontalHandle [ 
 
 	| handle pt |
 	handle := self buildDefaultHandle.
@@ -285,7 +285,7 @@ BlCleanSlider >> buildHorizontalHandle [
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildHorizontalSlider [
+BlOriginalSegmentedSlider >> buildHorizontalSlider [
 
 	self buildForeground.
 	self buildHorizontalBackground.
@@ -294,7 +294,7 @@ BlCleanSlider >> buildHorizontalSlider [
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> buildOrientation [
+BlOriginalSegmentedSlider >> buildOrientation [
 
 	self removeAllShapes.
 	self size: self widgetSize.
@@ -305,14 +305,14 @@ BlCleanSlider >> buildOrientation [
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> buildSlider [
+BlOriginalSegmentedSlider >> buildSlider [
 
 	self buildOrientation.
 	self initializeEventHandlers
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildVerticalSlider [
+BlOriginalSegmentedSlider >> buildVerticalSlider [
 
 	| fgElt bgElt bar handle pt pt1 pt2 |
 	"foreground"
@@ -363,13 +363,13 @@ BlCleanSlider >> buildVerticalSlider [
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> changedCurrentValue: aValue [
+BlOriginalSegmentedSlider >> changedCurrentValue: aValue [
 
 ^self changedCurrentValue: aValue withSlider: false
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
+BlOriginalSegmentedSlider >> changedCurrentValue: aValue withSlider: aBool [
 
 	| v color |
 	v := self valueToCoord: aValue.
@@ -396,7 +396,7 @@ BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> changedCursorPosition: v [
+BlOriginalSegmentedSlider >> changedCursorPosition: v [
 
 	self isHorizontal 
 		ifTrue: [
@@ -408,7 +408,7 @@ BlCleanSlider >> changedCursorPosition: v [
 ]
 
 { #category : #private }
-BlCleanSlider >> cleanSliderParts [
+BlOriginalSegmentedSlider >> cleanSliderParts [
 
 	sliderInteractionRectangle := nil.
 	sliderBackground := nil.
@@ -417,7 +417,7 @@ BlCleanSlider >> cleanSliderParts [
 ]
 
 { #category : #private }
-BlCleanSlider >> colorForValue: aValue [
+BlOriginalSegmentedSlider >> colorForValue: aValue [
 
 	| i |
 	self enumeratedColors
@@ -433,13 +433,13 @@ BlCleanSlider >> colorForValue: aValue [
 ]
 
 { #category : #private }
-BlCleanSlider >> currentValue [
+BlOriginalSegmentedSlider >> currentValue [
 
 	^ currentValue
 ]
 
 { #category : #private }
-BlCleanSlider >> currentValue: aNumber [
+BlOriginalSegmentedSlider >> currentValue: aNumber [
 
 	(aNumber <= maxValue and: [ aNumber >= minValue ]) ifFalse: [
 		^ self ].
@@ -448,13 +448,13 @@ BlCleanSlider >> currentValue: aNumber [
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> decrementValue [
+BlOriginalSegmentedSlider >> decrementValue [
 
 	self decrementValue: self stepValue.
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> decrementValue: aValue [
+BlOriginalSegmentedSlider >> decrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue - aValue.
@@ -462,43 +462,43 @@ BlCleanSlider >> decrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> disabledRebuilding [
+BlOriginalSegmentedSlider >> disabledRebuilding [
 
 	^ disabledRebuilding
 ]
 
 { #category : #accessing }
-BlCleanSlider >> disabledRebuilding: anObject [
+BlOriginalSegmentedSlider >> disabledRebuilding: anObject [
 
 	disabledRebuilding := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> endColor [
+BlOriginalSegmentedSlider >> endColor [
 
 	^ endColor
 ]
 
 { #category : #accessing }
-BlCleanSlider >> endColor: anObject [
+BlOriginalSegmentedSlider >> endColor: anObject [
 
 	endColor := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedColors [
+BlOriginalSegmentedSlider >> enumeratedColors [
 
 	^ enumeratedColors
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedColors: anObject [
+BlOriginalSegmentedSlider >> enumeratedColors: anObject [
 
 	enumeratedColors := anObject
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> enumeratedValues [
+BlOriginalSegmentedSlider >> enumeratedValues [
 	"since the enumerated value are derived from min, max and step, we lazy initialize it."
 	
 	enumeratedValues ifNil: [
@@ -508,25 +508,25 @@ BlCleanSlider >> enumeratedValues [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedValues: anObject [
+BlOriginalSegmentedSlider >> enumeratedValues: anObject [
 
 	enumeratedValues := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> horizontal: aBoolean [
+BlOriginalSegmentedSlider >> horizontal: aBoolean [
 
 	isHorizontal := aBoolean 
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> incrementValue [
+BlOriginalSegmentedSlider >> incrementValue [
 
 	self incrementValue: self stepValue
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> incrementValue: aValue [
+BlOriginalSegmentedSlider >> incrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue + aValue.
@@ -534,19 +534,19 @@ BlCleanSlider >> incrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> initColor [
+BlOriginalSegmentedSlider >> initColor [
 
 	^ initColor
 ]
 
 { #category : #accessing }
-BlCleanSlider >> initColor: anObject [
+BlOriginalSegmentedSlider >> initColor: anObject [
 
 	initColor := anObject
 ]
 
 { #category : #initialization }
-BlCleanSlider >> initialize [
+BlOriginalSegmentedSlider >> initialize [
 
 	super initialize.
 	barThickness := 8.
@@ -565,7 +565,7 @@ BlCleanSlider >> initialize [
 ]
 
 { #category : #initialization }
-BlCleanSlider >> initializeEventHandlers [
+BlOriginalSegmentedSlider >> initializeEventHandlers [
 
 	| bl |
 	self isSliderBuilt ifFalse: [
@@ -594,7 +594,7 @@ BlCleanSlider >> initializeEventHandlers [
 ]
 
 { #category : #initialization }
-BlCleanSlider >> initializeSpaceEventHandlers [
+BlOriginalSegmentedSlider >> initializeSpaceEventHandlers [
 
 	self space
 		addEventHandlerOn: BlMouseUpEvent
@@ -602,56 +602,56 @@ BlCleanSlider >> initializeSpaceEventHandlers [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> interactorPushedPoint [
+BlOriginalSegmentedSlider >> interactorPushedPoint [
 
 	^ interactorPushedPoint
 ]
 
 { #category : #accessing }
-BlCleanSlider >> interactorPushedPoint: anObject [
+BlOriginalSegmentedSlider >> interactorPushedPoint: anObject [
 
 	interactorPushedPoint := anObject
 ]
 
 { #category : #private }
-BlCleanSlider >> is: aValue near: aValue2 [
+BlOriginalSegmentedSlider >> is: aValue near: aValue2 [
 
 	^(aValue - aValue2) abs < self maxPixelDistance
 ]
 
 { #category : #accessing }
-BlCleanSlider >> isHorizontal [ 
+BlOriginalSegmentedSlider >> isHorizontal [ 
 
 	^ isHorizontal 
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> isSliderBuilt [
+BlOriginalSegmentedSlider >> isSliderBuilt [
 	"if no interactor, no slider"
 
 	^ self sliderHandle isNotNil
 ]
 
 { #category : #accessing }
-BlCleanSlider >> maxPixelDistance [
+BlOriginalSegmentedSlider >> maxPixelDistance [
 
 	^ maxPixelDistance 
 ]
 
 { #category : #accessing }
-BlCleanSlider >> maxPixelDistance: anObject [
+BlOriginalSegmentedSlider >> maxPixelDistance: anObject [
 
 	maxPixelDistance := anObject
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> maxValue [
+BlOriginalSegmentedSlider >> maxValue [
 
 	^ maxValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> maxValue: anObject [
+BlOriginalSegmentedSlider >> maxValue: anObject [
 	"when we change the maxValue, we rebuilding the enumerated values and slider"
 
 	maxValue := anObject.
@@ -660,13 +660,13 @@ BlCleanSlider >> maxValue: anObject [
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> minValue [
+BlOriginalSegmentedSlider >> minValue [
 
 	^ minValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> minValue: anObject [
+BlOriginalSegmentedSlider >> minValue: anObject [
 
 	minValue := anObject.
 	enumeratedValues := nil.
@@ -675,7 +675,7 @@ BlCleanSlider >> minValue: anObject [
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> nearestValue: aValue [
+BlOriginalSegmentedSlider >> nearestValue: aValue [
 
 	| val minResult tmp tmp2 |
 	self enumeratedValues ifNil: [ ^ aValue ].
@@ -692,7 +692,7 @@ BlCleanSlider >> nearestValue: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> pointToValue: point [
+BlOriginalSegmentedSlider >> pointToValue: point [
 
 	^ self isHorizontal 
 		  ifTrue: [ self pointToXValue: point ]
@@ -700,7 +700,7 @@ BlCleanSlider >> pointToValue: point [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> pointToXValue: point [
+BlOriginalSegmentedSlider >> pointToXValue: point [
 
 	| facteur valeur |
 	facteur := point x / self sliderBackground size x.
@@ -712,7 +712,7 @@ BlCleanSlider >> pointToXValue: point [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> pointToYValue: point [
+BlOriginalSegmentedSlider >> pointToYValue: point [
 
 	| facteur valeur |
 	facteur := 1 - (point y / self sliderBackground size y).
@@ -724,21 +724,21 @@ BlCleanSlider >> pointToYValue: point [
 ]
 
 { #category : #private }
-BlCleanSlider >> proportionOf: aValue [
+BlOriginalSegmentedSlider >> proportionOf: aValue [
 	| i |
 	i := self enumeratedValues indexOf: aValue.
 	^ (i/self enumeratedValues size)
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> rebuildSlider [
+BlOriginalSegmentedSlider >> rebuildSlider [
 
 	self disabledRebuilding ifTrue: [ ^ self ].
 	self buildOrientation
 ]
 
 { #category : #private }
-BlCleanSlider >> removeAllShapes [
+BlOriginalSegmentedSlider >> removeAllShapes [
 
 	| list |
 	list := self sliderParts.
@@ -748,33 +748,33 @@ BlCleanSlider >> removeAllShapes [
 ]
 
 { #category : #private }
-BlCleanSlider >> removeAllSliderEventHandlers [
+BlOriginalSegmentedSlider >> removeAllSliderEventHandlers [
 	sliderEventHandlerList traceCr.
 	sliderEventHandlerList do: [ :e | e key removeEventHandler: e value ].
 	sliderEventHandlerList := OrderedCollection new
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setMaxValue [
+BlOriginalSegmentedSlider >> setMaxValue [
 
 	self setValue: self maxValue.
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setMinValue [
+BlOriginalSegmentedSlider >> setMinValue [
 
 	self setValue: self minValue
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setValue: aValue [
+BlOriginalSegmentedSlider >> setValue: aValue [
 
 	(aValue < self maxValue and: [ aValue > self minValue ]) ifTrue: [
 		self validatedValue: aValue ].
 ]
 
 { #category : #'api - bounds' }
-BlCleanSlider >> size: aValue [
+BlOriginalSegmentedSlider >> size: aValue [
 
 	super size: aValue.
 	self widgetSize: aValue.
@@ -782,31 +782,31 @@ BlCleanSlider >> size: aValue [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBackground [
+BlOriginalSegmentedSlider >> sliderBackground [
 
 	^ sliderBackground
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBackground: anObject [
+BlOriginalSegmentedSlider >> sliderBackground: anObject [
 
 	sliderBackground := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBar [
+BlOriginalSegmentedSlider >> sliderBar [
 
 	^ sliderBar
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBar: anObject [
+BlOriginalSegmentedSlider >> sliderBar: anObject [
 
 	sliderBar := anObject
 ]
 
 { #category : #'events - bar' }
-BlCleanSlider >> sliderBarClicked: event [
+BlOriginalSegmentedSlider >> sliderBarClicked: event [
 
 	| tmp val |
 	tmp := self sliderBackground globalPointToLocal: event position.
@@ -815,19 +815,19 @@ BlCleanSlider >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderHandle [
+BlOriginalSegmentedSlider >> sliderHandle [
 
 	^ sliderInteractor
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderHandle: anObject [
+BlOriginalSegmentedSlider >> sliderHandle: anObject [
 
 	sliderInteractor := anObject
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandleMoved: event [
+BlOriginalSegmentedSlider >> sliderHandleMoved: event [
 
 	| val tmp v |
 	self interactorPushedPoint ifNil: [ ^ self ].
@@ -849,7 +849,7 @@ BlCleanSlider >> sliderHandleMoved: event [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandlePushed: event [
+BlOriginalSegmentedSlider >> sliderHandlePushed: event [
 
 	| value pt1 pt2 |
 	self sliderBar ifNil: [ ^ self ].
@@ -862,7 +862,7 @@ BlCleanSlider >> sliderHandlePushed: event [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandleReleased: event [
+BlOriginalSegmentedSlider >> sliderHandleReleased: event [
 
 	self interactorPushedPoint isNil ifTrue: [ ^ self ].
 	self interactorPushedPoint: nil.
@@ -870,19 +870,19 @@ BlCleanSlider >> sliderHandleReleased: event [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderInteractionRectangle [
+BlOriginalSegmentedSlider >> sliderInteractionRectangle [
 
 	^ sliderInteractionRectangle
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderInteractionRectangle: anObject [
+BlOriginalSegmentedSlider >> sliderInteractionRectangle: anObject [
 
 	sliderInteractionRectangle := anObject
 ]
 
 { #category : #private }
-BlCleanSlider >> sliderParts [
+BlOriginalSegmentedSlider >> sliderParts [
 
 	| oc |
 	oc := OrderedCollection new.
@@ -894,13 +894,13 @@ BlCleanSlider >> sliderParts [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderPixelMargin [
+BlOriginalSegmentedSlider >> sliderPixelMargin [
 
 	^ sliderPixelMargin 
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderPixelMargin: anObject [
+BlOriginalSegmentedSlider >> sliderPixelMargin: anObject [
 
 	sliderPixelMargin := anObject.
 	self isSliderBuilt ifTrue: [ 
@@ -908,32 +908,32 @@ BlCleanSlider >> sliderPixelMargin: anObject [
 ]
 
 { #category : #'api - space' }
-BlCleanSlider >> space: aSpace [
+BlOriginalSegmentedSlider >> space: aSpace [
 	super space: aSpace.
 	self initializeSpaceEventHandlers
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> stepValue [
+BlOriginalSegmentedSlider >> stepValue [
 
 	^ stepValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> stepValue: anObject [
+BlOriginalSegmentedSlider >> stepValue: anObject [
 
 	stepValue := anObject.
 	enumeratedValues := nil.
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValue [
+BlOriginalSegmentedSlider >> validatedValue [
 
 	^ validatedValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValue: aValue [
+BlOriginalSegmentedSlider >> validatedValue: aValue [
 
 	currentValue := aValue.
 	self changedCurrentValue: aValue withSlider: true. 
@@ -942,19 +942,19 @@ BlCleanSlider >> validatedValue: aValue [
 ]
 
 { #category : #private }
-BlCleanSlider >> validatedValueCallback [
+BlOriginalSegmentedSlider >> validatedValueCallback [
 
 	^ validatedValueCallback
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValueCallback: anObject [
+BlOriginalSegmentedSlider >> validatedValueCallback: anObject [
 
 	validatedValueCallback := anObject
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> valueToCoord: aValue [
+BlOriginalSegmentedSlider >> valueToCoord: aValue [
 
 	^ self isHorizontal 
 		  ifTrue: [ self valueToX: aValue ]
@@ -962,7 +962,7 @@ BlCleanSlider >> valueToCoord: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> valueToX: aValue [
+BlOriginalSegmentedSlider >> valueToX: aValue [
 
 	| current total coeff |
 	current := aValue - self minValue.
@@ -973,7 +973,7 @@ BlCleanSlider >> valueToX: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> valueToY: aValue [
+BlOriginalSegmentedSlider >> valueToY: aValue [
 
 	| valeurCourante valeurTotale facteur |
 	valeurCourante := aValue - self minValue.
@@ -986,7 +986,7 @@ BlCleanSlider >> valueToY: aValue [
 ]
 
 { #category : #private }
-BlCleanSlider >> whenEvent: anEventClass do: aBlock [
+BlOriginalSegmentedSlider >> whenEvent: anEventClass do: aBlock [
 
 	| anEventHandler |
 	anEventHandler := BlEventHandler
@@ -997,7 +997,7 @@ BlCleanSlider >> whenEvent: anEventClass do: aBlock [
 ]
 
 { #category : #private }
-BlCleanSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
+BlOriginalSegmentedSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
 
 	| anEventHandler |
 	anEventHandler := BlEventHandler
@@ -1008,13 +1008,13 @@ BlCleanSlider >> whenEvent: anEventClass on: aBlElement do: aBlock [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> widgetSize [
+BlOriginalSegmentedSlider >> widgetSize [
 
 	^ widgetSize
 ]
 
 { #category : #private }
-BlCleanSlider >> widgetSize: anObject [
+BlOriginalSegmentedSlider >> widgetSize: anObject [
 
 	widgetSize := anObject
 ]
