@@ -308,7 +308,7 @@ BlSimpleSlider >> initializeParts [
 { #category : #initialization }
 BlSimpleSlider >> initializeSizes [ 
 
-		barLength := self defaultBarLength.
+	barLength := self defaultBarLength.
 	barThickness := self defaultBarThickness.
 	marginLength := self defaultMarginLength.
 	marginThickness := self defaultMarginThickness.
