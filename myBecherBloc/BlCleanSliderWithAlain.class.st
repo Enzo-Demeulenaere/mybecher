@@ -10,10 +10,8 @@ Class {
 		'validatedValue',
 		'validatedValueCallback',
 		'sliderBar',
-		'sliderInteractor',
 		'sliderBackground',
 		'disabledRebuilding',
-		'sliderEventHandlerList',
 		'widgetSize',
 		'interactorPushedPoint',
 		'maxPixelDistance',
@@ -23,7 +21,8 @@ Class {
 		'endColor',
 		'barThickness',
 		'isHorizontal',
-		'eventHandler'
+		'eventHandler',
+		'sliderHandle'
 	],
 	#category : #myBecherBloc
 }
@@ -200,7 +199,7 @@ BlCleanSliderWithAlain >> beVertical [
 ]
 
 { #category : #'private - building' }
-BlCleanSliderWithAlain >> buildDefaultInteractor [
+BlCleanSliderWithAlain >> buildDefaultHandle [
 
 	| bl pt |
 	pt := 20 @ 20.
@@ -254,17 +253,17 @@ BlCleanSliderWithAlain >> buildHorizontalBar [
 ]
 
 { #category : #build }
-BlCleanSliderWithAlain >> buildHorizontalInteractor [ 
+BlCleanSliderWithAlain >> buildHorizontalHandle [ 
 
-	| interactor pt |
-	interactor := self buildDefaultInteractor.
-	interactor id: #sliderInteractor.
-	pt := (self valueToCoord: self currentValue)
+	| handle pt |
+	handle := self buildDefaultHandle.
+	handle id: #sliderHandle.
+	pt := (self valueToCoord: currentValue)
 	      @ (self widgetSize y / 2).
-	interactor position: pt.
-	interactor zIndex: 3.
-	self addChild: interactor.
-	self sliderInteractor: interactor
+	handle position: pt.
+	handle zIndex: 3.
+	self addChild: handle.
+	self sliderHandle: handle
 ]
 
 { #category : #'private - building' }
@@ -273,7 +272,7 @@ BlCleanSliderWithAlain >> buildHorizontalSlider [
 	self buildForeground.
 	self buildHorizontalBackground.
 	self buildHorizontalBar.
-	self buildHorizontalInteractor
+	self buildHorizontalHandle
 ]
 
 { #category : #'changing state' }
@@ -297,17 +296,17 @@ BlCleanSliderWithAlain >> buildSlider [
 { #category : #'private - building' }
 BlCleanSliderWithAlain >> buildVerticalSlider [
 
-	| bgElt bar interactor pt pt1 pt2 |
+	| bgElt bar handle pt pt1 pt2 |
 	"foreground"
 	self buildForeground.
 
 	"background"
 	bgElt := BlElement new.
-	pt1 := self barThickness
+	pt1 := barThickness
 	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
 	bgElt size: pt1.
 	bgElt id: #sliderBackground.
-	pt2 := self widgetSize x / 2 - (self barThickness / 2)
+	pt2 := self widgetSize x / 2 - ( barThickness / 2)
 	       @ self sliderPixelMargin.
 	bgElt position: pt2.
 	bgElt background: self class backgroundDefaultColor.
@@ -317,25 +316,25 @@ BlCleanSliderWithAlain >> buildVerticalSlider [
 
 	"bar"
 	bar := BlElement new.
-	bar size: self barThickness
-		@ (self widgetSize y - (self valueToCoord: self currentValue)
+	bar size: barThickness
+		@ (self widgetSize y - (self valueToCoord: currentValue)
 			 - self sliderPixelMargin).
 	bar id: #sliderBar.
-	bar position: self widgetSize x / 2 - (self barThickness / 2)
-		@ (self valueToCoord: self currentValue).
+	bar position: self widgetSize x / 2 - (barThickness / 2)
+		@ (self valueToCoord: currentValue).
 	bar background: self class barDefaultColor.
 	bar zIndex: 2.
 	self addChild: bar.
 	self sliderBar: bar.
 
 	"interactor"
-	interactor := self buildDefaultInteractor.
-	interactor id: #sliderInteractor.
-	pt := self widgetSize x / 2 @ (self valueToCoord: self currentValue).
-	interactor position: pt.
-	interactor zIndex: 3.
-	self addChild: interactor.
-	self sliderInteractor: interactor
+	handle := self buildDefaultHandle.
+	handle id: #sliderHandle.
+	pt := self widgetSize x / 2 @ (self valueToCoord: currentValue).
+	handle position: pt.
+	handle zIndex: 3.
+	self addChild: handle.
+	self sliderHandle: handle
 ]
 
 { #category : #'changing state' }
@@ -352,22 +351,22 @@ BlCleanSliderWithAlain >> changedCurrentValue: aValue withSlider: aBool [
 	self isHorizontal 
 		ifTrue: [
 			aBool ifTrue: [
-				self sliderInteractor ifNotNil: [ :sl |
+				self sliderHandle ifNotNil: [ :sl |
 					sl position: v @ sl constraints position y ] ].
 			self sliderBar size:
 				v - self sliderPixelMargin @ self sliderBar size y ]
 		ifFalse: [
 			aBool ifTrue: [
-				self sliderInteractor ifNotNil: [ :sl |
+				self sliderHandle ifNotNil: [ :sl |
 					sl position: sl constraints position x @ v ] ].
-			self sliderBar size: self barThickness
-				@ (self widgetSize y - (self valueToCoord: self currentValue)
+			self sliderBar size:  barThickness
+				@ (self widgetSize y - (self valueToCoord: currentValue)
 					 - self sliderPixelMargin).
 			self sliderBar position:
-				self widgetSize x / 2 - (self barThickness / 2)
-				@ (self valueToCoord: self currentValue) ].
+				self widgetSize x / 2 - (barThickness / 2)
+				@ (self valueToCoord: currentValue) ].
 	color := self colorForValue: aValue.
-	self sliderInteractor background: color.
+	self sliderHandle background: color.
 	self sliderBar background: color
 ]
 
@@ -376,10 +375,10 @@ BlCleanSliderWithAlain >> changedCursorPosition: v [
 
 	self isHorizontal 
 		ifTrue: [
-			self sliderInteractor ifNotNil: [ :sl |
+			self sliderHandle ifNotNil: [ :sl |
 				sl position: v @ sl constraints position y ] ]
 		ifFalse: [
-			self sliderInteractor ifNotNil: [ :sl |
+			self sliderHandle ifNotNil: [ :sl |
 				sl position: sl constraints position x @ v ] ]
 ]
 
@@ -388,7 +387,7 @@ BlCleanSliderWithAlain >> cleanSliderParts [
 
 	sliderBackground := nil.
 	sliderBar := nil.
-	sliderInteractor := nil
+	sliderHandle := nil
 ]
 
 { #category : #private }
@@ -786,15 +785,15 @@ BlCleanSliderWithAlain >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlCleanSliderWithAlain >> sliderInteractor [
+BlCleanSliderWithAlain >> sliderHandle [
 
-	^ sliderInteractor
+	^ sliderHandle
 ]
 
 { #category : #accessing }
-BlCleanSliderWithAlain >> sliderInteractor: anObject [
+BlCleanSliderWithAlain >> sliderHandle: anObject [
 
-	sliderInteractor := anObject
+	sliderHandle := anObject
 ]
 
 { #category : #'events - interactor' }
@@ -847,7 +846,7 @@ BlCleanSliderWithAlain >> sliderParts [
 	oc := OrderedCollection new.
 	self sliderBackground ifNotNil: [ :e | oc add: e ].
 	self sliderBar ifNotNil: [ :e | oc add: e ].
-	self sliderInteractor ifNotNil: [ :e | oc add: e ].
+	self sliderHandle ifNotNil: [ :e | oc add: e ].
 	^ oc
 ]
 
