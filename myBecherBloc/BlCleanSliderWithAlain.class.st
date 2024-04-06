@@ -526,7 +526,6 @@ BlCleanSliderWithAlain >> initialize [
 	sliderPixelMargin := 5.
 	disabledRebuilding := false.
 	stepValue := 1.
-	sliderEventHandlerList := OrderedCollection new.
 	endColor := self class interactorDefaultColor.
 	initColor := self class interactorDefaultColor.
 	maxPixelDistance := self class defaultMaxPixelDistance
@@ -544,14 +543,6 @@ BlCleanSliderWithAlain >> initializeEventHandlers [
 	self  addEventHandler: eventHandler
 	
 
-]
-
-{ #category : #initialization }
-BlCleanSliderWithAlain >> initializeSpaceEventHandlers [
-
-	self space
-		addEventHandlerOn: BlMouseUpEvent
-		do: [ :event | self sliderInteractorReleased: event ]
 ]
 
 { #category : #accessing }

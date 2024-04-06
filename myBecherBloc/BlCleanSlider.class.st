@@ -566,7 +566,7 @@ BlCleanSlider >> initialize [
 BlCleanSlider >> initializeEventHandlers [
 
 	| bl |
-	self isBuildSlider ifFalse: [
+	self isSliderBuilt ifFalse: [
 		^ self error: 'The slider must be built first' ].
 	bl := self sliderInteractionRectangle.
 	self
