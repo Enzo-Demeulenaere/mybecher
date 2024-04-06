@@ -180,13 +180,13 @@ BlCleanSliderWithAlain >> barThickness: anObject [
 	barThickness := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'main configuration' }
 BlCleanSliderWithAlain >> beHorizontal [  
 
-	self horizontal: true.
+	self horizontal: true
 ]
 
-{ #category : #accessing }
+{ #category : #'main configuration' }
 BlCleanSliderWithAlain >> beVertical [ 
 
 	self horizontal: false
