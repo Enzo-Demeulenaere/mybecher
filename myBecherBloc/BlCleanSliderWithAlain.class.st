@@ -535,7 +535,7 @@ BlCleanSliderWithAlain >> initialize [
 { #category : #initialization }
 BlCleanSliderWithAlain >> initializeEventHandlers [
 
-	self isBuildSlider ifFalse: [
+	self isSliderBuilt ifFalse: [
 		^ self error: 'The slider must be built first' ].
 	eventHandler ifNotNil: [ ^ self ].
 	self flag: #toClean. "to be cleaned after"
@@ -572,17 +572,17 @@ BlCleanSliderWithAlain >> is: aValue near: aValue2 [
 	^(aValue - aValue2) abs < self maxPixelDistance
 ]
 
-{ #category : #'private - building' }
-BlCleanSliderWithAlain >> isBuildSlider [
-	"if no interactor, no slider"
-
-	^ self sliderInteractor isNotNil
-]
-
 { #category : #accessing }
 BlCleanSliderWithAlain >> isHorizontal [ 
 
 	^ isHorizontal 
+]
+
+{ #category : #'private - building' }
+BlCleanSliderWithAlain >> isSliderBuilt [
+	"if no interactor, no slider"
+
+	^ self sliderHandle isNotNil
 ]
 
 { #category : #accessing }
@@ -605,11 +605,11 @@ BlCleanSliderWithAlain >> maxValue [
 
 { #category : #'api - values' }
 BlCleanSliderWithAlain >> maxValue: anObject [
-	"when we change the maxValue, we rebuilding the enumerated values and slider"
+	"when we change the maxValue, we are rebuilding the enumerated values and slider"
 
 	maxValue := anObject.
 	enumeratedValues := nil.
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #'api - values' }
@@ -623,8 +623,8 @@ BlCleanSliderWithAlain >> minValue: anObject [
 
 	minValue := anObject.
 	enumeratedValues := nil.
-	self currentValue < minValue ifTrue: [ currentValue := minValue copy ].
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	currentValue < minValue ifTrue: [ currentValue := minValue copy ].
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #'api - values' }
@@ -742,7 +742,7 @@ BlCleanSliderWithAlain >> size: aValue [
 
 	super size: aValue.
 	self widgetSize: aValue.
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #accessing }

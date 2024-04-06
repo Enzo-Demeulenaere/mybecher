@@ -617,17 +617,17 @@ BlCleanSlider >> is: aValue near: aValue2 [
 	^(aValue - aValue2) abs < self maxPixelDistance
 ]
 
-{ #category : #'private - building' }
-BlCleanSlider >> isBuildSlider [
-	"if no interactor, no slider"
-
-	^ self sliderInteractor isNotNil
-]
-
 { #category : #accessing }
 BlCleanSlider >> isHorizontal [ 
 
 	^ isHorizontal 
+]
+
+{ #category : #'private - building' }
+BlCleanSlider >> isSliderBuilt [
+	"if no interactor, no slider"
+
+	^ self sliderHandle isNotNil
 ]
 
 { #category : #accessing }
@@ -654,7 +654,7 @@ BlCleanSlider >> maxValue: anObject [
 
 	maxValue := anObject.
 	enumeratedValues := nil.
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #'api - values' }
@@ -668,8 +668,8 @@ BlCleanSlider >> minValue: anObject [
 
 	minValue := anObject.
 	enumeratedValues := nil.
-	self currentValue < minValue ifTrue: [ currentValue := minValue copy ].
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	currentValue < minValue ifTrue: [ currentValue := minValue copy ].
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #'api - values' }
@@ -776,7 +776,7 @@ BlCleanSlider >> size: aValue [
 
 	super size: aValue.
 	self widgetSize: aValue.
-	self isBuildSlider ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self rebuildSlider ]
 ]
 
 { #category : #accessing }
@@ -901,7 +901,7 @@ BlCleanSlider >> sliderPixelMargin [
 BlCleanSlider >> sliderPixelMargin: anObject [
 
 	sliderPixelMargin := anObject.
-	self isBuildSlider ifTrue: [ 
+	self isSliderBuilt ifTrue: [ 
 		self rebuildSlider ]
 ]
 
