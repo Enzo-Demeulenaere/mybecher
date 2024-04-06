@@ -383,7 +383,7 @@ BlCleanSliderWithAlain >> changedCurrentValue: aValue withSlider: aBool [
 ]
 
 { #category : #'changing state' }
-BlCleanSliderWithAlain >> changedCursorPosition: v [
+BlCleanSliderWithAlain >> changedHandlePosition: v [
 
 	self isHorizontal 
 		ifTrue: [
@@ -811,7 +811,7 @@ BlCleanSliderWithAlain >> sliderHandleMoved: event [
 			v := v min: (self valueToY: self minValue).
 			v := v max: (self valueToY: self maxValue) ].
 
-	self changedCursorPosition: v.
+	self changedHandlePosition: v.
 	self currentValue: val
 ]
 

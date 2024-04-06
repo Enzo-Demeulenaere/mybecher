@@ -396,7 +396,7 @@ BlOriginalSegmentedSlider >> changedCurrentValue: aValue withSlider: aBool [
 ]
 
 { #category : #'changing state' }
-BlOriginalSegmentedSlider >> changedCursorPosition: v [
+BlOriginalSegmentedSlider >> changedHandlePosition: v [
 
 	self isHorizontal 
 		ifTrue: [
@@ -844,7 +844,7 @@ BlOriginalSegmentedSlider >> sliderHandleMoved: event [
 			v := v min: (self valueToY: self minValue).
 			v := v max: (self valueToY: self maxValue) ].
 
-	self changedCursorPosition: v.
+	self changedHandlePosition: v.
 	self currentValue: val
 ]
 

@@ -72,7 +72,7 @@ BlCleanSliderHandler >> sliderHandleMoved: event [
 			v := v min: (slider valueToY: slider minValue).
 			v := v max: (slider valueToY: slider maxValue) ].
 
-	slider changedCursorPosition: v.
+	slider changedHandlePosition: v.
 	slider currentValue: val
 ]
 
