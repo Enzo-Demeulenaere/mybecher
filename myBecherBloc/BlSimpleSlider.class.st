@@ -14,12 +14,13 @@ Class {
 		'barThickness',
 		'barLength',
 		'marginThickness',
-		'marginLength'
+		'marginLength',
+		'announcer'
 	],
 	#category : #myBecherBloc
 }
 
-{ #category : #testing }
+{ #category : #example }
 BlSimpleSlider class >> alainVisual1 [
 
 	<script>
@@ -46,6 +47,61 @@ BlSimpleSlider class >> beHorizontal [
 BlSimpleSlider class >> beVertical [ 
 	
 	^ self new beVertical 
+]
+
+{ #category : #example }
+BlSimpleSlider class >> simpleExampleHorizontal [
+	"The values of the slider are also written in the transcript"
+
+	<script>
+	| slider textElt container |
+	slider := self beHorizontal.
+	textElt := BlTextElement new position: 100 @ 40.
+
+	textElt text: slider currentValue asRopedText.
+
+	slider
+		addEventHandlerOn: BlSliderValueChangedEvent
+		do: [ textElt text: slider currentValue asRopedText ].
+
+	container := BlElement new clipChildren: false.
+
+	container addChild: slider.
+	container addChild: textElt.
+
+	container openInSpace
+]
+
+{ #category : #example }
+BlSimpleSlider class >> simpleExampleVertical [
+	"The values of the slider are also written in the transcript"
+
+	<script>
+	| slider textElt container |
+	slider := self beVertical.
+	textElt := BlTextElement new position: 40 @ 100.
+
+	textElt text: slider currentValue asRopedText.
+
+	slider
+		addEventHandlerOn: BlSliderValueChangedEvent
+		do: [ textElt text: slider currentValue asRopedText ].
+
+
+
+
+	container := BlElement new clipChildren: false.
+
+	container addChild: slider.
+	container addChild: textElt.
+
+	container openInSpace
+]
+
+{ #category : #accessing }
+BlSimpleSlider >> announcer [ 
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #accessing }
@@ -315,11 +371,11 @@ BlSimpleSlider >> initializeSizes [
 ]
 
 { #category : #initialization }
-BlSimpleSlider >> initializeValues [ 
+BlSimpleSlider >> initializeValues [
 
 	self minValue: 0.
 	self maxValue: 50.
-	self currentValue: 0
+	self currentValue: self minValue 
 ]
 
 { #category : #accessing }
@@ -484,8 +540,9 @@ BlSimpleSlider >> updateColoredBar [
 { #category : #protocol }
 BlSimpleSlider >> updateValue [
 
-	| value |
-	value := self valueAtCoord: handle position.
+	currentValue := self valueAtCoord: handle position.
+	"self announcer announce: BlSliderValueChangedEvent"
+	self dispatchEvent: BlSliderValueChangedEvent new.
 ]
 
 { #category : #'api - transformations' }
@@ -507,21 +564,23 @@ BlSimpleSlider >> valueAtX: aPoint [
 			valueDiff := maxValue - minValue.
 			coeff := barLength / dist.
 			value := minValue + (valueDiff / coeff) ].
-	 value asFloat traceCr
+	value asFloat traceCr.
+	^ value asFloat
 ]
 
 { #category : #'api - transformations' }
 BlSimpleSlider >> valueAtY: aPoint [
 
 	| dist valueDiff value coeff |
-	dist := (bar position y + barLength) - aPoint y.
+	dist := bar position y + barLength - aPoint y.
 	dist = 0
 		ifTrue: [ value := minValue ]
 		ifFalse: [
 			valueDiff := maxValue - minValue.
 			coeff := barLength / dist.
 			value := minValue + (valueDiff / coeff) ].
-	value asFloat traceCr
+	value asFloat traceCr.
+	^ value asFloat
 ]
 
 { #category : #accessing }
