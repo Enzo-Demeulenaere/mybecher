@@ -1,5 +1,5 @@
 Class {
-	#name : #BlCleanSlider,
+	#name : #BlCleanSliderHorizontalTUTO,
 	#superclass : #BlElement,
 	#instVars : [
 		'minValue',
@@ -11,7 +11,6 @@ Class {
 		'validatedValueCallback',
 		'sliderBar',
 		'sliderBackground',
-		'disabledRebuilding',
 		'widgetSize',
 		'maxPixelDistance',
 		'enumeratedValues',
@@ -19,7 +18,6 @@ Class {
 		'initColor',
 		'endColor',
 		'barThickness',
-		'isHorizontal',
 		'eventHandler',
 		'sliderHandle',
 		'handlePushedPoint'
@@ -28,25 +26,25 @@ Class {
 }
 
 { #category : #building }
-BlCleanSlider class >> backgroundDefaultColor [
+BlCleanSliderHorizontalTUTO class >> backgroundDefaultColor [
 
 	^ Color gray
 ]
 
 { #category : #building }
-BlCleanSlider class >> barDefaultColor [
+BlCleanSliderHorizontalTUTO class >> barDefaultColor [
 
 	^ Color blue 
 ]
 
 { #category : #building }
-BlCleanSlider class >> defaultMaxPixelDistance [
+BlCleanSliderHorizontalTUTO class >> defaultMaxPixelDistance [
 
 	^ 25
 ]
 
 { #category : #testing }
-BlCleanSlider class >> exampleSegmented [
+BlCleanSliderHorizontalTUTO class >> exampleSegmented [
 
 	<script>
 	| bl |
@@ -64,7 +62,7 @@ BlCleanSlider class >> exampleSegmented [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> exampleSegmentedWithColors [
+BlCleanSliderHorizontalTUTO class >> exampleSegmentedWithColors [
 
 	<script>
 	| bl2 |
@@ -87,19 +85,19 @@ BlCleanSlider class >> exampleSegmentedWithColors [
 ]
 
 { #category : #building }
-BlCleanSlider class >> interactionDefaultColor [
+BlCleanSliderHorizontalTUTO class >> interactionDefaultColor [
 
 	^ Color pink alpha: 0.5
 ]
 
 { #category : #building }
-BlCleanSlider class >> interactorDefaultColor [
+BlCleanSliderHorizontalTUTO class >> interactorDefaultColor [
 
 	^ Color red 
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTestNotSegmented [
+BlCleanSliderHorizontalTUTO class >> visualTestNotSegmented [
 
 	<script>
 	| bl space val |
@@ -117,7 +115,7 @@ BlCleanSlider class >> visualTestNotSegmented [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTestNotSegmentedInspectValue [
+BlCleanSliderHorizontalTUTO class >> visualTestNotSegmentedInspectValue [
 
 	<script>
 	| bl space val |
@@ -135,7 +133,7 @@ BlCleanSlider class >> visualTestNotSegmentedInspectValue [
 ]
 
 { #category : #testing }
-BlCleanSlider class >> visualTestSegmented [
+BlCleanSliderHorizontalTUTO class >> visualTestSegmented [
 
 	<script>
 	| bl space val |
@@ -152,46 +150,13 @@ BlCleanSlider class >> visualTestSegmented [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> barThickness: anObject [
+BlCleanSliderHorizontalTUTO >> barThickness: anObject [
 
 	barThickness := anObject
 ]
 
-{ #category : #'main configuration' }
-BlCleanSlider >> beHorizontal [
-
-	self horizontal: true.
-]
-
-{ #category : #'main configuration' }
-BlCleanSlider >> beVertical [
-
-	self horizontal: false.
-]
-
 { #category : #'private - building' }
-BlCleanSlider >> buildDefaultHandle [
-
-	| bl pt |
-	pt := 20 @ 20.
-	bl := BlElement new
-		      geometry: BlCircleGeometry new;
-		      background: self class interactorDefaultColor;
-		      size: pt;
-		      transformDo: [ :t | t translateBy: pt negated / 2 ].
-	^ bl
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildForeground [ 
-
-	self id: #sliderInteractionForeground.
-	self size: self widgetSize.
-	self background: self class interactionDefaultColor.
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildHorizontalBackground [
+BlCleanSliderHorizontalTUTO >> buildBackground [
 
 	| bgElt |
 	bgElt := BlElement new.
@@ -207,7 +172,7 @@ BlCleanSlider >> buildHorizontalBackground [
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildHorizontalBar [
+BlCleanSliderHorizontalTUTO >> buildBar [
 
 	| bar |
 	bar := BlElement new.
@@ -224,7 +189,28 @@ BlCleanSlider >> buildHorizontalBar [
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildHorizontalHandle [ 
+BlCleanSliderHorizontalTUTO >> buildDefaultHandle [
+
+	| bl pt |
+	pt := 20 @ 20.
+	bl := BlElement new
+		      geometry: BlCircleGeometry new;
+		      background: self class interactorDefaultColor;
+		      size: pt;
+		      transformDo: [ :t | t translateBy: pt negated / 2 ].
+	^ bl
+]
+
+{ #category : #'private - building' }
+BlCleanSliderHorizontalTUTO >> buildForeground [ 
+
+	self id: #sliderInteractionForeground.
+	self size: self widgetSize.
+	self background: self class interactionDefaultColor.
+]
+
+{ #category : #'private - building' }
+BlCleanSliderHorizontalTUTO >> buildHandle [ 
 
 	| handle pt |
 	handle := self buildDefaultHandle.
@@ -238,135 +224,47 @@ BlCleanSlider >> buildHorizontalHandle [
 ]
 
 { #category : #'private - building' }
-BlCleanSlider >> buildHorizontalSlider [
-
-	self buildForeground.
-	self buildHorizontalBackground.
-	self buildHorizontalBar.
-	self buildHorizontalHandle
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildSlider [
+BlCleanSliderHorizontalTUTO >> buildSlider [
 
 	self removeAllShapes.
 	self size: self widgetSize.
-	self isHorizontal
-		ifTrue: [ self buildHorizontalSlider ]
-		ifFalse: [ self buildVerticalSlider ].
+	self buildForeground.
+	self buildBackground.
+	self buildBar.
+	self buildHandle.
 	self initializeEventHandlers
 ]
 
-{ #category : #'private - building' }
-BlCleanSlider >> buildVerticalBackground [
-
-	
-	| bgElt pt1 pt2 |
-	bgElt := BlElement new.
-	pt1 := barThickness
-	       @ (self widgetSize y - (2 * self sliderPixelMargin)).
-	bgElt size: pt1.
-	bgElt id: #sliderBackground.
-	pt2 := self widgetSize x / 2 - ( barThickness / 2)
-	       @ self sliderPixelMargin.
-	bgElt position: pt2.
-	bgElt background: self class backgroundDefaultColor.
-	bgElt zIndex: 0.
-	self addChild: bgElt.
-	self sliderBackground: bgElt.
-
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildVerticalBar [
-
-	| bar |
-	bar := BlElement new.
-	bar size: barThickness
-		@ (self widgetSize y - (self valueToCoord: currentValue)
-			 - self sliderPixelMargin).
-	bar id: #sliderBar.
-	bar position: self widgetSize x / 2 - (barThickness / 2)
-		@ (self valueToCoord: currentValue).
-	bar background: self class barDefaultColor.
-	bar zIndex: 2.
-	self addChild: bar.
-	self sliderBar: bar.
-
-	
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildVerticalHandle [
-
-	| handle pt |
-
-	handle := self buildDefaultHandle.
-	handle id: #sliderHandle.
-	pt := self widgetSize x / 2 @ (self valueToCoord: currentValue).
-	handle position: pt.
-	handle zIndex: 3.
-	self addChild: handle.
-	self sliderHandle: handle
-]
-
-{ #category : #'private - building' }
-BlCleanSlider >> buildVerticalSlider [
-
-	self buildForeground.
-	self buildVerticalBackground.
-	self buildVerticalBar.
-	self buildVerticalHandle
-]
-
 { #category : #'changing state' }
-BlCleanSlider >> changedCurrentValue: aValue [
+BlCleanSliderHorizontalTUTO >> changedCurrentValue: aValue [
 
 ^self changedCurrentValue: aValue withSlider: false
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> changedCurrentValue: aValue withSlider: aBool [
+BlCleanSliderHorizontalTUTO >> changedCurrentValue: aValue withSlider: aBool [
 
 	| v color |
 	v := self valueToCoord: aValue.
-	self isHorizontal
-		ifTrue: [
 			aBool ifTrue: [
 				self sliderHandle ifNotNil: [ :sl |
 					sl position: v @ sl constraints position y ] ].
 			self sliderBar size:
-				v - self sliderPixelMargin @ self sliderBar size y ]
-		ifFalse: [
-			aBool ifTrue: [
-				self sliderHandle ifNotNil: [ :sl |
-					sl position: sl constraints position x @ v ] ].
-			self sliderBar size:
-				barThickness
-				@ (self widgetSize y - (self valueToCoord: currentValue)
-					 - self sliderPixelMargin).
-			self sliderBar position:
-				self widgetSize x / 2 - (barThickness / 2)
-				@ (self valueToCoord: currentValue) ].
+				v - self sliderPixelMargin @ self sliderBar size y.
 	color := self colorForValue: aValue.
 	self sliderHandle background: color.
 	self sliderBar background: color
 ]
 
 { #category : #'changing state' }
-BlCleanSlider >> changedHandlePosition: v [
+BlCleanSliderHorizontalTUTO >> changedHandlePosition: v [
 
-	self isHorizontal 
-		ifTrue: [
 			self sliderHandle ifNotNil: [ :sl |
-				sl position: v @ sl constraints position y ] ]
-		ifFalse: [
-			self sliderHandle ifNotNil: [ :sl |
-				sl position: sl constraints position x @ v ] ]
+				sl position: v @ sl constraints position y ]
 ]
 
 { #category : #private }
-BlCleanSlider >> cleanSliderParts [
+BlCleanSliderHorizontalTUTO >> cleanSliderParts [
 
 	sliderBackground := nil.
 	sliderBar := nil.
@@ -374,7 +272,7 @@ BlCleanSlider >> cleanSliderParts [
 ]
 
 { #category : #private }
-BlCleanSlider >> colorForValue: aValue [
+BlCleanSliderHorizontalTUTO >> colorForValue: aValue [
 
 	| i |
 	self enumeratedColors
@@ -390,13 +288,13 @@ BlCleanSlider >> colorForValue: aValue [
 ]
 
 { #category : #private }
-BlCleanSlider >> currentValue [
+BlCleanSliderHorizontalTUTO >> currentValue [
 
 	^ currentValue
 ]
 
 { #category : #private }
-BlCleanSlider >> currentValue: aNumber [
+BlCleanSliderHorizontalTUTO >> currentValue: aNumber [
 
 	(aNumber between: minValue and: maxValue) ifFalse: [ ^ self ].
 	currentValue := aNumber.
@@ -404,13 +302,13 @@ BlCleanSlider >> currentValue: aNumber [
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> decrementValue [
+BlCleanSliderHorizontalTUTO >> decrementValue [
 
 	self decrementValue: self stepValue.
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> decrementValue: aValue [
+BlCleanSliderHorizontalTUTO >> decrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue - aValue.
@@ -418,37 +316,25 @@ BlCleanSlider >> decrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> disabledRebuilding [
-
-	^ disabledRebuilding
-]
-
-{ #category : #accessing }
-BlCleanSlider >> disabledRebuilding: anObject [
-
-	disabledRebuilding := anObject
-]
-
-{ #category : #accessing }
-BlCleanSlider >> endColor: anObject [
+BlCleanSliderHorizontalTUTO >> endColor: anObject [
 
 	endColor := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedColors [
+BlCleanSliderHorizontalTUTO >> enumeratedColors [
 
 	^ enumeratedColors
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedColors: anObject [
+BlCleanSliderHorizontalTUTO >> enumeratedColors: anObject [
 
 	enumeratedColors := anObject
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> enumeratedValues [
+BlCleanSliderHorizontalTUTO >> enumeratedValues [
 	"since the enumerated value are derived from min, max and step, we lazy initialize it."
 	
 	enumeratedValues ifNil: [
@@ -458,37 +344,31 @@ BlCleanSlider >> enumeratedValues [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> enumeratedValues: anObject [
+BlCleanSliderHorizontalTUTO >> enumeratedValues: anObject [
 
 	enumeratedValues := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> handlePushedPoint [
+BlCleanSliderHorizontalTUTO >> handlePushedPoint [
 
 	^ handlePushedPoint
 ]
 
 { #category : #accessing }
-BlCleanSlider >> handlePushedPoint: anObject [
+BlCleanSliderHorizontalTUTO >> handlePushedPoint: anObject [
 
 	handlePushedPoint := anObject
 ]
 
-{ #category : #accessing }
-BlCleanSlider >> horizontal: aBoolean [
-
-	isHorizontal := aBoolean 
-]
-
 { #category : #'api - slider' }
-BlCleanSlider >> incrementValue [
+BlCleanSliderHorizontalTUTO >> incrementValue [
 
 	self incrementValue: self stepValue
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> incrementValue: aValue [
+BlCleanSliderHorizontalTUTO >> incrementValue: aValue [
 
 	| tmp |
 	tmp := validatedValue + aValue.
@@ -496,19 +376,19 @@ BlCleanSlider >> incrementValue: aValue [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> initColor [
+BlCleanSliderHorizontalTUTO >> initColor [
 
 	^ initColor
 ]
 
 { #category : #accessing }
-BlCleanSlider >> initColor: anObject [
+BlCleanSliderHorizontalTUTO >> initColor: anObject [
 
 	initColor := anObject
 ]
 
 { #category : #initialization }
-BlCleanSlider >> initialize [
+BlCleanSliderHorizontalTUTO >> initialize [
 
 	super initialize.
 	barThickness := 8.
@@ -516,9 +396,7 @@ BlCleanSlider >> initialize [
 	minValue := 0.0.
 	self size: 300 @ 30.
 	currentValue := 0.0.
-	self beHorizontal.
 	sliderPixelMargin := 5.
-	disabledRebuilding := false.
 	stepValue := 1.
 	endColor := self class interactorDefaultColor.
 	initColor := self class interactorDefaultColor.
@@ -526,7 +404,7 @@ BlCleanSlider >> initialize [
 ]
 
 { #category : #initialization }
-BlCleanSlider >> initializeEventHandlers [
+BlCleanSliderHorizontalTUTO >> initializeEventHandlers [
 
 	self isSliderBuilt ifFalse: [
 		^ self error: 'The slider must be built first' ].
@@ -540,68 +418,62 @@ BlCleanSlider >> initializeEventHandlers [
 ]
 
 { #category : #private }
-BlCleanSlider >> is: aValue near: aValue2 [
+BlCleanSliderHorizontalTUTO >> is: aValue near: aValue2 [
 
 	^(aValue - aValue2) abs < self maxPixelDistance
 ]
 
-{ #category : #accessing }
-BlCleanSlider >> isHorizontal [ 
-
-	^ isHorizontal 
-]
-
 { #category : #'private - building' }
-BlCleanSlider >> isSliderBuilt [
+BlCleanSliderHorizontalTUTO >> isSliderBuilt [
 	"if no interactor, no slider"
 
 	^ self sliderHandle isNotNil
 ]
 
 { #category : #accessing }
-BlCleanSlider >> maxPixelDistance [
+BlCleanSliderHorizontalTUTO >> maxPixelDistance [
 
 	^ maxPixelDistance 
 ]
 
 { #category : #accessing }
-BlCleanSlider >> maxPixelDistance: anObject [
+BlCleanSliderHorizontalTUTO >> maxPixelDistance: anObject [
 
 	maxPixelDistance := anObject
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> maxValue [
+BlCleanSliderHorizontalTUTO >> maxValue [
 
 	^ maxValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> maxValue: anObject [
+BlCleanSliderHorizontalTUTO >> maxValue: anObject [
 	"when we change the maxValue, we are rebuilding the enumerated values and slider"
 
 	maxValue := anObject.
 	enumeratedValues := nil.
-	self isSliderBuilt ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self buildSlider ]
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> minValue [
+BlCleanSliderHorizontalTUTO >> minValue [
 
 	^ minValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> minValue: anObject [
+BlCleanSliderHorizontalTUTO >> minValue: anObject [
 
 	minValue := anObject.
 	enumeratedValues := nil.
 	currentValue < minValue ifTrue: [ currentValue := minValue copy ].
-	self isSliderBuilt ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self buildSlider ]
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> nearestValue: aValue [
+BlCleanSliderHorizontalTUTO >> nearestValue: aValue [
 
 	| val minResult tmp tmp2 |
 	self enumeratedValues ifNil: [ ^ aValue ].
@@ -618,31 +490,11 @@ BlCleanSlider >> nearestValue: aValue [
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> pointToValue: point [
-
-	^ self isHorizontal 
-		  ifTrue: [ self pointToXValue: point ]
-		  ifFalse: [ self pointToYValue: point ]
-]
-
-{ #category : #'api - transformations' }
-BlCleanSlider >> pointToXValue: point [
+BlCleanSliderHorizontalTUTO >> pointToValue: point [
 
 	| facteur valeur |
 	facteur := point x / self sliderBackground size x.
-	valeur := self maxValue - self minValue * facteur.
-	valeur := (valeur roundTo: (self stepValue ifNil: [ 1 ]))
-	          + self minValue.
-	valeur := self nearestValue: valeur.
-	^ valeur
-]
-
-{ #category : #'api - transformations' }
-BlCleanSlider >> pointToYValue: point [
-
-	| facteur valeur |
-	facteur := 1 - (point y / self sliderBackground size y).
-	valeur := self maxValue - self minValue * facteur.
+	valeur := (self maxValue - self minValue) * facteur.
 	valeur := (valeur roundTo: (self stepValue ifNil: [ 1 ]))
 	          + self minValue.
 	valeur := self nearestValue: valeur.
@@ -650,21 +502,14 @@ BlCleanSlider >> pointToYValue: point [
 ]
 
 { #category : #private }
-BlCleanSlider >> proportionOf: aValue [
+BlCleanSliderHorizontalTUTO >> proportionOf: aValue [
 	| i |
 	i := self enumeratedValues indexOf: aValue.
 	^ (i/self enumeratedValues size)
 ]
 
-{ #category : #'private - building' }
-BlCleanSlider >> rebuildSlider [
-
-	self disabledRebuilding ifTrue: [ ^ self ].
-	self buildSlider
-]
-
 { #category : #private }
-BlCleanSlider >> removeAllShapes [
+BlCleanSliderHorizontalTUTO >> removeAllShapes [
 
 	| list |
 	list := self sliderParts.
@@ -675,7 +520,7 @@ BlCleanSlider >> removeAllShapes [
 ]
 
 { #category : #private }
-BlCleanSlider >> removeEventHandler [
+BlCleanSliderHorizontalTUTO >> removeEventHandler [
 
 	eventHandler ifNil: [ ^ self ].
 	self flag: #toClean. "we should not test this"
@@ -686,58 +531,58 @@ BlCleanSlider >> removeEventHandler [
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setMaxValue [
+BlCleanSliderHorizontalTUTO >> setMaxValue [
 
 	self setValue: self maxValue.
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setMinValue [
+BlCleanSliderHorizontalTUTO >> setMinValue [
 
 	self setValue: self minValue
 ]
 
 { #category : #'api - slider' }
-BlCleanSlider >> setValue: aValue [
+BlCleanSliderHorizontalTUTO >> setValue: aValue [
 
 	(aValue < self maxValue and: [ aValue > self minValue ]) ifTrue: [
 		self validatedValue: aValue ].
 ]
 
 { #category : #'api - bounds' }
-BlCleanSlider >> size: aValue [
+BlCleanSliderHorizontalTUTO >> size: aValue [
 
 	super size: aValue.
 	self widgetSize: aValue.
-	self isSliderBuilt ifTrue: [ self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self buildSlider ]
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBackground [
+BlCleanSliderHorizontalTUTO >> sliderBackground [
 
 	^ sliderBackground
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBackground: anObject [
+BlCleanSliderHorizontalTUTO >> sliderBackground: anObject [
 
 	sliderBackground := anObject
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBar [
+BlCleanSliderHorizontalTUTO >> sliderBar [
 
 	^ sliderBar
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderBar: anObject [
+BlCleanSliderHorizontalTUTO >> sliderBar: anObject [
 
 	sliderBar := anObject
 ]
 
 { #category : #'events - bar' }
-BlCleanSlider >> sliderBarClicked: event [
+BlCleanSliderHorizontalTUTO >> sliderBarClicked: event [
 
 	| tmp val |
 	tmp := self sliderBackground globalPointToLocal: event position.
@@ -746,54 +591,48 @@ BlCleanSlider >> sliderBarClicked: event [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderHandle [
+BlCleanSliderHorizontalTUTO >> sliderHandle [
 
 	^ sliderHandle
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderHandle: anObject [
+BlCleanSliderHorizontalTUTO >> sliderHandle: anObject [
 
 	sliderHandle := anObject
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandleMoved: event [
+BlCleanSliderHorizontalTUTO >> sliderHandleMoved: event [
 
 	| val tmp v |
 	self handlePushedPoint ifNil: [ ^ self ].
 	tmp := self sliderBackground globalPointToLocal: event position.
 	val := self pointToValue: tmp.
 	tmp := self globalPointToLocal: event position.
-	self isHorizontal
-		ifTrue: [
 			v := tmp x.
-			v := v min: (self valueToX: self maxValue).
-			v := v max: (self valueToX: self minValue) ]
-		ifFalse: [
-			v := tmp y.
-			v := v min: (self valueToY: self minValue).
-			v := v max: (self valueToY: self maxValue) ].
+			v := v min: (self valueToCoord: self maxValue).
+			v := v max: (self valueToCoord: self minValue).
 
 	self changedHandlePosition: v.
 	self currentValue: val
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandlePushed: event [
+BlCleanSliderHorizontalTUTO >> sliderHandlePushed: event [
 
 	| value pt1 pt2 |
 	self sliderBar ifNil: [ ^ self ].
 	value := self pointToValue:
 		         (self sliderBackground globalPointToLocal: event position).
-	pt1 := self valueToX: value.
-	pt2 := self valueToX: currentValue.
+	pt1 := self valueToCoord: value.
+	pt2 := self valueToCoord: currentValue.
 	(self is: pt1 near: pt2) ifTrue: [
 		self handlePushedPoint: event position copy ]
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandleReleased [
+BlCleanSliderHorizontalTUTO >> sliderHandleReleased [
 
 	self handlePushedPoint ifNil: [ ^ self ].
 	self handlePushedPoint: nil.
@@ -801,7 +640,7 @@ BlCleanSlider >> sliderHandleReleased [
 ]
 
 { #category : #private }
-BlCleanSlider >> sliderParts [
+BlCleanSliderHorizontalTUTO >> sliderParts [
 
 	| oc |
 	oc := OrderedCollection new.
@@ -812,40 +651,39 @@ BlCleanSlider >> sliderParts [
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderPixelMargin [
+BlCleanSliderHorizontalTUTO >> sliderPixelMargin [
 
 	^ sliderPixelMargin 
 ]
 
 { #category : #accessing }
-BlCleanSlider >> sliderPixelMargin: anObject [
+BlCleanSliderHorizontalTUTO >> sliderPixelMargin: anObject [
 
 	sliderPixelMargin := anObject.
-	self isSliderBuilt ifTrue: [ 
-		self rebuildSlider ]
+	self isSliderBuilt ifTrue: [ self buildSlider ]
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> stepValue [
+BlCleanSliderHorizontalTUTO >> stepValue [
 
 	^ stepValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> stepValue: anObject [
+BlCleanSliderHorizontalTUTO >> stepValue: anObject [
 
 	stepValue := anObject.
 	enumeratedValues := nil.
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValue [
+BlCleanSliderHorizontalTUTO >> validatedValue [
 
 	^ validatedValue
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValue: aValue [
+BlCleanSliderHorizontalTUTO >> validatedValue: aValue [
 
 	currentValue := aValue.
 	self changedCurrentValue: aValue withSlider: true. 
@@ -854,27 +692,19 @@ BlCleanSlider >> validatedValue: aValue [
 ]
 
 { #category : #private }
-BlCleanSlider >> validatedValueCallback [
+BlCleanSliderHorizontalTUTO >> validatedValueCallback [
 
 	^ validatedValueCallback
 ]
 
 { #category : #'api - values' }
-BlCleanSlider >> validatedValueCallback: anObject [
+BlCleanSliderHorizontalTUTO >> validatedValueCallback: anObject [
 
 	validatedValueCallback := anObject
 ]
 
 { #category : #'api - transformations' }
-BlCleanSlider >> valueToCoord: aValue [
-
-	^ self isHorizontal 
-		  ifTrue: [ self valueToX: aValue ]
-		  ifFalse: [ self valueToY: aValue ]
-]
-
-{ #category : #'api - transformations' }
-BlCleanSlider >> valueToX: aValue [
+BlCleanSliderHorizontalTUTO >> valueToCoord: aValue [
 
 	| current total coeff |
 	current := aValue - self minValue.
@@ -884,27 +714,14 @@ BlCleanSlider >> valueToX: aValue [
 	  + (self sliderBackground constraints horizontal resizer size * coeff roundTo: 1)
 ]
 
-{ #category : #'api - transformations' }
-BlCleanSlider >> valueToY: aValue [
-
-	| valeurCourante valeurTotale facteur |
-	valeurCourante := aValue - self minValue.
-	valeurTotale := self maxValue - self minValue.
-	facteur := 1 - (valeurCourante / valeurTotale).
-	^ self sliderPixelMargin
-	  +
-		  (self sliderBackground constraints vertical resizer size * facteur
-			   roundTo: 1)
-]
-
 { #category : #accessing }
-BlCleanSlider >> widgetSize [
+BlCleanSliderHorizontalTUTO >> widgetSize [
 
 	^ widgetSize
 ]
 
 { #category : #private }
-BlCleanSlider >> widgetSize: anObject [
+BlCleanSliderHorizontalTUTO >> widgetSize: anObject [
 
 	widgetSize := anObject
 ]
