@@ -60,7 +60,7 @@ BlCleanSlider class >> exampleSegmented [
 	bl buildSlider.
 	bl validatedValueCallback: [ :e | "self changedTimeValue: e" ].
 	bl margin: (BlInsets top: 5).
-	bl openInSpace.
+	bl openInSpace
 ]
 
 { #category : #testing }
@@ -182,7 +182,7 @@ BlCleanSlider >> buildDefaultHandle [
 	^ bl
 ]
 
-{ #category : #build }
+{ #category : #'private - building' }
 BlCleanSlider >> buildForeground [ 
 
 	self id: #sliderInteractionForeground.
@@ -190,7 +190,7 @@ BlCleanSlider >> buildForeground [
 	self background: self class interactionDefaultColor.
 ]
 
-{ #category : #build }
+{ #category : #'private - building' }
 BlCleanSlider >> buildHorizontalBackground [
 
 	| bgElt |
@@ -206,7 +206,7 @@ BlCleanSlider >> buildHorizontalBackground [
 	self sliderBackground: bgElt
 ]
 
-{ #category : #build }
+{ #category : #'private - building' }
 BlCleanSlider >> buildHorizontalBar [
 
 	| bar |
@@ -223,7 +223,7 @@ BlCleanSlider >> buildHorizontalBar [
 	self sliderBar: bar
 ]
 
-{ #category : #build }
+{ #category : #'private - building' }
 BlCleanSlider >> buildHorizontalHandle [ 
 
 	| handle pt |
@@ -246,8 +246,8 @@ BlCleanSlider >> buildHorizontalSlider [
 	self buildHorizontalHandle
 ]
 
-{ #category : #'changing state' }
-BlCleanSlider >> buildOrientation [
+{ #category : #'private - building' }
+BlCleanSlider >> buildSlider [
 
 	self removeAllShapes.
 	self size: self widgetSize.
@@ -255,13 +255,6 @@ BlCleanSlider >> buildOrientation [
 		ifTrue: [ self buildHorizontalSlider ]
 		ifFalse: [ self buildVerticalSlider ].
 	self initializeEventHandlers
-]
-
-{ #category : #'api - slider' }
-BlCleanSlider >> buildSlider [
-
-	self buildOrientation.
-
 ]
 
 { #category : #'private - building' }
@@ -667,7 +660,7 @@ BlCleanSlider >> proportionOf: aValue [
 BlCleanSlider >> rebuildSlider [
 
 	self disabledRebuilding ifTrue: [ ^ self ].
-	self buildOrientation
+	self buildSlider
 ]
 
 { #category : #private }
@@ -675,16 +668,10 @@ BlCleanSlider >> removeAllShapes [
 
 	| list |
 	list := self sliderParts.
+	"BlCleanSlider>>sliderParts is only called here and returns the same thing as BlElement>>children"
 	self removeEventHandler.
 	self removeChildren: list.
 	self cleanSliderParts
-]
-
-{ #category : #private }
-BlCleanSlider >> removeAllSliderEventHandlers [
-	self removeEventHandler: eventHandler.
-	eventHandler := nil.
-	
 ]
 
 { #category : #private }
@@ -806,7 +793,7 @@ BlCleanSlider >> sliderHandlePushed: event [
 ]
 
 { #category : #'events - interactor' }
-BlCleanSlider >> sliderHandleReleased: event [
+BlCleanSlider >> sliderHandleReleased [
 
 	self handlePushedPoint ifNil: [ ^ self ].
 	self handlePushedPoint: nil.
