@@ -27,8 +27,26 @@ Class {
 	#category : #myBecherBloc
 }
 
+{ #category : #building }
+BlCleanSliderWithAlain class >> backgroundDefaultColor [
+
+	^ Color gray
+]
+
+{ #category : #building }
+BlCleanSliderWithAlain class >> barDefaultColor [
+
+	^ Color blue 
+]
+
+{ #category : #building }
+BlCleanSliderWithAlain class >> defaultMaxPixelDistance [
+
+	^ 25
+]
+
 { #category : #testing }
-BlCleanSliderWithAlain class >> alainVisual1 [
+BlCleanSliderWithAlain class >> exampleSegmented [
 
 	<script>
 	| bl |
@@ -43,11 +61,10 @@ BlCleanSliderWithAlain class >> alainVisual1 [
 	bl validatedValueCallback: [ :e | "self changedTimeValue: e" ].
 	bl margin: (BlInsets top: 5).
 	bl openInSpace.
-	bl inspect
 ]
 
 { #category : #testing }
-BlCleanSliderWithAlain class >> alainVisual2 [
+BlCleanSliderWithAlain class >> exampleSegmentedWithColors [
 
 	<script>
 	| bl2 |
@@ -67,25 +84,6 @@ BlCleanSliderWithAlain class >> alainVisual2 [
 	bl2 validatedValueCallback: [ :e | "self changedOperationalActivityValue: e"
 		 ].
 	bl2 openInSpace.
-	bl2 inspect.
-]
-
-{ #category : #building }
-BlCleanSliderWithAlain class >> backgroundDefaultColor [
-
-	^ Color gray
-]
-
-{ #category : #building }
-BlCleanSliderWithAlain class >> barDefaultColor [
-
-	^ Color blue 
-]
-
-{ #category : #building }
-BlCleanSliderWithAlain class >> defaultMaxPixelDistance [
-
-	^ 25
 ]
 
 { #category : #building }
@@ -101,7 +99,43 @@ BlCleanSliderWithAlain class >> interactorDefaultColor [
 ]
 
 { #category : #testing }
-BlCleanSliderWithAlain class >> visualTest1 [
+BlCleanSliderWithAlain class >> visualTestNotSegmented [
+
+	<script>
+	| bl space val |
+	bl := self new.
+	bl minValue: 10.
+	bl maxValue: 50.
+	bl stepValue: 1.
+	bl buildSlider.
+	space := bl openInNewSpace.
+	space windowExtent: 1920 @ 1050.
+	space setPosition: 0 @ 30.
+	val := space -> bl.
+	"	bl validatedValueCallback: [ :e | e inspect ]."
+	^ val
+]
+
+{ #category : #testing }
+BlCleanSliderWithAlain class >> visualTestNotSegmentedInspectValue [
+
+	<script>
+	| bl space val |
+	bl := self new.
+	bl minValue: 10.
+	bl maxValue: 50.
+	bl stepValue: 1.
+	bl buildSlider.
+	space := bl openInNewSpace.
+	space windowExtent: 1920 @ 1050.
+	space setPosition: 0 @ 30.
+	val := space -> bl.
+	bl validatedValueCallback: [ :e | e inspect ].
+	^ val
+]
+
+{ #category : #testing }
+BlCleanSliderWithAlain class >> visualTestSegmented [
 
 	<script>
 	| bl space val |
@@ -114,63 +148,6 @@ BlCleanSliderWithAlain class >> visualTest1 [
 	space windowExtent: 1920 @ 1050.
 	space setPosition: 0 @ 30.
 	val := space -> bl.
-	^ val
-]
-
-{ #category : #testing }
-BlCleanSliderWithAlain class >> visualTest2 [
-
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 10.
-	bl maxValue: 50.
-	bl stepValue: 1.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-"	bl validatedValueCallback: [ :e | e inspect ]."
-	val inspect.
-	^ val
-]
-
-{ #category : #testing }
-BlCleanSliderWithAlain class >> visualTest3 [
-
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 10.
-	bl maxValue: 50.
-	bl stepValue: 0.1.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-	bl validatedValueCallback: [ :e | e inspect ].
-	val inspect.
-	^ val
-]
-
-{ #category : #testing }
-BlCleanSliderWithAlain class >> visualTestVertical1 [
-
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 10.
-	bl maxValue: 50.
-	bl stepValue: 1.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-	bl validatedValueCallback: [ :e | e inspect ].
-	val inspect.
 	^ val
 ]
 
