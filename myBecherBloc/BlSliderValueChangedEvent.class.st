@@ -1,5 +1,5 @@
 Class {
 	#name : #BlSliderValueChangedEvent,
 	#superclass : #BlEvent,
-	#category : #myBecherBloc
+	#category : #'myBecherBloc-Slider'
 }

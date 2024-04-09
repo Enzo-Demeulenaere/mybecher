@@ -17,7 +17,7 @@ Class {
 		'marginLength',
 		'announcer'
 	],
-	#category : #myBecherBloc
+	#category : #'myBecherBloc-Slider'
 }
 
 { #category : #example }

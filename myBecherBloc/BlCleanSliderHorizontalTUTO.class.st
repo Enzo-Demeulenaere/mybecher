@@ -14,15 +14,12 @@ Class {
 		'widgetSize',
 		'maxPixelDistance',
 		'enumeratedValues',
-		'enumeratedColors',
-		'initColor',
-		'endColor',
 		'barThickness',
 		'eventHandler',
 		'sliderHandle',
 		'handlePushedPoint'
 	],
-	#category : #myBecherBloc
+	#category : #'myBecherBloc-Slider'
 }
 
 { #category : #building }
@@ -34,7 +31,7 @@ BlCleanSliderHorizontalTUTO class >> backgroundDefaultColor [
 { #category : #building }
 BlCleanSliderHorizontalTUTO class >> barDefaultColor [
 
-	^ Color blue 
+	^ Color red
 ]
 
 { #category : #building }
@@ -44,109 +41,64 @@ BlCleanSliderHorizontalTUTO class >> defaultMaxPixelDistance [
 ]
 
 { #category : #testing }
-BlCleanSliderHorizontalTUTO class >> exampleSegmented [
+BlCleanSliderHorizontalTUTO class >> exampleNotSegmented [
 
 	<script>
 	| bl |
 	bl := self new.
 	bl minValue: 0.
 	bl maxValue: 20.
-	bl stepValue: 1.
-	bl enumeratedValues: #( 0 5 10 15 20 ).
-	bl sliderPixelMargin: 20.
-	bl size: 500 @ 25.
+	bl sliderPixelMargin: 35.
+	bl size: 500 @ 40.
+
 	bl buildSlider.
-	bl validatedValueCallback: [ :e | "self changedTimeValue: e" ].
-	bl margin: (BlInsets top: 5).
 	bl openInSpace
 ]
 
 { #category : #testing }
-BlCleanSliderHorizontalTUTO class >> exampleSegmentedWithColors [
+BlCleanSliderHorizontalTUTO class >> exampleSegmentedEnumerated [
 
 	<script>
-	| bl2 |
-	bl2 := self new.
-	bl2 enumeratedColors: {
-			Color lightBlue.
-			Color blue.
-			Color orange.
-			Color red }.
-	bl2 position: 0 @ 20.
-	bl2 minValue: 50.
-	bl2 maxValue: 200.
-	bl2 stepValue: 50.
-	bl2 size: 550 @ 48.
-	bl2 sliderPixelMargin: 35.
-	bl2 buildSlider.
-	bl2 validatedValueCallback: [ :e | "self changedOperationalActivityValue: e"
-		 ].
-	bl2 openInSpace.
+	| bl |
+	bl := self new.
+	bl minValue: 0.
+	bl maxValue: 20.
+	bl sliderPixelMargin: 35.
+	bl size: 500 @ 40.
+	
+	bl enumeratedValues: #( 0 5 10 15 20 ).
+	
+	bl buildSlider.
+	bl openInSpace
+]
+
+{ #category : #testing }
+BlCleanSliderHorizontalTUTO class >> exampleSegmentedStepValue [
+
+	<script>
+	| bl |
+	bl := self new.
+	bl minValue: 0.
+	bl maxValue: 20.
+	bl sliderPixelMargin: 35.
+	bl size: 500 @ 40.
+	
+	bl stepValue: 5.
+	
+	bl buildSlider.
+	bl openInSpace
 ]
 
 { #category : #building }
-BlCleanSliderHorizontalTUTO class >> interactionDefaultColor [
-
-	^ Color pink alpha: 0.5
-]
-
-{ #category : #building }
-BlCleanSliderHorizontalTUTO class >> interactorDefaultColor [
+BlCleanSliderHorizontalTUTO class >> handleDefaultColor [
 
 	^ Color red 
 ]
 
-{ #category : #testing }
-BlCleanSliderHorizontalTUTO class >> visualTestNotSegmented [
+{ #category : #building }
+BlCleanSliderHorizontalTUTO class >> widgetDefaultColor [
 
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 10.
-	bl maxValue: 50.
-	bl stepValue: 1.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-	"	bl validatedValueCallback: [ :e | e inspect ]."
-	^ val
-]
-
-{ #category : #testing }
-BlCleanSliderHorizontalTUTO class >> visualTestNotSegmentedInspectValue [
-
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 10.
-	bl maxValue: 50.
-	bl stepValue: 1.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-	bl validatedValueCallback: [ :e | e inspect ].
-	^ val
-]
-
-{ #category : #testing }
-BlCleanSliderHorizontalTUTO class >> visualTestSegmented [
-
-	<script>
-	| bl space val |
-	bl := self new.
-	bl minValue: 55.
-	bl maxValue: 75.
-	bl stepValue: 5.
-	bl buildSlider.
-	space := bl openInNewSpace.
-	space windowExtent: 1920 @ 1050.
-	space setPosition: 0 @ 30.
-	val := space -> bl.
-	^ val
+	^ Color pink alpha: 0.5
 ]
 
 { #category : #accessing }
@@ -195,7 +147,7 @@ BlCleanSliderHorizontalTUTO >> buildDefaultHandle [
 	pt := 20 @ 20.
 	bl := BlElement new
 		      geometry: BlCircleGeometry new;
-		      background: self class interactorDefaultColor;
+		      background: self class handleDefaultColor;
 		      size: pt;
 		      transformDo: [ :t | t translateBy: pt negated / 2 ].
 	^ bl
@@ -206,7 +158,7 @@ BlCleanSliderHorizontalTUTO >> buildForeground [
 
 	self id: #sliderInteractionForeground.
 	self size: self widgetSize.
-	self background: self class interactionDefaultColor.
+	self background: self class widgetDefaultColor.
 ]
 
 { #category : #'private - building' }
@@ -244,16 +196,13 @@ BlCleanSliderHorizontalTUTO >> changedCurrentValue: aValue [
 { #category : #'changing state' }
 BlCleanSliderHorizontalTUTO >> changedCurrentValue: aValue withSlider: aBool [
 
-	| v color |
+	| v |
 	v := self valueToCoord: aValue.
-			aBool ifTrue: [
-				self sliderHandle ifNotNil: [ :sl |
-					sl position: v @ sl constraints position y ] ].
-			self sliderBar size:
-				v - self sliderPixelMargin @ self sliderBar size y.
-	color := self colorForValue: aValue.
-	self sliderHandle background: color.
-	self sliderBar background: color
+	aBool ifTrue: [
+		self sliderHandle ifNotNil: [ :sl |
+			sl position: v @ sl constraints position y ] ].
+	self sliderBar size:
+		v - self sliderPixelMargin @ self sliderBar size y.
 ]
 
 { #category : #'changing state' }
@@ -269,22 +218,6 @@ BlCleanSliderHorizontalTUTO >> cleanSliderParts [
 	sliderBackground := nil.
 	sliderBar := nil.
 	sliderHandle := nil
-]
-
-{ #category : #private }
-BlCleanSliderHorizontalTUTO >> colorForValue: aValue [
-
-	| i |
-	self enumeratedColors
-		ifNil: [
-			^  endColor
-				  mixed: (self proportionOf: aValue)
-				  with: self initColor ]
-		ifNotNil: [ :list |
-			i := self enumeratedValues indexOf: aValue.
-			i = 0 ifTrue: [ ^ self initColor ].
-			(i > list size) ifTrue: [ ^  endColor ].
-			^list at: i ]
 ]
 
 { #category : #private }
@@ -313,24 +246,6 @@ BlCleanSliderHorizontalTUTO >> decrementValue: aValue [
 	| tmp |
 	tmp := validatedValue - aValue.
 	tmp < self maxValue ifTrue: [ self validatedValue: tmp ]
-]
-
-{ #category : #accessing }
-BlCleanSliderHorizontalTUTO >> endColor: anObject [
-
-	endColor := anObject
-]
-
-{ #category : #accessing }
-BlCleanSliderHorizontalTUTO >> enumeratedColors [
-
-	^ enumeratedColors
-]
-
-{ #category : #accessing }
-BlCleanSliderHorizontalTUTO >> enumeratedColors: anObject [
-
-	enumeratedColors := anObject
 ]
 
 { #category : #'api - values' }
@@ -375,18 +290,6 @@ BlCleanSliderHorizontalTUTO >> incrementValue: aValue [
 	tmp < self maxValue ifTrue: [ self validatedValue: tmp ]
 ]
 
-{ #category : #accessing }
-BlCleanSliderHorizontalTUTO >> initColor [
-
-	^ initColor
-]
-
-{ #category : #accessing }
-BlCleanSliderHorizontalTUTO >> initColor: anObject [
-
-	initColor := anObject
-]
-
 { #category : #initialization }
 BlCleanSliderHorizontalTUTO >> initialize [
 
@@ -398,23 +301,14 @@ BlCleanSliderHorizontalTUTO >> initialize [
 	currentValue := 0.0.
 	sliderPixelMargin := 5.
 	stepValue := 1.
-	endColor := self class interactorDefaultColor.
-	initColor := self class interactorDefaultColor.
 	maxPixelDistance := self class defaultMaxPixelDistance
 ]
 
 { #category : #initialization }
 BlCleanSliderHorizontalTUTO >> initializeEventHandlers [
 
-	self isSliderBuilt ifFalse: [
-		^ self error: 'The slider must be built first' ].
-	eventHandler ifNotNil: [ ^ self ].
-	self flag: #toClean. "to be cleaned after"
-	
 	eventHandler := BlCleanSliderHandler new.
-	self  addEventHandler: eventHandler
-	
-
+	self addEventHandler: eventHandler
 ]
 
 { #category : #private }
@@ -522,12 +416,8 @@ BlCleanSliderHorizontalTUTO >> removeAllShapes [
 { #category : #private }
 BlCleanSliderHorizontalTUTO >> removeEventHandler [
 
-	eventHandler ifNil: [ ^ self ].
-	self flag: #toClean. "we should not test this"
-	
 	self removeEventHandler: eventHandler.
-	eventHandler := nil.
-	
+	eventHandler := nil
 ]
 
 { #category : #'api - slider' }
